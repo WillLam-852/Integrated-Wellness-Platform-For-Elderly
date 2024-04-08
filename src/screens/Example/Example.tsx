@@ -22,6 +22,7 @@ import { isImageSourcePropType } from '@/types/guards/image';
 import SendImage from '@/theme/assets/images/send.png';
 import ColorsWatchImage from '@/theme/assets/images/colorswatch.png';
 import TranslateImage from '@/theme/assets/images/translate.png';
+import CameraImage from '@/theme/assets/images/camera.png';
 
 function Example() {
 	const { t } = useTranslation(['example', 'welcome']);
@@ -64,7 +65,8 @@ function Example() {
 	if (
 		!isImageSourcePropType(SendImage) ||
 		!isImageSourcePropType(ColorsWatchImage) ||
-		!isImageSourcePropType(TranslateImage)
+		!isImageSourcePropType(TranslateImage) ||
+		!isImageSourcePropType(CameraImage)
 	) {
 		throw new Error('Image source is not valid');
 	}
@@ -128,8 +130,8 @@ function Example() {
 							) : (
 								<ImageVariant
 									source={SendImage}
-									style={{ tintColor: colors.purple500 }}
-								/>
+									style={[{ tintColor: colors.purple500 }, components.buttonIcon]}
+									/>
 							)}
 						</TouchableOpacity>
 
@@ -140,7 +142,7 @@ function Example() {
 						>
 							<ImageVariant
 								source={ColorsWatchImage}
-								style={{ tintColor: colors.purple500 }}
+								style={[{ tintColor: colors.purple500 }, components.buttonIcon]}
 							/>
 						</TouchableOpacity>
 
@@ -153,9 +155,21 @@ function Example() {
 						>
 							<ImageVariant
 								source={TranslateImage}
-								style={{ tintColor: colors.purple500 }}
+								style={[{ tintColor: colors.purple500 }, components.buttonIcon]}
 							/>
 						</TouchableOpacity>
+
+						<TouchableOpacity
+							testID="trigger-native-module-button"
+							style={[components.buttonCircle, gutters.marginBottom_16]}
+							onPress={() => {}}
+						>
+							<ImageVariant
+								source={CameraImage}
+								style={[{ tintColor: colors.purple500 }, components.buttonIcon]}
+							/>
+						</TouchableOpacity>
+
 					</View>
 				</View>
 			</ScrollView>

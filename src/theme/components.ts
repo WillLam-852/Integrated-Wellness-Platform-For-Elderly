@@ -12,6 +12,10 @@ export default ({ layout, backgrounds, fonts }: ComponentTheme) => {
 			width: 70,
 			borderRadius: 35,
 		},
+		buttonIcon: {
+			height: 30,
+			width: 30,
+		},
 		circle250: {
 			borderRadius: 140,
 			height: 250,
