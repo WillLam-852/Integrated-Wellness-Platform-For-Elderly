@@ -4,7 +4,8 @@
     "types": ["jest", "node"],
     "paths": {
       "@/*": ["./src/*"],
-    }
+    },
+    "moduleResolution":"node",
   },
   "include": [
     "./src/**/*",
