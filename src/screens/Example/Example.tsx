@@ -23,8 +23,10 @@ import SendImage from '@/theme/assets/images/send.png';
 import ColorsWatchImage from '@/theme/assets/images/colorswatch.png';
 import TranslateImage from '@/theme/assets/images/translate.png';
 import CameraImage from '@/theme/assets/images/camera.png';
+import BotImage from '@/theme/assets/images/bot.png';
+import { ApplicationScreenProps } from '@/types/navigation';
 
-function Example() {
+function Example({ navigation }: ApplicationScreenProps) {
 	const { t } = useTranslation(['example', 'welcome']);
 
 	const {
@@ -166,6 +168,17 @@ function Example() {
 						>
 							<ImageVariant
 								source={CameraImage}
+								style={[{ tintColor: colors.purple500 }, components.buttonIcon]}
+							/>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							testID="navigate-to-botadvisor-button"
+							style={[components.buttonCircle, gutters.marginBottom_16]}
+							onPress={() => navigation.navigate('BotAdvisor')}
+						>
+							<ImageVariant
+								source={BotImage}
 								style={[{ tintColor: colors.purple500 }, components.buttonIcon]}
 							/>
 						</TouchableOpacity>

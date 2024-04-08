@@ -8,13 +8,13 @@ export default ({ layout, backgrounds, fonts }: ComponentTheme) => {
 			...layout.itemsCenter,
 			...backgrounds.purple100,
 			...fonts.gray400,
-			height: 70,
-			width: 70,
+			height: 50,
+			width: 50,
 			borderRadius: 35,
 		},
 		buttonIcon: {
-			height: 30,
-			width: 30,
+			height: 25,
+			width: 25,
 		},
 		circle250: {
 			borderRadius: 140,
