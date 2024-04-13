@@ -27,9 +27,29 @@ public enum K {
 //  public static let apiBaseUrl = "\(protocal)://\(domain)/\(mobileAPI)";
   public static let apiBaseUrl = "Pending...";
   
+  // MARK: - DispatchQueueLabel
+  struct DispatchQueueLabel {
+      public static let sessionQueue = "SessionQueue"
+      public static let detectionQueue = "DetectionQueue"
+  }
+  
+    // MARK: - ViewControllerID
+  struct ViewControllerID {
+    public static let LaunchViewControllerID = "LaunchViewControllerID"
+    public static let ReactViewControllerID = "ReactViewControllerID"
+    public static let NavigationControllerID = "NavigationControllerID"
+    public static let CameraViewControllerID = "CameraViewControllerID"
+  }
+  
+
   struct Localization {
     public static let error = "error"
     public static let tryAgain = "tryAgain"
+    public static let permissionRequest = "permissionRequest"
+    public static let enablePermission = "enablePermission"
+    public static let OK = "OK"
+    public static let settings = "settings"
+    public static let unableCaptureMedia = "unableCaptureMedia"
   }
 
 }

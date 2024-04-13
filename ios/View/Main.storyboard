@@ -12,7 +12,7 @@
         <!--Launch View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="LaunchViewController" customModule="BoilerReactNativeApplication" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LaunchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="LaunchViewController" customModule="BoilerReactNativeApplication" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +27,7 @@
         <!--React View Controller-->
         <scene sceneID="ggh-Ew-voS">
             <objects>
-                <viewController id="Fhr-PX-1uW" customClass="ReactViewController" customModule="BoilerReactNativeApplication" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReactViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fhr-PX-1uW" customClass="ReactViewController" customModule="BoilerReactNativeApplication" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y7G-AS-rb1">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,6 +38,62 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bDb-vG-Mya" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="837" y="-2"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="HMl-8C-yLT">
+            <objects>
+                <viewController storyboardIdentifier="CameraViewControllerID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="POR-sc-LF2" customClass="CameraViewController" customModule="BoilerReactNativeApplication" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bwj-hq-oKo">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cXR-Jz-uWu">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="O9a-ak-ucj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cXR-Jz-uWu" secondAttribute="trailing" id="0qy-gK-IMx"/>
+                            <constraint firstItem="cXR-Jz-uWu" firstAttribute="leading" secondItem="bwj-hq-oKo" secondAttribute="leading" id="OKR-yb-9Oa"/>
+                            <constraint firstAttribute="bottom" secondItem="cXR-Jz-uWu" secondAttribute="bottom" id="Zyu-vM-QqB"/>
+                            <constraint firstItem="cXR-Jz-uWu" firstAttribute="top" secondItem="bwj-hq-oKo" secondAttribute="top" id="doC-wI-4bR"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="JuQ-GX-azu">
+                        <barButtonItem key="leftBarButtonItem" title="Return" id="pG8-h6-kBC">
+                            <connections>
+                                <action selector="returnButtonPressed:" destination="POR-sc-LF2" id="RaR-Sf-7Yg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="overlayView" destination="cXR-Jz-uWu" id="CN2-b2-U6i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="btw-fJ-Wzi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2594.6564885496182" y="-2.1126760563380285"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uGG-dr-yW0">
+            <objects>
+                <navigationController storyboardIdentifier="NavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="m1L-no-ETF" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SJZ-iK-lrt">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="POR-sc-LF2" kind="relationship" relationship="rootViewController" id="VPD-bP-ATV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0mi-ez-BVP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1667.9389312977098" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>

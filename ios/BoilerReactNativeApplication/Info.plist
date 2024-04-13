@@ -68,5 +68,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera to analyze body movements</string>
 </dict>
 </plist>

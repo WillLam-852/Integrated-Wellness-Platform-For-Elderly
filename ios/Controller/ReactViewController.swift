@@ -38,21 +38,11 @@ class ReactViewController: UIViewController {
   
     
     func showCameraView() {
-      print("showCameraView")
-                    
-//            let navVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.NavigationControllerID) as! UINavigationController
-//            let camVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.CameraViewControllerID) as! CameraViewController
-//
-//            camVC.isPracticeMode = isPracticeMode
-//            camVC.currentTherapyAndPlannedTherapyList = therapyAndPlannedTherapyList
-//            camVC.bloodPressure = bloodPressure
-//            camVC.connectedHealthPeripheralName = connectedHealthPeripheralName
-//            camVC.cameraViewDelegate = self
-//
-//            navVC.setViewControllers([camVC], animated: false)
-//            navVC.modalPresentationStyle = .fullScreen
-//            self.present(navVC, animated: true, completion: nil)
-        
+        let navVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.NavigationControllerID) as! UINavigationController
+        let camVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.CameraViewControllerID) as! CameraViewController
+        navVC.setViewControllers([camVC], animated: false)
+        navVC.modalPresentationStyle = .fullScreen
+        self.present(navVC, animated: true, completion: nil)
     }
     
     

@@ -18,6 +18,9 @@
 		0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC682BCAD349001651BE /* BridgingModule.m */; };
 		0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC672BCAD218001651BE /* CameraModule.swift */; };
 		0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */; };
+		0DFEAC6F2BCAD6D2001651BE /* CameraFeedModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC6E2BCAD6D2001651BE /* CameraFeedModule.swift */; };
+		0DFEAC722BCAD726001651BE /* SessionSetupResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC712BCAD726001651BE /* SessionSetupResult.swift */; };
+		0DFEAC752BCAD77B001651BE /* AVCaptureVideoOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		7699B88040F8A987B510C191 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -47,6 +50,9 @@
 		0DFEAC672BCAD218001651BE /* CameraModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModule.swift; sourceTree = "<group>"; };
 		0DFEAC682BCAD349001651BE /* BridgingModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingModule.m; sourceTree = "<group>"; };
 		0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		0DFEAC6E2BCAD6D2001651BE /* CameraFeedModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeedModule.swift; sourceTree = "<group>"; };
+		0DFEAC712BCAD726001651BE /* SessionSetupResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSetupResult.swift; sourceTree = "<group>"; };
+		0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureVideoOrientation.swift; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* BoilerReactNativeApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoilerReactNativeApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BoilerReactNativeApplication/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BoilerReactNativeApplication/Info.plist; sourceTree = "<group>"; };
@@ -107,6 +113,7 @@
 		0D18CBF12BCACAD600717213 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				0DFEAC702BCAD716001651BE /* CameraFeedModule */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -134,6 +141,7 @@
 		0D18CBF42BCACAF200717213 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -159,6 +167,23 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0DFEAC702BCAD716001651BE /* CameraFeedModule */ = {
+			isa = PBXGroup;
+			children = (
+				0DFEAC732BCAD737001651BE /* dto */,
+				0DFEAC6E2BCAD6D2001651BE /* CameraFeedModule.swift */,
+			);
+			path = CameraFeedModule;
+			sourceTree = "<group>";
+		};
+		0DFEAC732BCAD737001651BE /* dto */ = {
+			isa = PBXGroup;
+			children = (
+				0DFEAC712BCAD726001651BE /* SessionSetupResult.swift */,
+			);
+			name = dto;
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* BoilerReactNativeApplication */ = {
@@ -498,14 +523,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DFEAC6F2BCAD6D2001651BE /* CameraFeedModule.swift in Sources */,
 				0D18CBEE2BCAC68500717213 /* AppDelegate.swift in Sources */,
 				0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */,
 				0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */,
+				0DFEAC752BCAD77B001651BE /* AVCaptureVideoOrientation.swift in Sources */,
 				0D18CBED2BCAC68500717213 /* SceneDelegate.swift in Sources */,
 				0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */,
 				0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */,
 				0D18CBFA2BCACB5B00717213 /* Constants.swift in Sources */,
 				0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */,
+				0DFEAC722BCAD726001651BE /* SessionSetupResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
