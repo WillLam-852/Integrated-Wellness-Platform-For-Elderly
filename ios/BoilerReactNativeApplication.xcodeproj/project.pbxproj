@@ -15,6 +15,9 @@
 		0D18CBFC2BCACBEF00717213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D18CBFB2BCACBEF00717213 /* Main.storyboard */; };
 		0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */; };
 		0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */; };
+		0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC682BCAD349001651BE /* BridgingModule.m */; };
+		0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC672BCAD218001651BE /* CameraModule.swift */; };
+		0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		7699B88040F8A987B510C191 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -41,6 +44,9 @@
 		0D18CBFB2BCACBEF00717213 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactViewController.swift; sourceTree = "<group>"; };
+		0DFEAC672BCAD218001651BE /* CameraModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModule.swift; sourceTree = "<group>"; };
+		0DFEAC682BCAD349001651BE /* BridgingModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingModule.m; sourceTree = "<group>"; };
+		0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* BoilerReactNativeApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoilerReactNativeApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BoilerReactNativeApplication/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BoilerReactNativeApplication/Info.plist; sourceTree = "<group>"; };
@@ -110,6 +116,7 @@
 			children = (
 				0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */,
 				0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */,
+				0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -118,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				0D18CBEA2BCAC68400717213 /* BoilerReactNativeApplication-Bridging-Header.h */,
+				0DFEAC672BCAD218001651BE /* CameraModule.swift */,
+				0DFEAC682BCAD349001651BE /* BridgingModule.m */,
 			);
 			path = BridgingFiles;
 			sourceTree = "<group>";
@@ -490,8 +499,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D18CBEE2BCAC68500717213 /* AppDelegate.swift in Sources */,
+				0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */,
+				0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */,
 				0D18CBED2BCAC68500717213 /* SceneDelegate.swift in Sources */,
 				0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */,
+				0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */,
 				0D18CBFA2BCACB5B00717213 /* Constants.swift in Sources */,
 				0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */,
 			);
@@ -587,6 +599,7 @@
 				PRODUCT_NAME = BoilerReactNativeApplication;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "BridgingFiles/BoilerReactNativeApplication-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

@@ -38,6 +38,7 @@ class ReactViewController: UIViewController {
   
     
     func showCameraView() {
+      print("showCameraView")
                     
 //            let navVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.NavigationControllerID) as! UINavigationController
 //            let camVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.CameraViewControllerID) as! CameraViewController
