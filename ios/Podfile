@@ -27,6 +27,7 @@ end
 
 target 'BoilerReactNativeApplication' do
   config = use_native_modules!
+  pod 'MediaPipeTasksVision', '0.10.12'
 
   use_react_native!(
     :path => config[:reactNativePath],

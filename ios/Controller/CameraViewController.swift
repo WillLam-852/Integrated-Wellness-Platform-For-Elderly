@@ -6,508 +6,254 @@
 //
 
 import AVFoundation
+import MediaPipeTasksVision
 import UIKit
 
-final class CameraViewController: UIViewController {
-  
-  // MARK: Storyboards Connections
-  @IBOutlet weak var overlayView: UIImageView!
-  
-  // MARK: - Camera & Image
-  /// Handle the camera pipeline.
-  private var cameraFeedModule: CameraFeedModule? = CameraFeedModule()
-  
-  private var windowOrientation: UIInterfaceOrientation {
-    return self.view.window?.windowScene?.interfaceOrientation ?? .unknown
+/**
+ * The view controller is responsible for performing detection on incoming frames from the live camera and presenting the frames with the
+ * landmark of the landmarked poses to the user.
+ */
+class CameraViewController: UIViewController {
+  private struct Constants {
+    static let edgeOffset: CGFloat = 2.0
   }
   
+//  weak var inferenceResultDeliveryDelegate: InferenceResultDeliveryDelegate?
+//  weak var interfaceUpdatesDelegate: InterfaceUpdatesDelegate?
   
-  // MARK: - Button Actions
+  @IBOutlet weak var previewView: UIView!
+  @IBOutlet weak var cameraUnavailableLabel: UILabel!
+  @IBOutlet weak var resumeButton: UIButton!
+  @IBOutlet weak var overlayView: OverlayView!
   
-  @IBAction func returnButtonPressed(_ sender: UIBarButtonItem) {
-    DispatchQueue.main.async {
-      self.dismiss(animated: true)
+  private var isSessionRunning = false
+  private var isObserving = false
+  private let backgroundQueue = DispatchQueue(label: "com.google.mediapipe.cameraController.backgroundQueue")
+  
+    // MARK: Controllers that manage functionality
+    // Handles all the camera related functionality
+  private lazy var cameraFeedModule = CameraFeedModule(previewView: previewView)
+  
+  private let poseLandmarkerServiceQueue = DispatchQueue(
+    label: "com.google.mediapipe.cameraController.poseLandmarkerServiceQueue",
+    attributes: .concurrent)
+  
+    // Queuing reads and writes to poseLandmarkerService using the Apple recommended way
+    // as they can be read and written from multiple threads and can result in race conditions.
+  private var _poseLandmarkerService: PoseLandmarkerService?
+  private var poseLandmarkerService: PoseLandmarkerService? {
+    get {
+      poseLandmarkerServiceQueue.sync {
+        return self._poseLandmarkerService
+      }
+    }
+    set {
+      poseLandmarkerServiceQueue.async(flags: .barrier) {
+        self._poseLandmarkerService = newValue
+      }
     }
   }
   
+#if !targetEnvironment(simulator)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    initializePoseLandmarkerServiceOnSessionResumption()
+    cameraFeedModule.startLiveCameraSession {[weak self] cameraConfiguration in
+      DispatchQueue.main.async {
+        switch cameraConfiguration {
+          case .failed:
+            self?.presentVideoConfigurationErrorAlert()
+          case .permissionDenied:
+            self?.presentCameraPermissionsDeniedAlert()
+          default:
+            break
+        }
+      }
+    }
+  }
   
-  // MARK: - View Handling Methods
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    cameraFeedModule.stopSession()
+    clearPoseLandmarkerServiceOnSessionInterruption()
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    self.cameraFeedModule!.authorizeCamera()
-    self.cameraFeedModule!.configureSession(windowOrientation: self.windowOrientation, sampleBufferDelegate: self)
-    
-    self.setupUILayout()
-    
-    // Disable idle timer so the device will not sleep automatically
-    UIApplication.shared.isIdleTimerDisabled = true
+    cameraFeedModule.delegate = self
+      // Do any additional setup after loading the view.
   }
-  
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    let setupResult = self.cameraFeedModule!.getVideoSetupResult()
-    switch setupResult {
-    case .success:
-      // Only setup observers and start the session if setup succeeded.
-      self.cameraFeedModule!.startRunning {
-      }
-      
-    case .notAuthorized:
-      DispatchQueue.main.async {
-        let alertController = UIAlertController(
-          title: NSLocalizedString(K.Localization.permissionRequest, comment: "Permission Required"),
-          message: NSLocalizedString(K.Localization.enablePermission, comment: "Please enable Camera Permission to use this function."),
-          preferredStyle: .alert
-        )
-        alertController.addAction(UIAlertAction(
-          title: NSLocalizedString(K.Localization.OK, comment: "OK"),
-          style: .cancel,
-          handler: nil
-        ))
-        alertController.addAction(UIAlertAction(
-          title: NSLocalizedString(K.Localization.settings, comment: "Settings"),
-          style: .default,
-          handler: { _ in
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
-                                      options: [:],
-                                      completionHandler: nil)
-          }
-        ))
-        self.present(alertController, animated: true, completion: nil)
-      }
-      
-    case .configurationFailed:
-      DispatchQueue.main.async {
-        let alertController = UIAlertController(
-          title: NSLocalizedString(K.Localization.error, comment: "Error"),
-          message: NSLocalizedString(K.Localization.unableCaptureMedia, comment: "Unable to capture media"),
-          preferredStyle: .alert
-        )
-        alertController.addAction(UIAlertAction(
-          title: NSLocalizedString(K.Localization.OK, comment: "OK"),
-          style: .cancel,
-          handler: nil
-        ))
-        self.present(alertController, animated: true, completion: nil)
-      }
-    }
-  }
-  
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    // Initialize the varaibles
+    cameraFeedModule.updateVideoPreviewLayer(toFrame: previewView.bounds)
   }
   
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    self.cameraFeedModule!.stopRunning()
-    super.viewWillDisappear(animated)
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    cameraFeedModule.updateVideoPreviewLayer(toFrame: previewView.bounds)
   }
+#endif
   
-  
-  override func viewDidDisappear(_ animated: Bool) {
-    // Enable idle timer so the device will not sleep automatically
-    UIApplication.shared.isIdleTimerDisabled = false
-    
-    // Remove all variables (for reducing memory use)
-    self.cameraFeedModule = nil
-    super.viewDidDisappear(animated)
-  }
-  
-  
-  // MARK: - UI Layout
-  
-  private func setupUILayout() {
-    self.overlayView.isHidden = false
-  }
-  
-}
-
-
-// MARK: - AVCaptureVideoDataOutputSampleBufferDelegate Methods
-
-extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
-    
-    /// Called whenever an AVCaptureVideoDataOutput instance outputs a new video frame.
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return
-        }
-        CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags.readOnly)
-        // Show the real-time video thread
-        DispatchQueue.main.async {
-            self.overlayView.image = UIImage(ciImage: CIImage(cvPixelBuffer: pixelBuffer))
-            // Send the image to analyse information
-//            self.poseAndHandTracker!.send(pixelBuffer, timestamp: CMSampleBufferGetPresentationTimeStamp(sampleBuffer), isPoseTherapy: self.currentTherapyMode == .pose)
-        }
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags.readOnly)
+    // Resume camera session when click button resume
+  @IBAction func onClickResume(_ sender: Any) {
+    cameraFeedModule.resumeInterruptedSession {[weak self] isSessionRunning in
+      if isSessionRunning {
+        self?.resumeButton.isHidden = true
+        self?.cameraUnavailableLabel.isHidden = true
+        self?.initializePoseLandmarkerServiceOnSessionResumption()
+      }
     }
+  }
+  
+  private func presentCameraPermissionsDeniedAlert() {
+    let alertController = UIAlertController(
+      title: "Camera Permissions Denied",
+      message:
+        "Camera permissions have been denied for this app. You can change this by going to Settings",
+      preferredStyle: .alert)
     
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    let settingsAction = UIAlertAction(title: "Settings", style: .default) { (action) in
+      UIApplication.shared.open(
+        URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+    }
+    alertController.addAction(cancelAction)
+    alertController.addAction(settingsAction)
     
+    present(alertController, animated: true, completion: nil)
+  }
+  
+  private func presentVideoConfigurationErrorAlert() {
+    let alert = UIAlertController(
+      title: "Camera Configuration Failed",
+      message: "There was an error while configuring camera.",
+      preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    
+    self.present(alert, animated: true)
+  }
+  
+  private func initializePoseLandmarkerServiceOnSessionResumption() {
+    clearAndInitializePoseLandmarkerService()
+    startObserveConfigChanges()
+  }
+  
+  @objc private func clearAndInitializePoseLandmarkerService() {
+    poseLandmarkerService = nil
+    poseLandmarkerService = PoseLandmarkerService
+      .liveStreamPoseLandmarkerService(
+        modelPath: InferenceConfigurationManager.sharedInstance.model.modelPath,
+        numPoses: InferenceConfigurationManager.sharedInstance.numPoses,
+        minPoseDetectionConfidence: InferenceConfigurationManager.sharedInstance.minPoseDetectionConfidence,
+        minPosePresenceConfidence: InferenceConfigurationManager.sharedInstance.minPosePresenceConfidence,
+        minTrackingConfidence: InferenceConfigurationManager.sharedInstance.minTrackingConfidence,
+        liveStreamDelegate: self,
+        delegate: InferenceConfigurationManager.sharedInstance.delegate)
+  }
+  
+  private func clearPoseLandmarkerServiceOnSessionInterruption() {
+    stopObserveConfigChanges()
+    poseLandmarkerService = nil
+  }
+  
+  private func startObserveConfigChanges() {
+    NotificationCenter.default
+      .addObserver(self,
+                   selector: #selector(clearAndInitializePoseLandmarkerService),
+                   name: InferenceConfigurationManager.notificationName,
+                   object: nil)
+    isObserving = true
+  }
+  
+  private func stopObserveConfigChanges() {
+    if isObserving {
+      NotificationCenter.default
+        .removeObserver(self,
+                        name:InferenceConfigurationManager.notificationName,
+                        object: nil)
+    }
+    isObserving = false
+  }
 }
 
+extension CameraViewController: CameraFeedModuleDelegate {
+  
+  func didOutput(sampleBuffer: CMSampleBuffer, orientation: UIImage.Orientation) {
+    let currentTimeMs = Date().timeIntervalSince1970 * 1000
+      // Pass the pixel buffer to mediapipe
+    backgroundQueue.async { [weak self] in
+      self?.poseLandmarkerService?.detectAsync(
+        sampleBuffer: sampleBuffer,
+        orientation: orientation,
+        timeStamps: Int(currentTimeMs))
+    }
+  }
+  
+    // MARK: Session Handling Alerts
+  func sessionWasInterrupted(canResumeManually resumeManually: Bool) {
+      // Updates the UI when session is interupted.
+    if resumeManually {
+      resumeButton.isHidden = false
+    } else {
+      cameraUnavailableLabel.isHidden = false
+    }
+    clearPoseLandmarkerServiceOnSessionInterruption()
+  }
+  
+  func sessionInterruptionEnded() {
+      // Updates UI once session interruption has ended.
+    cameraUnavailableLabel.isHidden = true
+    resumeButton.isHidden = true
+    initializePoseLandmarkerServiceOnSessionResumption()
+  }
+  
+  func didEncounterSessionRuntimeError() {
+      // Handles session run time error by updating the UI and providing a button if session can be
+      // manually resumed.
+    resumeButton.isHidden = false
+    clearPoseLandmarkerServiceOnSessionInterruption()
+  }
+}
 
-// MARK: - PoseAndHandTrackerDelegate
+  // MARK: PoseLandmarkerServiceLiveStreamDelegate
+extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
+  
+  func poseLandmarkerService(
+    _ poseLandmarkerService: PoseLandmarkerService,
+    didFinishDetection result: ResultBundle?,
+    error: Error?) {
+      DispatchQueue.main.async { [weak self] in
+        guard let weakSelf = self else { return }
+//        weakSelf.inferenceResultDeliveryDelegate?.didPerformInference(result: result)
+        guard let poseLandmarkerResult = result?.poseLandmarkerResults.first as? PoseLandmarkerResult else { return }
+        let imageSize = weakSelf.cameraFeedModule.videoResolution
+        let poseOverlays = OverlayView.poseOverlays(
+          fromMultiplePoseLandmarks: poseLandmarkerResult.landmarks,
+          inferredOnImageOfSize: imageSize,
+          ovelayViewSize: weakSelf.overlayView.bounds.size,
+          imageContentMode: weakSelf.overlayView.imageContentMode,
+          andOrientation: UIImage.Orientation.from(
+            deviceOrientation: UIDevice.current.orientation))
+        weakSelf.overlayView.draw(poseOverlays: poseOverlays,
+                                  inBoundsOfContentImageOfSize: imageSize,
+                                  imageContentMode: weakSelf.cameraFeedModule.videoGravity.contentMode)
+      }
+    }
+}
 
-//extension CameraViewController: PoseAndHandTrackerDelegate {
-//    
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputPixelBuffer pixelBuffer: CVPixelBuffer!) {
-//        // This function returns the image by mediapipe (not used, for testing only)
-//    }
-//    
-//    
-//    // MARK: - Pose Therapy Outputs
-//    
-//    // Use this normalized landmarks list for display
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputPoseLandmarks landmarks: [Landmark]!, timestamp time: CMTime) {
-//        self.detectionQueue.async {
-//            // Check if the function is already running
-//            guard !self.isDidOutputLandmarksFunctionRunning else {
-//                // Ignore the request if the function is still running
-//                return
-//            }
-//        }
-//        
-//        // Set the flag to indicate that the function is running
-//        self.isDidOutputLandmarksFunctionRunning = true
-//        
-//        if self.currentTherapyMode == .pose {
-//            if self.therapyStage == .readyToCalibrate || self.therapyStage == .duringTherapy || self.therapyStage == .pause {
-//                // Draw pose skeletonr
-//                let pose = Pose(landmarks, self.cameraSide == .front)
-//                self.displayPose = pose
-////                if let poseCheckComplete = self.poseCheckComplete {
-////                    poseCheckComplete.createPose(pose)
-////                }
-//                
-//                // Case 2: Person is detected
-//                if self.poseCheckComplete != nil {
-//                    do {
-//                        // End count down clock timer
-//                        self.endNoPersonOrHandCountDownClock()
-//                        
-//                        if self.therapyStage == .readyToCalibrate || self.therapyStage == .pause {
-//                            // Case 2a: Person is detected + Not yet calibrated
-//                            // Proceed pose skeleton data and check whether the person is inside the calibration bound
-//                            // Also start progress circle (count down for 5 seconds)
-//                            // Remark: Use displayPose because world landmarks are not normalized
-//                            if let poseCalibration = self.poseCalibration,
-//                               let displayPose = self.displayPose {
-//                                
-//                                let calibrationReminderMessage = poseCalibration.execReminderMessage(pose: displayPose)
-//                                DispatchQueue.main.async {
-//                                    self.reminderLabel.text = calibrationReminderMessage
-//                                }
-//                                if calibrationReminderMessage != nil {
-//                                    // There is error message
-//                                    // Person outside the bound, set calibration image color to red
-//                                    self.setPoseCalibrationImageView(isDetected: false)
-//                                    self.countdownProgressCircleView.hideProgressCircle()
-//                                } else {
-//                                    // Person inside the bound, set calibration image color to green
-//                                    self.setPoseCalibrationImageView(isDetected: true)
-//                                    self.countdownProgressCircleView.beginProgressCircle(duration: K.CameraView.calibrationRequiredTime) { [weak self] count in
-//                                        if count == 3 {
-//                                            self?.playSoundForProgress(progress: .three)
-//                                        } else if count == 2 {
-//                                            self?.playSoundForProgress(progress: .two)
-//                                        } else if count == 1 {
-//                                            self?.playSoundForProgress(progress: .one)
-//                                        } else if count <= 0 {
-//                                            self?.changeTherapyStage(.duringTherapy)
-//                                        }
-//                                    }
-//                                }
-//                                
-//                            } else {
-//                                // Person outside the bound, set calibration image color to red
-//                                DispatchQueue.main.async {
-//                                    self.reminderLabel.text = nil
-//                                }
-//                                self.setPoseCalibrationImageView(isDetected: false)
-//                                self.countdownProgressCircleView.hideProgressCircle()
-//                            }
-//                        } else if self.therapyStage == .duringTherapy {
-//                            // Case 2b: Person is detected + Have calibrated already
-//                            // Send the pose data for calculation
-//                            try self.checkCount(pose, nil, Date())
-//                        }
-//                    } catch {
-//                        if #available(iOS 14.0, *) {
-//                            os_log("\(error.localizedDescription)")
-//                        }
-//                    }
-//                }
-//
-//            } else {
-//                self.displayPose = nil
-//            }
-//            
-//        }
-//        
-//        // Reset the flag to indicate that the function has finished
-//        self.isDidOutputLandmarksFunctionRunning = false
-//    }
-//    
-//    // Use this world landmarks list for calculation
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputPoseWorldLandmarks worldLandmarks: [Landmark]!, timestamp time: CMTime) {
-////        if self.currentTherapyMode == .pose {
-////            // Case 2: Person is detected
-////            if let poseCheckComplete = self.poseCheckComplete {
-////                do {
-////                    poseCheckComplete.createWorldPose(worldLandmarks: worldLandmarks, isLeftRightExchange: self.cameraSide == .front)
-////                    // End count down clock timer
-////                    self.endNoPersonCountDownClock()
-////
-////                    if self.therapyStage == .readyToCalibrate || self.therapyStage == .pause {
-////                        // Case 2a: Person is detected + Not yet calibrated
-////                        // Proceed pose skeleton data and check whether the person is inside the calibration bound
-////                        // Also start progress circle (count down for 5 seconds)
-////                        // Remark: Use displayPose because world landmarks are not normalized
-////                        if let poseCalibration = self.poseCalibration,
-////                           let displayPose = self.displayPose,
-////                           poseCalibration.exec(pose: displayPose) {
-////                            // Person inside the bound, set calibration image color to green
-////                            self.setPoseCalibrationImageView(isDetected: true)
-////                            self.countdownProgressCircleView.beginProgressCircle(duration: K.CameraView.calibrationRequiredTime) { count in
-////                                if count == 3 {
-////                                    self.playSoundForProgress(progress: .three)
-////                                } else if count == 2 {
-////                                    self.playSoundForProgress(progress: .two)
-////                                } else if count == 1 {
-////                                    self.playSoundForProgress(progress: .one)
-////                                } else if count < 1 {
-////                                    self.changeTherapyStage(.duringTherapy)
-////                                }
-////                            }
-////                        } else {
-////                            // Person outside the bound, set calibration image color to red
-////                            self.setPoseCalibrationImageView(isDetected: false)
-////                            self.countdownProgressCircleView.hideProgressCircle()
-////                        }
-////                    } else if self.therapyStage == .duringTherapy {
-////                        // Case 2b: Person is detected + Have calibrated already
-////                        // Send the pose data for calculation
-////                        try self.checkCount(Date())
-////                    }
-////                } catch {
-////                    if #available(iOS 14.0, *) {
-////                        os_log("\(error.localizedDescription)")
-////                    }
-////                }
-////            }
-////        }
-//    }
-//    
-//    
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputPosePresence isPresence: Bool, timestamp time: CMTime) {
-//        if self.currentTherapyMode == .pose {
-//            // isPoseDetected changes to false only if consecutive number of same state occurs
-//            if isPresence {
-//                self.isDetected = isPresence
-//                self.isDetectedConsecutiveFrames = 0
-//            } else {
-//                self.isDetectedConsecutiveFrames += 1
-//                if self.isDetectedConsecutiveFrames > K.PoseTherapy.isPoseDetectedConsecutiveFrameThreshold {
-//                    self.isDetected = isPresence
-//                    self.isDetectedConsecutiveFrames = 0
-//                }
-//            }
-//            
-//            // Case 1: No person is detected
-//            if !self.isDetected {
-//                // Hide pose skeleton
-//                self.displayPose = nil
-//
-//                // Reset count down clock (for alert view and auto-dismiss)
-//                self.restartNoPersonCountDownClock()
-//                
-//                if self.therapyStage == .readyToCalibrate || self.therapyStage == .pause {
-//                    // Case 1a: No person is detected + Not yet calibrated
-//                    // Hide progress circle and set calibration image color to red
-//                    self.setPoseCalibrationImageView(isDetected: false)
-//                    self.countdownProgressCircleView.hideProgressCircle()
-//                } else if self.therapyStage == .duringTherapy {
-//                    // Case 1b: No person is detected + Have calibrated already
-//                    // Set the score to 0 (hide it) and clear this count data
-//                    self.clearCountData()
-//                }
-//            }
-//        }
-//    }
-//    
-//    
-//    func drawPoseImage(_ displayPose: Pose) {
-//        if let cc = self.poseCheckComplete,
-//           let overlayViewImage = self.overlayView.image {
-//            let overlayViewExtraInformation = OverlayViewExtraInformation(
-//                image: overlayViewImage,
-//                displayPose: displayPose,
-//                therapyStage: self.therapyStage,
-//                therapyCode: self.currentTherapy!.code,
-//                therapySide: self.currentTherapy!.side,
-//                gravityDegrees: self.gravityDegrees,
-//                initialAnklePoint: cc.initialAnklePoint,
-//                initialBodyMidLineEquation: cc.initialBodyMidLineEquation
-//            )
-//            self.overlayView.draw(overlayViewExtraInformation)
-//        }
-//    }
-//    
-//    
-//    // MARK: - Hand Therapy Outputs
-//    
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputHand landmarks: [Landmark]!, timestamp time: CMTime) {
-//        self.detectionQueue.async {
-//            // Check if the function is already running
-//            guard !self.isDidOutputLandmarksFunctionRunning else {
-//                // Ignore the request if the function is still running
-//                return
-//            }
-//        }
-//        
-//        // Set the flag to indicate that the function is running
-//        self.isDidOutputLandmarksFunctionRunning = true
-//        
-//        if self.currentTherapyMode == .hand {
-//            if self.therapyStage == .readyToCalibrate || self.therapyStage == .duringTherapy || self.therapyStage == .pause {
-//                // Draw pose skeletonr
-//                let hand = Hand(landmarks)
-//                self.displayHand = hand
-//                
-//                // Case 2: Hand is detected
-//                if self.handCheckComplete != nil {
-//                    do {
-//                        // End count down clock timer
-//                        self.endNoPersonOrHandCountDownClock()
-//                        
-//                        if self.therapyStage == .readyToCalibrate || self.therapyStage == .pause {
-//                            // Case 2a: Hand is detected + Not yet calibrated
-//                            // Proceed hand skeleton data and check whether the hand is inside the calibration bound
-//                            // Also start progress circle (count down for 5 seconds)
-//                            // Remark: Use displayHand because world landmarks are not normalized
-//                            if let handCalibration = self.handCalibration,
-//                               let displayHand = self.displayHand {
-//                                let calibrationReminderMessage = handCalibration.execReminderMessage(hand: displayHand, plannedTherapy: self.currentPlannedTherapy!)
-//                                DispatchQueue.main.async {
-//                                    self.reminderLabel.text = calibrationReminderMessage
-//                                }
-//                                if calibrationReminderMessage != nil {
-//                                    // There is error message
-//                                    // Hand outside the bound, set calibration image color to red
-//                                    self.setHandCalibrationImageView(isDetected: false)
-//                                    self.countdownProgressCircleView.hideProgressCircle()
-//                                } else {
-//                                    // Hand inside the bound, set calibration image color to green
-//                                    self.setHandCalibrationImageView(isDetected: true)
-//                                    self.countdownProgressCircleView.beginProgressCircle(duration: K.CameraView.calibrationRequiredTime) { [weak self] count in
-//                                        if count == 3 {
-//                                            self?.playSoundForProgress(progress: .three)
-//                                        } else if count == 2 {
-//                                            self?.playSoundForProgress(progress: .two)
-//                                        } else if count == 1 {
-//                                            self?.playSoundForProgress(progress: .one)
-//                                        } else if count <= 0 {
-//                                            self?.changeTherapyStage(.duringTherapy)
-//                                        }
-//                                    }
-//                                }
-//                                
-//                            } else {
-//                                // Hand outside the bound, set calibration image color to red
-//                                DispatchQueue.main.async {
-//                                    self.reminderLabel.text = nil
-//                                }
-//                                self.setHandCalibrationImageView(isDetected: false)
-//                                self.countdownProgressCircleView.hideProgressCircle()
-//                            }
-//                        } else if self.therapyStage == .duringTherapy {
-//                            // Case 2b: Person is detected + Have calibrated already
-//                            // Send the pose data for calculation
-//                            try self.checkCount(nil, hand, Date())
-//                        }
-//                    } catch {
-//                        if #available(iOS 14.0, *) {
-//                            os_log("\(error.localizedDescription)")
-//                        }
-//                    }
-//                }
-//
-//            } else {
-//                self.displayPose = nil
-//            }
-//            
-//        }
-//        
-//        // Reset the flag to indicate that the function has finished
-//        self.isDidOutputLandmarksFunctionRunning = false
-//    }
-//    
-//    
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputHandWorldLandmarks worldLandmarks: [Landmark]!, timestamp time: CMTime) {
-//    }
-//    
-//    
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputHandPresence isPresence: Bool, timestamp time: CMTime) {
-//        if self.currentTherapyMode == .hand {
-//            // isPoseDetected changes to false only if consecutive number of same state occurs
-//            if isPresence {
-//                self.isDetected = isPresence
-//                self.isDetectedConsecutiveFrames = 0
-//            } else {
-//                self.isDetectedConsecutiveFrames += 1
-//                if self.isDetectedConsecutiveFrames > K.PoseTherapy.isPoseDetectedConsecutiveFrameThreshold {
-//                    self.isDetected = isPresence
-//                    self.isDetectedConsecutiveFrames = 0
-//                }
-//            }
-//            
-//            // Case 1: No person is detected
-//            if !self.isDetected {
-//                // Hide pose skeleton
-//                self.displayHand = nil
-//
-//                // Reset count down clock (for alert view and auto-dismiss)
-//                self.restartNoPersonCountDownClock()
-//                
-//                if self.therapyStage == .readyToCalibrate || self.therapyStage == .pause {
-//                    // Case 1a: No person is detected + Not yet calibrated
-//                    // Hide progress circle and set calibration image color to red
-//                    self.setHandCalibrationImageView(isDetected: false)
-//                    self.countdownProgressCircleView.hideProgressCircle()
-//                } else if self.therapyStage == .duringTherapy {
-//                    // Case 1b: No person is detected + Have calibrated already
-//                    // Set the score to 0 (hide it) and clear this count data
-//                    self.clearCountData()
-//                }
-//            }
-//        }
-//    }
-//    
-//    
-//    func poseAndHandTracker(_ tracker: PoseAndHandTracker!, didOutputHandSide isLeftHandForFrontCamera: Bool, timestamp time: CMTime) {
-//        // TODO: Implement Hand Model
-//    }
-//    
-//    
-//    func drawHandImage(_ displayHand: Hand) {
-//        if let overlayViewImage = self.overlayView.image {
-//            let overlayViewExtraInformation = OverlayViewExtraInformation(
-//                image: overlayViewImage,
-//                displayHand: displayHand,
-//                therapyStage: self.therapyStage,
-//                therapyCode: self.currentTherapy!.code,
-//                therapySide: self.currentTherapy!.side,
-//                gravityDegrees: self.gravityDegrees
-//            )
-//            self.overlayView.draw(overlayViewExtraInformation)
-//        }
-//    }
-//    
-//    
-//}
+  // MARK: - AVLayerVideoGravity Extension
+extension AVLayerVideoGravity {
+  var contentMode: UIView.ContentMode {
+    switch self {
+      case .resizeAspectFill:
+        return .scaleAspectFill
+      case .resizeAspect:
+        return .scaleAspectFit
+      case .resize:
+        return .scaleToFill
+      default:
+        return .scaleAspectFill
+    }
+  }
+}
