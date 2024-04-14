@@ -11,7 +11,16 @@ namespace NativeCameraModule {
                 callback("CameraModule not found!", undefined)
                 return
             }
-            CameraModule.start(callback)
+            CameraModule.createCallbackEvent(
+                'CameraModule',
+                'CatemraLocation',
+                (error: any) => {
+                    console.log(`Error found in native callback module ${error}`);
+                },
+                (callbackId: number) => {
+                    console.log(`get sussess callback, the callback id is ${callbackId}`);
+                }
+            );
         }
         const ios = () => {
             if (CameraModule == null) {

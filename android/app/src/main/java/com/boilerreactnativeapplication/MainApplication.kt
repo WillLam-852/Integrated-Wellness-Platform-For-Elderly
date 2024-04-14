@@ -1,6 +1,7 @@
 package com.boilerreactnativeapplication
 
 import android.app.Application
+import com.boilerreactnativeapplication.reactnative.ModulePackage
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
@@ -20,6 +21,7 @@ class MainApplication : Application(), ReactApplication {
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
               // add(MyReactNativePackage())
+              add(ModulePackage())
             }
 
         override fun getJSMainModuleName(): String = "index"
