@@ -1,7 +1,7 @@
 package com.boilerreactnativeapplication.reactnative
 
 import android.view.View
-import com.boilerreactnativeapplication.reactnative.modules.CameraModule
+import com.boilerreactnativeapplication.reactnative.modules.NativeCameraModule
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
@@ -15,7 +15,7 @@ class ModulePackage : ReactPackage {
 
     override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> =
         listOf(
-            CameraModule(reactContext),
+            NativeCameraModule(reactContext),
         ).toMutableList()
 
 }

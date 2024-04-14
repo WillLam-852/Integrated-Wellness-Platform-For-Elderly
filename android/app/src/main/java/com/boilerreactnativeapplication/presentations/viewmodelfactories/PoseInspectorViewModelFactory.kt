@@ -1,0 +1,4 @@
+package com.boilerreactnativeapplication.presentations.viewmodelfactories
+
+class PoseInspectorViewModelFactory {
+}
