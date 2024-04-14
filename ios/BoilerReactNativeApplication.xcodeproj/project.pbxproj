@@ -9,9 +9,25 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BoilerReactNativeApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BoilerReactNativeApplicationTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-BoilerReactNativeApplication.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-BoilerReactNativeApplication.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
+		0D18CBED2BCAC68500717213 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBEB2BCAC68500717213 /* SceneDelegate.swift */; };
+		0D18CBEE2BCAC68500717213 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBEC2BCAC68500717213 /* AppDelegate.swift */; };
+		0D18CBFA2BCACB5B00717213 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBF92BCACB5B00717213 /* Constants.swift */; };
+		0D18CBFC2BCACBEF00717213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D18CBFB2BCACBEF00717213 /* Main.storyboard */; };
+		0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */; };
+		0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */; };
+		0D72FAAE2BCAE01000113BE2 /* pose_landmarker_full.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */; };
+		0D72FAAF2BCAE01000113BE2 /* pose_landmarker_heavy.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */; };
+		0D72FAB02BCAE01000113BE2 /* pose_landmarker_lite.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */; };
+		0D72FAB32BCAE05000113BE2 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D72FAB22BCAE05000113BE2 /* DefaultConstants.swift */; };
+		0D72FAB52BCAE0A800113BE2 /* InferenceConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D72FAB42BCAE0A800113BE2 /* InferenceConfigurationManager.swift */; };
+		0D72FAB82BCAE0E100113BE2 /* PoseLandmarkerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D72FAB72BCAE0E100113BE2 /* PoseLandmarkerService.swift */; };
+		0D72FABB2BCAE13100113BE2 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D72FABA2BCAE13100113BE2 /* OverlayView.swift */; };
+		0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC682BCAD349001651BE /* BridgingModule.m */; };
+		0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC672BCAD218001651BE /* CameraModule.swift */; };
+		0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */; };
+		0DFEAC6F2BCAD6D2001651BE /* CameraFeedModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC6E2BCAD6D2001651BE /* CameraFeedModule.swift */; };
+		0DFEAC752BCAD77B001651BE /* AVCaptureVideoOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -30,18 +46,34 @@
 		00E356EE1AD99517003FC87E /* BoilerReactNativeApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoilerReactNativeApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BoilerReactNativeApplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BoilerReactNativeApplicationTests.m; sourceTree = "<group>"; };
+		0D18CBEA2BCAC68400717213 /* BoilerReactNativeApplication-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BoilerReactNativeApplication-Bridging-Header.h"; sourceTree = "<group>"; };
+		0D18CBEB2BCAC68500717213 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		0D18CBEC2BCAC68500717213 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0D18CBF92BCACB5B00717213 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0D18CBFB2BCACBEF00717213 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactViewController.swift; sourceTree = "<group>"; };
+		0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_full.task; sourceTree = "<group>"; };
+		0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_heavy.task; sourceTree = "<group>"; };
+		0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_lite.task; sourceTree = "<group>"; };
+		0D72FAB22BCAE05000113BE2 /* DefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConstants.swift; sourceTree = "<group>"; };
+		0D72FAB42BCAE0A800113BE2 /* InferenceConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceConfigurationManager.swift; sourceTree = "<group>"; };
+		0D72FAB72BCAE0E100113BE2 /* PoseLandmarkerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseLandmarkerService.swift; sourceTree = "<group>"; };
+		0D72FABA2BCAE13100113BE2 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		0DFEAC672BCAD218001651BE /* CameraModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModule.swift; sourceTree = "<group>"; };
+		0DFEAC682BCAD349001651BE /* BridgingModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingModule.m; sourceTree = "<group>"; };
+		0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		0DFEAC6E2BCAD6D2001651BE /* CameraFeedModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeedModule.swift; sourceTree = "<group>"; };
+		0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureVideoOrientation.swift; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* BoilerReactNativeApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoilerReactNativeApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BoilerReactNativeApplication/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = BoilerReactNativeApplication/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BoilerReactNativeApplication/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BoilerReactNativeApplication/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BoilerReactNativeApplication/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-BoilerReactNativeApplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoilerReactNativeApplication.debug.xcconfig"; path = "Target Support Files/Pods-BoilerReactNativeApplication/Pods-BoilerReactNativeApplication.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-BoilerReactNativeApplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoilerReactNativeApplication.release.xcconfig"; path = "Target Support Files/Pods-BoilerReactNativeApplication/Pods-BoilerReactNativeApplication.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.debug.xcconfig"; path = "Target Support Files/Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests/Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-BoilerReactNativeApplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BoilerReactNativeApplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BoilerReactNativeApplication/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.release.xcconfig"; path = "Target Support Files/Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests/Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -83,15 +115,119 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0D18CBF02BCACACF00717213 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		0D18CBF12BCACAD600717213 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				0DFEAC702BCAD716001651BE /* CameraFeedModule */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		0D18CBF22BCACADC00717213 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */,
+				0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */,
+				0DFEAC6B2BCAD66D001651BE /* CameraViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0D18CBF32BCACAE900717213 /* BridgingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				0D18CBEA2BCAC68400717213 /* BoilerReactNativeApplication-Bridging-Header.h */,
+				0DFEAC672BCAD218001651BE /* CameraModule.swift */,
+				0DFEAC682BCAD349001651BE /* BridgingModule.m */,
+			);
+			path = BridgingFiles;
+			sourceTree = "<group>";
+		};
+		0D18CBF42BCACAF200717213 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0D18CBF52BCACAF700717213 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		0D18CBF62BCACAFC00717213 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0D18CBF82BCACB1700717213 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0D72FAB92BCAE12500113BE2 /* Subviews */,
+				0D18CBFB2BCACBEF00717213 /* Main.storyboard */,
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0D72FAB12BCAE03500113BE2 /* MediaPipe */ = {
+			isa = PBXGroup;
+			children = (
+				0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */,
+				0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */,
+				0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */,
+				0D72FAB22BCAE05000113BE2 /* DefaultConstants.swift */,
+				0D72FAB42BCAE0A800113BE2 /* InferenceConfigurationManager.swift */,
+				0D72FAB72BCAE0E100113BE2 /* PoseLandmarkerService.swift */,
+			);
+			path = MediaPipe;
+			sourceTree = "<group>";
+		};
+		0D72FAB92BCAE12500113BE2 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				0D72FABA2BCAE13100113BE2 /* OverlayView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		0DFEAC702BCAD716001651BE /* CameraFeedModule */ = {
+			isa = PBXGroup;
+			children = (
+				0DFEAC6E2BCAD6D2001651BE /* CameraFeedModule.swift */,
+			);
+			path = CameraFeedModule;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* BoilerReactNativeApplication */ = {
 			isa = PBXGroup;
 			children = (
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
+				0D72FAB12BCAE03500113BE2 /* MediaPipe */,
+				0D18CBF02BCACACF00717213 /* Storage */,
+				0D18CBF12BCACAD600717213 /* Module */,
+				0D18CBF82BCACB1700717213 /* View */,
+				0D18CBF22BCACADC00717213 /* Controller */,
+				0D18CBF32BCACAE900717213 /* BridgingFiles */,
+				0D18CBF42BCACAF200717213 /* Extensions */,
+				0D18CBF52BCACAF700717213 /* Errors */,
+				0D18CBF62BCACAFC00717213 /* Resources */,
+				0D18CBEC2BCAC68500717213 /* AppDelegate.swift */,
+				0D18CBEB2BCAC68500717213 /* SceneDelegate.swift */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				0D18CBF92BCACB5B00717213 /* Constants.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
-				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = BoilerReactNativeApplication;
 			sourceTree = "<group>";
@@ -207,7 +343,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1530;
 					};
 				};
 			};
@@ -242,8 +378,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D72FAAF2BCAE01000113BE2 /* pose_landmarker_heavy.task in Resources */,
+				0D18CBFC2BCACBEF00717213 /* Main.storyboard in Resources */,
+				0D72FAB02BCAE01000113BE2 /* pose_landmarker_lite.task in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				0D72FAAE2BCAE01000113BE2 /* pose_landmarker_full.task in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,8 +552,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				0DFEAC6F2BCAD6D2001651BE /* CameraFeedModule.swift in Sources */,
+				0D72FAB82BCAE0E100113BE2 /* PoseLandmarkerService.swift in Sources */,
+				0D18CBEE2BCAC68500717213 /* AppDelegate.swift in Sources */,
+				0D72FAB52BCAE0A800113BE2 /* InferenceConfigurationManager.swift in Sources */,
+				0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */,
+				0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */,
+				0DFEAC752BCAD77B001651BE /* AVCaptureVideoOrientation.swift in Sources */,
+				0D18CBED2BCAC68500717213 /* SceneDelegate.swift in Sources */,
+				0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */,
+				0D72FABB2BCAE13100113BE2 /* OverlayView.swift in Sources */,
+				0D72FAB32BCAE05000113BE2 /* DefaultConstants.swift in Sources */,
+				0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */,
+				0D18CBFA2BCACB5B00717213 /* Constants.swift in Sources */,
+				0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -459,6 +612,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-BoilerReactNativeApplication-BoilerReactNativeApplicationTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = BoilerReactNativeApplicationTests/Info.plist;
@@ -486,9 +640,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HH673SN3QR;
+				DEVELOPMENT_TEAM = T3N6692BLL;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BoilerReactNativeApplication/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Elderly Wellness";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -501,8 +657,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = BoilerReactNativeApplication;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "BridgingFiles/BoilerReactNativeApplication-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -514,8 +675,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HH673SN3QR;
+				DEVELOPMENT_TEAM = T3N6692BLL;
 				INFOPLIST_FILE = BoilerReactNativeApplication/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Elderly Wellness";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -528,7 +691,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = BoilerReactNativeApplication;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "BridgingFiles/BoilerReactNativeApplication-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -595,22 +762,14 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_CFLAGS = "$(inherited)  ";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
-					" ",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -674,22 +833,14 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_CFLAGS = "$(inherited)  ";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
-					" ",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
