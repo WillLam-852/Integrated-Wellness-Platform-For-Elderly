@@ -3,7 +3,7 @@ package com.boilerreactnativeapplication.reactnative.modules
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
-import com.boilerreactnativeapplication.presentations.PoseInspectorActivity
+import com.boilerreactnativeapplication.presentations.activities.PoseInspectorActivity
 import com.facebook.react.bridge.ActivityEventListener
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.BaseActivityEventListener
