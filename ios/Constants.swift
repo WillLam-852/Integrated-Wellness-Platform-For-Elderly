@@ -27,10 +27,15 @@ public enum K {
 //  public static let apiBaseUrl = "\(protocal)://\(domain)/\(mobileAPI)";
   public static let apiBaseUrl = "Pending...";
   
-  // MARK: - DispatchQueueLabel
+  // MARK: - Dispatch Queue Label
   struct DispatchQueueLabel {
-      public static let sessionQueue = "SessionQueue"
-      public static let detectionQueue = "DetectionQueue"
+      public static let backgroundQueue = "mediapipe.cameraController.backgroundQueue"
+      public static let poseLandmarkerServiceQueue = "mediapipe.cameraController.poseLandmarkerServiceQueue"
+  }
+  
+  // MARK: - Notification Name
+  struct NotificationName {
+    public static let inferenceConfigChanged = "mediapipe.inferenceConfigChanged"
   }
   
     // MARK: - ViewControllerID

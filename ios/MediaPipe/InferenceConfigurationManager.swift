@@ -14,34 +14,43 @@ import Foundation
 
 class InferenceConfigurationManager: NSObject {
   
+    // The model used for inference
   var model: Model = DefaultConstants.model {
     didSet { postConfigChangedNotification() }
   }
   
+    // The delegate for handling pose landmarker events
   var delegate: PoseLandmarkerDelegate = DefaultConstants.delegate {
     didSet { postConfigChangedNotification() }
   }
   
+    // The number of poses to be detected
   var numPoses: Int = DefaultConstants.numPoses {
     didSet { postConfigChangedNotification() }
   }
   
+    // The minimum confidence threshold for pose detection
   var minPoseDetectionConfidence: Float = DefaultConstants.minPoseDetectionConfidence {
     didSet { postConfigChangedNotification() }
   }
   
+    // The minimum confidence threshold for pose presence
   var minPosePresenceConfidence: Float = DefaultConstants.minPosePresenceConfidence {
     didSet { postConfigChangedNotification() }
   }
   
+    // The minimum confidence threshold for pose tracking
   var minTrackingConfidence: Float = DefaultConstants.minTrackingConfidence {
     didSet { postConfigChangedNotification() }
   }
   
+    // Singleton instance of InferenceConfigurationManager
   static let sharedInstance = InferenceConfigurationManager()
   
-  static let notificationName = Notification.Name.init(rawValue: "com.google.mediapipe.inferenceConfigChanged")
+    // Notification name for configuration changes
+  static let notificationName = Notification.Name.init(rawValue: K.NotificationName.inferenceConfigChanged)
   
+    // Posts a notification when the configuration changes
   private func postConfigChangedNotification() {
     NotificationCenter.default
       .post(name: InferenceConfigurationManager.notificationName, object: nil)

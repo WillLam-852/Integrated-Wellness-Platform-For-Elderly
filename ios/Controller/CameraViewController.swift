@@ -21,23 +21,36 @@ class CameraViewController: UIViewController {
 //  weak var inferenceResultDeliveryDelegate: InferenceResultDeliveryDelegate?
 //  weak var interfaceUpdatesDelegate: InterfaceUpdatesDelegate?
   
+    // Declare outlets for UI elements
   @IBOutlet weak var previewView: UIView!
   @IBOutlet weak var cameraUnavailableLabel: UILabel!
   @IBOutlet weak var resumeButton: UIButton!
   @IBOutlet weak var overlayView: OverlayView!
-  
+  @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    // Declare properties for session and observation tracking
   private var isSessionRunning = false
   private var isObserving = false
-  private let backgroundQueue = DispatchQueue(label: "com.google.mediapipe.cameraController.backgroundQueue")
+  private let backgroundQueue = DispatchQueue(label: K.DispatchQueueLabel.backgroundQueue)
+  
+  
+    // MARK: - Button Actions
+  
+  @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
+    self.dismiss(animated: true)
+  }
+
   
     // MARK: Controllers that manage functionality
     // Handles all the camera related functionality
   private lazy var cameraFeedModule = CameraFeedModule(previewView: previewView)
   
+    // Declare a queue for accessing the poseLandmarkerService property
   private let poseLandmarkerServiceQueue = DispatchQueue(
-    label: "com.google.mediapipe.cameraController.poseLandmarkerServiceQueue",
+    label: K.DispatchQueueLabel.poseLandmarkerServiceQueue,
     attributes: .concurrent)
   
+    // The poseLandmarkerService property for performing pose landmark detection
     // Queuing reads and writes to poseLandmarkerService using the Apple recommended way
     // as they can be read and written from multiple threads and can result in race conditions.
   private var _poseLandmarkerService: PoseLandmarkerService?
@@ -54,10 +67,14 @@ class CameraViewController: UIViewController {
     }
   }
   
+  
+    // MARK: - View Handling Methods
+
 #if !targetEnvironment(simulator)
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     initializePoseLandmarkerServiceOnSessionResumption()
+      // Start the camera session and handle the configuration result
     cameraFeedModule.startLiveCameraSession {[weak self] cameraConfiguration in
       DispatchQueue.main.async {
         switch cameraConfiguration {
@@ -74,6 +91,7 @@ class CameraViewController: UIViewController {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
+      // Stop the camera session
     cameraFeedModule.stopSession()
     clearPoseLandmarkerServiceOnSessionInterruption()
   }
@@ -86,16 +104,18 @@ class CameraViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+      // Update the video preview layer when the view appears
     cameraFeedModule.updateVideoPreviewLayer(toFrame: previewView.bounds)
   }
   
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
+      // Update the video preview layer when the view layout changes
     cameraFeedModule.updateVideoPreviewLayer(toFrame: previewView.bounds)
   }
 #endif
   
-    // Resume camera session when click button resume
+    // Resume camera session when the resume button is clicked
   @IBAction func onClickResume(_ sender: Any) {
     cameraFeedModule.resumeInterruptedSession {[weak self] isSessionRunning in
       if isSessionRunning {
@@ -106,6 +126,7 @@ class CameraViewController: UIViewController {
     }
   }
   
+    // Present an alert when camera permissions are denied
   private func presentCameraPermissionsDeniedAlert() {
     let alertController = UIAlertController(
       title: "Camera Permissions Denied",
@@ -124,6 +145,7 @@ class CameraViewController: UIViewController {
     present(alertController, animated: true, completion: nil)
   }
   
+    // Present an alert when video configuration fails
   private func presentVideoConfigurationErrorAlert() {
     let alert = UIAlertController(
       title: "Camera Configuration Failed",
@@ -134,13 +156,20 @@ class CameraViewController: UIViewController {
     self.present(alert, animated: true)
   }
   
+  
+    // MARK: - Pose Landmark Service
+  
   private func initializePoseLandmarkerServiceOnSessionResumption() {
     clearAndInitializePoseLandmarkerService()
     startObserveConfigChanges()
   }
+
   
   @objc private func clearAndInitializePoseLandmarkerService() {
+      // Clear the existing poseLandmarkerService
     poseLandmarkerService = nil
+    
+      // Initialize a new poseLandmarkerService with the specified configuration
     poseLandmarkerService = PoseLandmarkerService
       .liveStreamPoseLandmarkerService(
         modelPath: InferenceConfigurationManager.sharedInstance.model.modelPath,
@@ -152,12 +181,17 @@ class CameraViewController: UIViewController {
         delegate: InferenceConfigurationManager.sharedInstance.delegate)
   }
   
+  
   private func clearPoseLandmarkerServiceOnSessionInterruption() {
     stopObserveConfigChanges()
+    
+      // Clear the poseLandmarkerService
     poseLandmarkerService = nil
   }
   
+  
   private func startObserveConfigChanges() {
+      // Add observer for configuration changes
     NotificationCenter.default
       .addObserver(self,
                    selector: #selector(clearAndInitializePoseLandmarkerService),
@@ -168,17 +202,25 @@ class CameraViewController: UIViewController {
   
   private func stopObserveConfigChanges() {
     if isObserving {
+        // Remove observer for configuration changes
       NotificationCenter.default
         .removeObserver(self,
-                        name:InferenceConfigurationManager.notificationName,
+                        name: InferenceConfigurationManager.notificationName,
                         object: nil)
     }
     isObserving = false
   }
+  
 }
+
+
+// MARK: - CameraFeedModuleDelegate
 
 extension CameraViewController: CameraFeedModuleDelegate {
   
+  /** This method is called when a sample buffer is output from the camera feed.
+   *  It retrieves the current timestamp in milliseconds and asynchronously passes the sample buffer, orientation, and timestamp to the poseLandmarkerService for detection
+   */
   func didOutput(sampleBuffer: CMSampleBuffer, orientation: UIImage.Orientation) {
     let currentTimeMs = Date().timeIntervalSince1970 * 1000
       // Pass the pixel buffer to mediapipe
@@ -190,7 +232,13 @@ extension CameraViewController: CameraFeedModuleDelegate {
     }
   }
   
-    // MARK: Session Handling Alerts
+    // MARK: - Session Handling Alerts
+  
+  /** This method is called when the camera session is interrupted.
+      It updates the UI based on whether the session can be manually resumed or not.
+      If it can be resumed manually, it shows the resume button; otherwise, it shows the camera unavailable label.
+      It also calls the clearPoseLandmarkerServiceOnSessionInterruption() method to clear the poseLandmarkerService.
+   */
   func sessionWasInterrupted(canResumeManually resumeManually: Bool) {
       // Updates the UI when session is interupted.
     if resumeManually {
@@ -201,6 +249,10 @@ extension CameraViewController: CameraFeedModuleDelegate {
     clearPoseLandmarkerServiceOnSessionInterruption()
   }
   
+  /** This method is called when the session interruption has ended.
+      It updates the UI by hiding the cameraUnavailableLabel and resumeButton.
+      It then calls the initializePoseLandmarkerServiceOnSessionResumption() method to initialize the poseLandmarkerService.
+   */
   func sessionInterruptionEnded() {
       // Updates UI once session interruption has ended.
     cameraUnavailableLabel.isHidden = true
@@ -208,6 +260,9 @@ extension CameraViewController: CameraFeedModuleDelegate {
     initializePoseLandmarkerServiceOnSessionResumption()
   }
   
+  /** This method is called when a runtime error is encountered during the camera session.
+      It updates the UI by showing the resume button and calls the clearPoseLandmarkerServiceOnSessionInterruption() method to clear the poseLandmarkerService.
+   */
   func didEncounterSessionRuntimeError() {
       // Handles session run time error by updating the UI and providing a button if session can be
       // manually resumed.
@@ -219,6 +274,10 @@ extension CameraViewController: CameraFeedModuleDelegate {
   // MARK: PoseLandmarkerServiceLiveStreamDelegate
 extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
   
+  /** This method is called by the poseLandmarkerService when the pose detection is finished.
+      It updates the UI on the main queue. It extracts the poseLandmarkerResult from the result parameter and uses it to generate poseOverlays using the OverlayView.poseOverlays method.
+      Finally, it calls the overlayView.draw method to display the pose overlays on the overlayView.
+   */
   func poseLandmarkerService(
     _ poseLandmarkerService: PoseLandmarkerService,
     didFinishDetection result: ResultBundle?,
@@ -244,6 +303,10 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
 
   // MARK: - AVLayerVideoGravity Extension
 extension AVLayerVideoGravity {
+  
+  /** This extension provides a computed property contentMode for AVLayerVideoGravity.
+      It maps the different AVLayerVideoGravity options to UIView.ContentMode options for easier usage in the UI.
+   */
   var contentMode: UIView.ContentMode {
     switch self {
       case .resizeAspectFill:

@@ -42,7 +42,7 @@
         <!--Camera View Controller-->
         <scene sceneID="689-P2-UG9">
             <objects>
-                <viewController storyboardIdentifier="CameraViewControllerID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H5N-MK-V7d" customClass="CameraViewController" customModule="PoseLandmarker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraViewControllerID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H5N-MK-V7d" customClass="CameraViewController" customModule="BoilerReactNativeApplication" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N8a-kd-E3M">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -90,9 +90,16 @@
                             <constraint firstItem="Bgp-ng-8ws" firstAttribute="centerY" secondItem="N8a-kd-E3M" secondAttribute="centerY" id="vZc-lL-30Z"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="B2D-ss-4Jm"/>
+                    <navigationItem key="navigationItem" id="B2D-ss-4Jm">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="KA7-O5-NaC">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="H5N-MK-V7d" id="Pyr-1N-muB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="cameraUnavailableLabel" destination="xKQ-Gp-OGW" id="QQQ-dy-kpI"/>
+                        <outlet property="doneButton" destination="KA7-O5-NaC" id="LeV-M9-fIw"/>
                         <outlet property="overlayView" destination="3tK-Gc-Mxd" id="kgs-V8-Wir"/>
                         <outlet property="previewView" destination="KXu-g0-suQ" id="Z3f-i5-acj"/>
                         <outlet property="resumeButton" destination="Bgp-ng-8ws" id="hpi-LX-Ge0"/>
