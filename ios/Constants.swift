@@ -46,7 +46,15 @@ public enum K {
     public static let CameraViewControllerID = "CameraViewControllerID"
   }
   
-
+    // MARK: - Exercise
+  struct Exercise {
+      /// Number of frames before proceed to analyze frame to reduce memory used (i.e. save 1 frame for each 3 frames)
+    public static let frameIndexThreshold: Int = 3
+      /// Number of same state required before transition (i.e. 6 frames, around 0.3 seconds)
+    public static let countTransitionThreshold: Int = 6
+  }
+  
+    // MARK: - Localization
   struct Localization {
     public static let error = "error"
     public static let tryAgain = "tryAgain"

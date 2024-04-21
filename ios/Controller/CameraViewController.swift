@@ -18,9 +18,6 @@ class CameraViewController: UIViewController {
     static let edgeOffset: CGFloat = 2.0
   }
   
-//  weak var inferenceResultDeliveryDelegate: InferenceResultDeliveryDelegate?
-//  weak var interfaceUpdatesDelegate: InterfaceUpdatesDelegate?
-  
     // Declare outlets for UI elements
   @IBOutlet weak var previewView: UIView!
   @IBOutlet weak var cameraUnavailableLabel: UILabel!
@@ -284,9 +281,13 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
     error: Error?) {
       DispatchQueue.main.async { [weak self] in
         guard let weakSelf = self else { return }
-//        weakSelf.inferenceResultDeliveryDelegate?.didPerformInference(result: result)
         guard let poseLandmarkerResult = result?.poseLandmarkerResults.first as? PoseLandmarkerResult else { return }
         let imageSize = weakSelf.cameraFeedModule.videoResolution
+        
+        if !poseLandmarkerResult.landmarks.isEmpty {
+          let pose = Pose(poseLandmarkerResult.landmarks[0])
+        }
+        
         let poseOverlays = OverlayView.poseOverlays(
           fromMultiplePoseLandmarks: poseLandmarkerResult.landmarks,
           inferredOnImageOfSize: imageSize,

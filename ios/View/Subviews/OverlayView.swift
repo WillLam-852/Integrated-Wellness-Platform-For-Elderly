@@ -307,18 +307,26 @@ class OverlayView: UIView {
         }
         
           // Calculate dot positions based on transformed landmarks, offsets, and scale factor
-        let dots: [CGPoint] = transformedPoseLandmarks.map({CGPoint(x: CGFloat($0.x) * originalImageSize.width * offsetsAndScaleFactor.scaleFactor + offsetsAndScaleFactor.xOffset, y: CGFloat($0.y) * originalImageSize.height * offsetsAndScaleFactor.scaleFactor + offsetsAndScaleFactor.yOffset)})
+        var dots: [CGPoint] = transformedPoseLandmarks.map({CGPoint(x: CGFloat($0.x) * originalImageSize.width * offsetsAndScaleFactor.scaleFactor + offsetsAndScaleFactor.xOffset, y: CGFloat($0.y) * originalImageSize.height * offsetsAndScaleFactor.scaleFactor + offsetsAndScaleFactor.yOffset)})
+                
+          // Indices of dots to be removed (face, thumb, pinky)
+        let dotsToRemove = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 18, 21, 22]
+        for index in dotsToRemove.sorted(by: >) {
+          dots.remove(at: index)
+        }
         
-        let lines: [Line] = PoseLandmarker.poseLandmarks
-          // Iterate through pose connections
-          .map({ connection in
-              // Get start point of the line
-            let start = dots[Int(connection.start)]
-              // Get end point of the line
-            let end = dots[Int(connection.end)]
-              // Create a Line object with start and end points
-            return Line(from: start, to: end)
-          })
+        // Not show the lines in overlay view
+        let lines: [Line] = []
+//        let lines: [Line] = PoseLandmarker.poseLandmarks
+//          // Iterate through pose connections
+//          .map({ connection in
+//              // Get start point of the line
+//            let start = dots[Int(connection.start)]
+//              // Get end point of the line
+//            let end = dots[Int(connection.end)]
+//              // Create a Line object with start and end points
+//            return Line(from: start, to: end)
+//          })
         
           // Create a PoseOverlay object with dots and lines, and add it to the poseOverlays array
         poseOverlays.append(PoseOverlay(dots: dots, lines: lines))

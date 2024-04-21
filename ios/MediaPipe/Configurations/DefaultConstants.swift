@@ -14,7 +14,7 @@ struct DefaultConstants {
   
     // Default values for line width, point radius, and colors
   static let lineWidth: CGFloat = 2
-  static let pointRadius: CGFloat = 2
+  static let pointRadius: CGFloat = 10
   static let pointColor = UIColor.yellow
   static let pointFillColor = UIColor.red
   

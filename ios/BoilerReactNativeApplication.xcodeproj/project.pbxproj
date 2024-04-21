@@ -15,6 +15,23 @@
 		0D18CBFC2BCACBEF00717213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D18CBFB2BCACBEF00717213 /* Main.storyboard */; };
 		0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */; };
 		0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */; };
+		0D515AA22BD5063100643DC1 /* Pose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AA12BD5063100643DC1 /* Pose.swift */; };
+		0D515AA42BD5067F00643DC1 /* PoseKeyPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AA32BD5067F00643DC1 /* PoseKeyPoint.swift */; };
+		0D515AA62BD5069200643DC1 /* PosePartName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AA52BD5069200643DC1 /* PosePartName.swift */; };
+		0D515AA82BD50D7A00643DC1 /* Point3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AA72BD50D7A00643DC1 /* Point3D.swift */; };
+		0D515AAA2BD50DF000643DC1 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AA92BD50DF000643DC1 /* Double.swift */; };
+		0D515AAF2BD50E4E00643DC1 /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AAE2BD50E4E00643DC1 /* Axis.swift */; };
+		0D515AB12BD50E9E00643DC1 /* Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AB02BD50E9E00643DC1 /* Side.swift */; };
+		0D515AB52BD5627E00643DC1 /* AbstractExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AB42BD5627E00643DC1 /* AbstractExercise.swift */; };
+		0D515AB82BD562F700643DC1 /* ExerciseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AB72BD562F700643DC1 /* ExerciseCode.swift */; };
+		0D515ABA2BD5634400643DC1 /* Criteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AB92BD5634400643DC1 /* Criteria.swift */; };
+		0D515ABC2BD563D000643DC1 /* KeyPointAngle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515ABB2BD563D000643DC1 /* KeyPointAngle.swift */; };
+		0D515ABE2BD5645200643DC1 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515ABD2BD5645200643DC1 /* Feedback.swift */; };
+		0D515AC02BD5647700643DC1 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515ABF2BD5647700643DC1 /* Level.swift */; };
+		0D515AC22BD564DB00643DC1 /* CalculationExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AC12BD564DB00643DC1 /* CalculationExtraInformation.swift */; };
+		0D515AC42BD5651F00643DC1 /* ShownFrameInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AC32BD5651F00643DC1 /* ShownFrameInformation.swift */; };
+		0D515AC62BD56D4700643DC1 /* FrameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AC52BD56D4700643DC1 /* FrameResult.swift */; };
+		0D515ACB2BD56E4D00643DC1 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515ACA2BD56E4D00643DC1 /* Plan.swift */; };
 		0D72FAAE2BCAE01000113BE2 /* pose_landmarker_full.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */; };
 		0D72FAAF2BCAE01000113BE2 /* pose_landmarker_heavy.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */; };
 		0D72FAB02BCAE01000113BE2 /* pose_landmarker_lite.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */; };
@@ -53,6 +70,23 @@
 		0D18CBFB2BCACBEF00717213 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0D18CBFD2BCACC0A00717213 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		0D18CBFF2BCACC8F00717213 /* ReactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactViewController.swift; sourceTree = "<group>"; };
+		0D515AA12BD5063100643DC1 /* Pose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pose.swift; sourceTree = "<group>"; };
+		0D515AA32BD5067F00643DC1 /* PoseKeyPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseKeyPoint.swift; sourceTree = "<group>"; };
+		0D515AA52BD5069200643DC1 /* PosePartName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosePartName.swift; sourceTree = "<group>"; };
+		0D515AA72BD50D7A00643DC1 /* Point3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3D.swift; sourceTree = "<group>"; };
+		0D515AA92BD50DF000643DC1 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		0D515AAE2BD50E4E00643DC1 /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
+		0D515AB02BD50E9E00643DC1 /* Side.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Side.swift; sourceTree = "<group>"; };
+		0D515AB42BD5627E00643DC1 /* AbstractExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractExercise.swift; sourceTree = "<group>"; };
+		0D515AB72BD562F700643DC1 /* ExerciseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCode.swift; sourceTree = "<group>"; };
+		0D515AB92BD5634400643DC1 /* Criteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Criteria.swift; sourceTree = "<group>"; };
+		0D515ABB2BD563D000643DC1 /* KeyPointAngle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPointAngle.swift; sourceTree = "<group>"; };
+		0D515ABD2BD5645200643DC1 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		0D515ABF2BD5647700643DC1 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		0D515AC12BD564DB00643DC1 /* CalculationExtraInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationExtraInformation.swift; sourceTree = "<group>"; };
+		0D515AC32BD5651F00643DC1 /* ShownFrameInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShownFrameInformation.swift; sourceTree = "<group>"; };
+		0D515AC52BD56D4700643DC1 /* FrameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameResult.swift; sourceTree = "<group>"; };
+		0D515ACA2BD56E4D00643DC1 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_full.task; sourceTree = "<group>"; };
 		0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_heavy.task; sourceTree = "<group>"; };
 		0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_lite.task; sourceTree = "<group>"; };
@@ -125,7 +159,10 @@
 		0D18CBF12BCACAD600717213 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				0D515AAD2BD50E4000643DC1 /* AnalyzeModule */,
 				0DFEAC702BCAD716001651BE /* CameraFeedModule */,
+				0D515AC72BD56E1E00643DC1 /* PlanModule */,
+				0D515A9F2BD505FC00643DC1 /* PoseModule */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -154,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				0DFEAC742BCAD77B001651BE /* AVCaptureVideoOrientation.swift */,
+				0D515AA92BD50DF000643DC1 /* Double.swift */,
+				0D515AA72BD50D7A00643DC1 /* Point3D.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -182,15 +221,107 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		0D72FAB12BCAE03500113BE2 /* MediaPipe */ = {
+		0D515A9C2BD4FF6A00643DC1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */,
 				0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */,
 				0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0D515A9D2BD4FF7400643DC1 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
 				0D72FAB22BCAE05000113BE2 /* DefaultConstants.swift */,
 				0D72FAB42BCAE0A800113BE2 /* InferenceConfigurationManager.swift */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		0D515A9E2BD4FF8500643DC1 /* Service */ = {
+			isa = PBXGroup;
+			children = (
 				0D72FAB72BCAE0E100113BE2 /* PoseLandmarkerService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		0D515A9F2BD505FC00643DC1 /* PoseModule */ = {
+			isa = PBXGroup;
+			children = (
+				0D515AB22BD5618300643DC1 /* Exercise */,
+				0D515AA02BD5061300643DC1 /* Model */,
+			);
+			path = PoseModule;
+			sourceTree = "<group>";
+		};
+		0D515AA02BD5061300643DC1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D515AA12BD5063100643DC1 /* Pose.swift */,
+				0D515AA32BD5067F00643DC1 /* PoseKeyPoint.swift */,
+				0D515AA52BD5069200643DC1 /* PosePartName.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D515AAD2BD50E4000643DC1 /* AnalyzeModule */ = {
+			isa = PBXGroup;
+			children = (
+				0D515AAE2BD50E4E00643DC1 /* Axis.swift */,
+				0D515AC12BD564DB00643DC1 /* CalculationExtraInformation.swift */,
+				0D515AB92BD5634400643DC1 /* Criteria.swift */,
+				0D515ABD2BD5645200643DC1 /* Feedback.swift */,
+				0D515AC52BD56D4700643DC1 /* FrameResult.swift */,
+				0D515ABB2BD563D000643DC1 /* KeyPointAngle.swift */,
+				0D515ABF2BD5647700643DC1 /* Level.swift */,
+				0D515AC32BD5651F00643DC1 /* ShownFrameInformation.swift */,
+				0D515AB02BD50E9E00643DC1 /* Side.swift */,
+			);
+			path = AnalyzeModule;
+			sourceTree = "<group>";
+		};
+		0D515AB22BD5618300643DC1 /* Exercise */ = {
+			isa = PBXGroup;
+			children = (
+				0D515AB62BD562ED00643DC1 /* Model */,
+				0D515AB42BD5627E00643DC1 /* AbstractExercise.swift */,
+			);
+			path = Exercise;
+			sourceTree = "<group>";
+		};
+		0D515AB62BD562ED00643DC1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D515AB72BD562F700643DC1 /* ExerciseCode.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D515AC72BD56E1E00643DC1 /* PlanModule */ = {
+			isa = PBXGroup;
+			children = (
+				0D515AC82BD56E2D00643DC1 /* Model */,
+			);
+			path = PlanModule;
+			sourceTree = "<group>";
+		};
+		0D515AC82BD56E2D00643DC1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D515ACA2BD56E4D00643DC1 /* Plan.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D72FAB12BCAE03500113BE2 /* MediaPipe */ = {
+			isa = PBXGroup;
+			children = (
+				0D515A9C2BD4FF6A00643DC1 /* Models */,
+				0D515A9D2BD4FF7400643DC1 /* Configurations */,
+				0D515A9E2BD4FF8500643DC1 /* Service */,
 			);
 			path = MediaPipe;
 			sourceTree = "<group>";
@@ -554,18 +685,35 @@
 			files = (
 				0DFEAC6F2BCAD6D2001651BE /* CameraFeedModule.swift in Sources */,
 				0D72FAB82BCAE0E100113BE2 /* PoseLandmarkerService.swift in Sources */,
+				0D515ABE2BD5645200643DC1 /* Feedback.swift in Sources */,
+				0D515AC22BD564DB00643DC1 /* CalculationExtraInformation.swift in Sources */,
+				0D515AC02BD5647700643DC1 /* Level.swift in Sources */,
 				0D18CBEE2BCAC68500717213 /* AppDelegate.swift in Sources */,
+				0D515AA82BD50D7A00643DC1 /* Point3D.swift in Sources */,
 				0D72FAB52BCAE0A800113BE2 /* InferenceConfigurationManager.swift in Sources */,
 				0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */,
+				0D515AB82BD562F700643DC1 /* ExerciseCode.swift in Sources */,
+				0D515AC62BD56D4700643DC1 /* FrameResult.swift in Sources */,
 				0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */,
+				0D515ABC2BD563D000643DC1 /* KeyPointAngle.swift in Sources */,
 				0DFEAC752BCAD77B001651BE /* AVCaptureVideoOrientation.swift in Sources */,
+				0D515AA62BD5069200643DC1 /* PosePartName.swift in Sources */,
+				0D515AAA2BD50DF000643DC1 /* Double.swift in Sources */,
+				0D515AA42BD5067F00643DC1 /* PoseKeyPoint.swift in Sources */,
+				0D515ACB2BD56E4D00643DC1 /* Plan.swift in Sources */,
+				0D515ABA2BD5634400643DC1 /* Criteria.swift in Sources */,
+				0D515AB12BD50E9E00643DC1 /* Side.swift in Sources */,
 				0D18CBED2BCAC68500717213 /* SceneDelegate.swift in Sources */,
 				0D18CC002BCACC8F00717213 /* ReactViewController.swift in Sources */,
+				0D515AA22BD5063100643DC1 /* Pose.swift in Sources */,
+				0D515AC42BD5651F00643DC1 /* ShownFrameInformation.swift in Sources */,
 				0D72FABB2BCAE13100113BE2 /* OverlayView.swift in Sources */,
+				0D515AAF2BD50E4E00643DC1 /* Axis.swift in Sources */,
 				0D72FAB32BCAE05000113BE2 /* DefaultConstants.swift in Sources */,
 				0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */,
 				0D18CBFA2BCACB5B00717213 /* Constants.swift in Sources */,
 				0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */,
+				0D515AB52BD5627E00643DC1 /* AbstractExercise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
