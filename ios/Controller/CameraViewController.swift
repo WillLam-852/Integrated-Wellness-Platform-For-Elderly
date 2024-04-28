@@ -33,7 +33,8 @@ class CameraViewController: UIViewController {
   private let backgroundQueue = DispatchQueue(label: K.DispatchQueueLabel.backgroundQueue)
   
   private var exercises: [AbstractExercise] = [
-    Exercise1(Plan(id: 1, target: 10, disabilityFactor: 1.0))
+    Exercise1(Plan(id: 1, target: 3, disabilityFactor: 1.0)),
+    Exercise2(Plan(id: 1, target: 10, disabilityFactor: 1.0))
   ]
   private var currentExerciseIndex: Int = 0
   private var currentExercise: AbstractExercise? {
@@ -44,6 +45,8 @@ class CameraViewController: UIViewController {
       return nil
     }
   }
+  
+  private var isExerciseFirstStart: Bool = true
   
   
     // MARK: - Button Actions
@@ -231,10 +234,12 @@ class CameraViewController: UIViewController {
   
   private func changeExercise() {
     self.currentExerciseIndex += 1
-    if let currentExercise = self.currentExercise {
-      self.title = currentExercise.name
-    } else {
-      DispatchQueue.main.async { [weak self] in
+    self.isExerciseFirstStart = true
+    DispatchQueue.main.async { [weak self] in
+      if let currentExercise = self?.currentExercise {
+        self?.title = currentExercise.name
+        self?.countLabel.text = "\(currentExercise.count) / \(currentExercise.plan.target)"
+      } else {
         self?.dismiss(animated: true)
       }
     }
@@ -340,10 +345,15 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
   
   
   private func checkCount(_ pose: Pose) throws {
-    let calculationExtraInformation = CalculationExtraInformation(timeStamp: Date(), isFirstStart: true)
+    let calculationExtraInformation = CalculationExtraInformation(timeStamp: Date(), isFirstStart: self.isExerciseFirstStart)
     if let currentExercise = self.currentExercise {
       let target = currentExercise.plan.target
-      let shownFrameInformation = try currentExercise.check(pose, calculationExtraInformation)
+      
+      let shownFrameInformation = try currentExercise.check(pose, calculationExtraInformation) { [weak self] in
+        self?.isExerciseFirstStart = false
+      }
+      
+//      print(shownFrameInformation)
       
       if let shownFrameInformation = shownFrameInformation {
         self.handleScore(shownFrameInformation)

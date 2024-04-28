@@ -50,7 +50,7 @@ extension Array where Element == Feedback {
         isInverse = true
       }
     }
-    
+        
     if !isInverse {
       
         // Check for each level to see if resultValue is inside that range

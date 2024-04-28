@@ -9,10 +9,9 @@ class Exercise1: AbstractExercise {
     
   override init(_ plan: Plan) {
     super.init(plan)
-    self.code = .E1
+    self.code = .E2
     self.side = .both
-    self.name = "Exercise 1"
-    self.isCountStateStarted = true
+    self.name = "雙手畫大圈"
     self.criteriaSets = [
       [
         Criteria(

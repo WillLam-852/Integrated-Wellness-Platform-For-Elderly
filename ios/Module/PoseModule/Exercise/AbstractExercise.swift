@@ -90,12 +90,17 @@ class AbstractExercise {
 
   
     /// Method for analyzing the pose infromation (Used after calibration ONLY)
-  public func check(_ pose: Pose, _ calculationExtraInformation: CalculationExtraInformation) throws -> ShownFrameInformation? {
+  public func check(_ pose: Pose, _ calculationExtraInformation: CalculationExtraInformation, isFirstStartCallback: @escaping () -> Void) throws -> ShownFrameInformation? {
       // First start exercise (right after calibration)
     if calculationExtraInformation.isFirstStart {
-      try self.firstStartExercise(pose: pose)
+      try self.firstStartExercise(pose, isFirstStartCallback)
     }
     
+    guard !self.criteriaSets.isEmpty else {
+      print("[ERROR] criteriaSets is empty")
+      return nil
+    }
+
     let frameResult = try self.analyzeFrame(pose, calculationExtraInformation)
     
     let displayScore = !self.isCountStateStarted ? 0.0 : frameResult.score_CountingCriteria
@@ -238,8 +243,9 @@ class AbstractExercise {
   
     // MARK: - Methods to calculate initial information
   
-  func firstStartExercise(pose: Pose) throws {
+  func firstStartExercise(_ pose: Pose, _ isFirstStartCallback: @escaping () -> Void) throws {
 //    self.patientInformation = try getPatientInformation()
+    isFirstStartCallback()
   }
     
 }
