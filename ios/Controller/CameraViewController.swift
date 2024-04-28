@@ -24,11 +24,26 @@ class CameraViewController: UIViewController {
   @IBOutlet weak var resumeButton: UIButton!
   @IBOutlet weak var overlayView: OverlayView!
   @IBOutlet weak var doneButton: UIBarButtonItem!
-    
+  @IBOutlet weak var scoreProgressView: UIProgressView!
+  @IBOutlet weak var countLabel: UILabel!
+  
     // Declare properties for session and observation tracking
   private var isSessionRunning = false
   private var isObserving = false
   private let backgroundQueue = DispatchQueue(label: K.DispatchQueueLabel.backgroundQueue)
+  
+  private var exercises: [AbstractExercise] = [
+    Exercise1(Plan(id: 1, target: 10, disabilityFactor: 1.0))
+  ]
+  private var currentExerciseIndex: Int = 0
+  private var currentExercise: AbstractExercise? {
+    get {
+      if self.currentExerciseIndex < self.exercises.count {
+        return self.exercises[self.currentExerciseIndex]
+      }
+      return nil
+    }
+  }
   
   
     // MARK: - Button Actions
@@ -97,6 +112,7 @@ class CameraViewController: UIViewController {
     super.viewDidLoad()
     cameraFeedModule.delegate = self
       // Do any additional setup after loading the view.
+    self.setUILayout()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -208,6 +224,22 @@ class CameraViewController: UIViewController {
     isObserving = false
   }
   
+  private func setUILayout() {
+    self.title = self.currentExercise?.name
+    self.scoreProgressView.transform = CGAffineTransform(scaleX: 1.0, y: 4.0)
+  }
+  
+  private func changeExercise() {
+    self.currentExerciseIndex += 1
+    if let currentExercise = self.currentExercise {
+      self.title = currentExercise.name
+    } else {
+      DispatchQueue.main.async { [weak self] in
+        self?.dismiss(animated: true)
+      }
+    }
+  }
+  
 }
 
 
@@ -286,6 +318,11 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
         
         if !poseLandmarkerResult.landmarks.isEmpty {
           let pose = Pose(poseLandmarkerResult.landmarks[0])
+          do {
+            try weakSelf.checkCount(pose)
+          } catch {
+            print("checkCount error: ", error.localizedDescription)
+          }
         }
         
         let poseOverlays = OverlayView.poseOverlays(
@@ -300,6 +337,39 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
                                   imageContentMode: weakSelf.cameraFeedModule.videoGravity.contentMode)
       }
     }
+  
+  
+  private func checkCount(_ pose: Pose) throws {
+    let calculationExtraInformation = CalculationExtraInformation(timeStamp: Date(), isFirstStart: true)
+    if let currentExercise = self.currentExercise {
+      let target = currentExercise.plan.target
+      let shownFrameInformation = try currentExercise.check(pose, calculationExtraInformation)
+      
+      if let shownFrameInformation = shownFrameInformation {
+        self.handleScore(shownFrameInformation)
+        self.handleCount(shownFrameInformation, target)
+      }
+    }
+  }
+  
+  
+  private func handleScore(_ shownFrameInformation: ShownFrameInformation) {
+    DispatchQueue.main.async { [weak self] in
+      self?.scoreProgressView.progress = Float(shownFrameInformation.score) / 100.0
+    }
+  }
+  
+  
+  private func handleCount(_ shownFrameInformation: ShownFrameInformation, _ target: Int) {
+    let count = shownFrameInformation.count
+    DispatchQueue.main.async { [weak self] in
+      self?.countLabel.text = "\(count) / \(target)"
+    }
+    if count >= target {
+      self.changeExercise()
+    }
+  }
+
 }
 
   // MARK: - AVLayerVideoGravity Extension

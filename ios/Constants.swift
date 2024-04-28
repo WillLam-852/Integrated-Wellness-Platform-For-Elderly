@@ -9,7 +9,7 @@ public enum K {
   
   // MARK: - React Server IP Address
   // SAIL-Wifi
-  public static let SAILWIFI = "http://192.168.88.69:8081/index.bundle?platform=ios"
+  public static let SAILWIFI = "http://192.168.88.16:8081/index.bundle?platform=ios"
   // HKU WiFi
   public static let HKU = "http://10.69.120.111:8081/index.bundle?platform=ios"
   // Home WiFi
@@ -52,6 +52,7 @@ public enum K {
     public static let frameIndexThreshold: Int = 3
       /// Number of same state required before transition (i.e. 6 frames, around 0.3 seconds)
     public static let countTransitionThreshold: Int = 6
+    public static let ShoulderAngleMinimum = 17.0
   }
   
     // MARK: - Localization

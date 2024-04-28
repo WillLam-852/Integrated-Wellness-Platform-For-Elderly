@@ -12,6 +12,4 @@ struct CalculationExtraInformation {
   let timeStamp: Date
     /// Indication for first start of this therapy set, to record important information
   let isFirstStart: Bool
-    /// Image Size of this frame
-  let imageSize: CGSize
 }

@@ -54,11 +54,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bgp-ng-8ws" userLabel="Resume">
-                                <rect key="frame" x="158" y="408.66666666666669" width="77" height="35"/>
+                                <rect key="frame" x="154" y="408.66666666666669" width="85.333333333333314" height="35"/>
                                 <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Resum"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Resume"/>
                                 <connections>
                                     <action selector="onClickResume:" destination="H5N-MK-V7d" eventType="touchUpInside" id="MNw-Hf-dLK"/>
                                 </connections>
@@ -71,23 +71,42 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HTV-8b-uwx">
+                                <rect key="frame" x="20" y="123" width="353" height="2.6666666666666714"/>
+                                <color key="progressTintColor" systemColor="systemGreenColor"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGb-oV-cGl">
+                                <rect key="frame" x="20" y="758" width="353" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="O1e-08-K13"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k0c-2f-De2"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="GGb-oV-cGl" firstAttribute="leading" secondItem="k0c-2f-De2" secondAttribute="leading" constant="20" id="1hF-Gv-j5B"/>
                             <constraint firstItem="3tK-Gc-Mxd" firstAttribute="top" secondItem="N8a-kd-E3M" secondAttribute="top" id="2fy-mP-G71"/>
                             <constraint firstItem="xKQ-Gp-OGW" firstAttribute="leading" secondItem="k0c-2f-De2" secondAttribute="leading" constant="10" id="5tZ-Fd-w92"/>
                             <constraint firstItem="3tK-Gc-Mxd" firstAttribute="leading" secondItem="N8a-kd-E3M" secondAttribute="leading" id="6h4-hC-0E9"/>
                             <constraint firstItem="KXu-g0-suQ" firstAttribute="trailing" secondItem="N8a-kd-E3M" secondAttribute="trailing" id="7CY-pv-7PO"/>
+                            <constraint firstItem="HTV-8b-uwx" firstAttribute="top" secondItem="k0c-2f-De2" secondAttribute="top" constant="20" id="DzG-Ll-CvV"/>
                             <constraint firstItem="xKQ-Gp-OGW" firstAttribute="top" secondItem="k0c-2f-De2" secondAttribute="top" constant="20" id="J7D-uC-Zvi"/>
                             <constraint firstAttribute="bottom" secondItem="KXu-g0-suQ" secondAttribute="bottom" id="KwR-ji-UHN"/>
                             <constraint firstItem="k0c-2f-De2" firstAttribute="trailing" secondItem="xKQ-Gp-OGW" secondAttribute="trailing" constant="10" id="Noi-zo-jZZ"/>
                             <constraint firstAttribute="trailing" secondItem="3tK-Gc-Mxd" secondAttribute="trailing" id="UD5-7f-idl"/>
+                            <constraint firstItem="k0c-2f-De2" firstAttribute="trailing" secondItem="HTV-8b-uwx" secondAttribute="trailing" constant="20" id="YDi-qz-5NW"/>
                             <constraint firstItem="Bgp-ng-8ws" firstAttribute="centerX" secondItem="N8a-kd-E3M" secondAttribute="centerX" id="b1p-lU-Qaf"/>
+                            <constraint firstItem="HTV-8b-uwx" firstAttribute="leading" secondItem="k0c-2f-De2" secondAttribute="leading" constant="20" id="btx-GB-lq7"/>
                             <constraint firstAttribute="bottom" secondItem="3tK-Gc-Mxd" secondAttribute="bottom" id="hXf-5t-o4d"/>
                             <constraint firstItem="KXu-g0-suQ" firstAttribute="top" secondItem="N8a-kd-E3M" secondAttribute="top" id="loH-TT-L4b"/>
+                            <constraint firstItem="k0c-2f-De2" firstAttribute="bottom" secondItem="GGb-oV-cGl" secondAttribute="bottom" constant="10" id="mdh-y7-5a8"/>
                             <constraint firstItem="KXu-g0-suQ" firstAttribute="leading" secondItem="N8a-kd-E3M" secondAttribute="leading" id="r2L-0V-hKS"/>
                             <constraint firstItem="Bgp-ng-8ws" firstAttribute="centerY" secondItem="N8a-kd-E3M" secondAttribute="centerY" id="vZc-lL-30Z"/>
+                            <constraint firstItem="k0c-2f-De2" firstAttribute="trailing" secondItem="GGb-oV-cGl" secondAttribute="trailing" constant="20" id="wdz-Df-yGr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="B2D-ss-4Jm">
@@ -99,10 +118,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cameraUnavailableLabel" destination="xKQ-Gp-OGW" id="QQQ-dy-kpI"/>
+                        <outlet property="countLabel" destination="GGb-oV-cGl" id="m0Y-Pg-day"/>
                         <outlet property="doneButton" destination="KA7-O5-NaC" id="LeV-M9-fIw"/>
                         <outlet property="overlayView" destination="3tK-Gc-Mxd" id="kgs-V8-Wir"/>
                         <outlet property="previewView" destination="KXu-g0-suQ" id="Z3f-i5-acj"/>
                         <outlet property="resumeButton" destination="Bgp-ng-8ws" id="hpi-LX-Ge0"/>
+                        <outlet property="scoreProgressView" destination="HTV-8b-uwx" id="O3e-Rj-3ce"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P8h-a1-FYC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -117,6 +138,25 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pp8-Cf-1FH">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -131,6 +171,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

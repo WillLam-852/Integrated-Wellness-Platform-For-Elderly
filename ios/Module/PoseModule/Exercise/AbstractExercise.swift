@@ -93,7 +93,7 @@ class AbstractExercise {
   public func check(_ pose: Pose, _ calculationExtraInformation: CalculationExtraInformation) throws -> ShownFrameInformation? {
       // First start exercise (right after calibration)
     if calculationExtraInformation.isFirstStart {
-      try self.firstStartExercise(pose: pose, imageSize: calculationExtraInformation.imageSize)
+      try self.firstStartExercise(pose: pose)
     }
     
     let frameResult = try self.analyzeFrame(pose, calculationExtraInformation)
@@ -238,7 +238,7 @@ class AbstractExercise {
   
     // MARK: - Methods to calculate initial information
   
-  func firstStartExercise(pose: Pose, imageSize: CGSize) throws {
+  func firstStartExercise(pose: Pose) throws {
 //    self.patientInformation = try getPatientInformation()
   }
     
