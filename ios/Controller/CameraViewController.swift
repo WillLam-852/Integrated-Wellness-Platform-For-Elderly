@@ -33,8 +33,9 @@ class CameraViewController: UIViewController {
   private let backgroundQueue = DispatchQueue(label: K.DispatchQueueLabel.backgroundQueue)
   
   private var exercises: [AbstractExercise] = [
-    Exercise1(Plan(id: 1, target: 3, disabilityFactor: 1.0)),
-    Exercise2(Plan(id: 1, target: 10, disabilityFactor: 1.0))
+    Exercise1(Plan(id: 1, target: 10, disabilityFactor: 1.0)),
+    Exercise2(Plan(id: 1, target: 10, disabilityFactor: 1.0)),
+    Exercise3(Plan(id: 1, target: 10, disabilityFactor: 1.0))
   ]
   private var currentExerciseIndex: Int = 0
   private var currentExercise: AbstractExercise? {

@@ -44,13 +44,6 @@ class Exercise2: AbstractExercise {
   }
   
   
-  override func calculateScore(_ resultValue: Double, _ criteria: Criteria, _ disabilityFactor: Double?) -> Double {
-    var score: Double
-    score = criteria.feedbacks.calculateScore(resultValue, disabilityFactor)
-    return score
-  }
-
-  
   private func calculateShoulderDistance(_ pose: Pose) -> Double {
     let leftShoulderPoint = pose.getKeyPoint(PoseKeyPoint(.shoulder, .left)).point!
     let rightShoulderPoint = pose.getKeyPoint(PoseKeyPoint(.shoulder, .right)).point!

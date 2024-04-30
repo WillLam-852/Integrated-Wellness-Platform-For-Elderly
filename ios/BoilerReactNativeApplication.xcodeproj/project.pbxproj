@@ -33,6 +33,7 @@
 		0D515AC62BD56D4700643DC1 /* FrameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515AC52BD56D4700643DC1 /* FrameResult.swift */; };
 		0D515ACB2BD56E4D00643DC1 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515ACA2BD56E4D00643DC1 /* Plan.swift */; };
 		0D6836E62BDE9D7A004C0E27 /* Exercise2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6836E52BDE9D7A004C0E27 /* Exercise2.swift */; };
+		0D6836E82BDF8D05004C0E27 /* Exercise3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6836E72BDF8D05004C0E27 /* Exercise3.swift */; };
 		0D72FAAE2BCAE01000113BE2 /* pose_landmarker_full.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */; };
 		0D72FAAF2BCAE01000113BE2 /* pose_landmarker_heavy.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */; };
 		0D72FAB02BCAE01000113BE2 /* pose_landmarker_lite.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */; };
@@ -90,6 +91,7 @@
 		0D515AC52BD56D4700643DC1 /* FrameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameResult.swift; sourceTree = "<group>"; };
 		0D515ACA2BD56E4D00643DC1 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		0D6836E52BDE9D7A004C0E27 /* Exercise2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise2.swift; sourceTree = "<group>"; };
+		0D6836E72BDF8D05004C0E27 /* Exercise3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise3.swift; sourceTree = "<group>"; };
 		0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_full.task; sourceTree = "<group>"; };
 		0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_heavy.task; sourceTree = "<group>"; };
 		0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */ = {isa = PBXFileReference; lastKnownFileType = file; path = pose_landmarker_lite.task; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				0D515AB42BD5627E00643DC1 /* AbstractExercise.swift */,
 				0DBFCD5C2BD8FA9B00E9DED9 /* Exercise1.swift */,
 				0D6836E52BDE9D7A004C0E27 /* Exercise2.swift */,
+				0D6836E72BDF8D05004C0E27 /* Exercise3.swift */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 				0D6836E62BDE9D7A004C0E27 /* Exercise2.swift in Sources */,
 				0D515AAF2BD50E4E00643DC1 /* Axis.swift in Sources */,
 				0D72FAB32BCAE05000113BE2 /* DefaultConstants.swift in Sources */,
+				0D6836E82BDF8D05004C0E27 /* Exercise3.swift in Sources */,
 				0DFEAC6C2BCAD66D001651BE /* CameraViewController.swift in Sources */,
 				0D18CBFA2BCACB5B00717213 /* Constants.swift in Sources */,
 				0D18CBFE2BCACC0A00717213 /* LaunchViewController.swift in Sources */,

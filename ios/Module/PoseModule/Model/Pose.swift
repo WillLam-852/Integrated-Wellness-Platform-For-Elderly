@@ -13,8 +13,23 @@ struct Pose {
   
   init(_ landmarks: [NormalizedLandmark]) {
     self.keyPoints = []
-    for i in 0..<landmarks.count {
-      if let newKeyPoint = PoseKeyPoint(keyPointNumber: i, landmark: landmarks[i]) {
+    var newLandmarks = landmarks
+    newLandmarks[0] = landmarks[0]
+    newLandmarks[1] = landmarks[4]
+    newLandmarks[2] = landmarks[5]
+    newLandmarks[3] = landmarks[6]
+    newLandmarks[4] = landmarks[1]
+    newLandmarks[5] = landmarks[2]
+    newLandmarks[6] = landmarks[3]
+    for i in 7..<landmarks.count {
+      if i % 2 == 1 {
+        newLandmarks[i] = landmarks[i+1]
+      } else {
+        newLandmarks[i] = landmarks[i-1]
+      }
+    }
+    for i in 0..<newLandmarks.count {
+      if let newKeyPoint = PoseKeyPoint(keyPointNumber: i, landmark: newLandmarks[i]) {
         self.keyPoints.append(newKeyPoint)
       }
     }

@@ -9,7 +9,7 @@ public enum K {
   
   // MARK: - React Server IP Address
   // SAIL-Wifi
-  public static let SAILWIFI = "http://192.168.88.16:8081/index.bundle?platform=ios"
+  public static let SAILWIFI = "http://192.168.88.27:8081/index.bundle?platform=ios"
   // HKU WiFi
   public static let HKU = "http://10.69.120.111:8081/index.bundle?platform=ios"
   // Home WiFi

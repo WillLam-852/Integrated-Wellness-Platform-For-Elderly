@@ -103,7 +103,7 @@ class AbstractExercise {
 
     let frameResult = try self.analyzeFrame(pose, calculationExtraInformation)
     
-    let displayScore = !self.isCountStateStarted ? 0.0 : frameResult.score_CountingCriteria
+    let displayScore = !self.isCountStateStarted ? 0.0 : frameResult.weightedScore
     
     if frameResult.level_CountingCriteria > self.highestLevelForThisCount {
       self.highestLevelForThisCount = frameResult.level_CountingCriteria
@@ -147,7 +147,7 @@ class AbstractExercise {
     var weights: Double = 0.0
     let extraInformation: [String: Double] = [:]
     
-    for criteria in self.criteriaSets[self.progress] {
+    for (index, criteria) in self.criteriaSets[self.progress].enumerated() {
       let resultValue = try self.calculateResultValue(pose: pose, criteria: criteria, calculationExtraInformation: calculationExtraInformation)
       let score = self.calculateScore(resultValue, criteria, self.plan.disabilityFactor)
       let level = criteria.feedbacks.calculateLevel(score)
@@ -158,8 +158,16 @@ class AbstractExercise {
         score_CountingCriteria = score
         level_CountingCriteria = level
       }
+      
+      print("----- Criteria \(index) -----")
+      print("resultValue:", resultValue)
+      print("score:", score)
     }
     weightedScore = weightedScore / weights
+    print("-----------------")
+    print("weightedScore:", weightedScore)
+    print("progress:", self.progress)
+    print()
     
     let frameResult = FrameResult(
       timeStamp: calculationExtraInformation.timeStamp,
@@ -204,27 +212,43 @@ class AbstractExercise {
       switch currentCountState {
         case false:
           if frameResult.score_CountingCriteria > self.scoreThreshold_CountingCriteria {
+              // When current frame meets the threshold score of current progress's criteria
             if self.countTransition < self.countTransitionThreshold {
+                // When countTransition is smaller than threshold, increase countTransition by 1
               self.countTransition += 1
               return false
             } else {
-              self.countStartTime = frameResult.timeStamp
               self.countTransition = 0
+                // When countTransition meets threshold, increase the progress by 1 (change to next criteria set) and set countTransition to 0
+              self.incrementProgress()
+              if self.progress == 0 {
+                  // Record the countStartTime only when progress is 0 (first criteria set)
+                self.countStartTime = frameResult.timeStamp
+              } else if self.progress >= self.criteriaSets.count {
+                  // When progress number meets the number of criterias, set progress to 0 and currentCountState to true
+                self.progress = 0
+                return true
+              }
               return true
             }
           } else {
+              // When current frame does not meet the 95% score of current progress's criteria, set countTransition back to 0
             self.countTransition = 0
             return false
           }
         case true:
           if frameResult.score_CountingCriteria > self.scoreThreshold_CountingCriteria {
+              // When current frame does not meet the threshold score, set countTransition back to 0
             self.countTransition = 0
             return true
           } else {
+              // When current frame meets the threshold score
             if self.countTransition < self.countTransitionThreshold {
+                // When countTransition is smaller than threshold, increase countTransition by 1
               self.countTransition += 1
               return true
             } else {
+                // When countTransition meets threshold, increase the count by 1 (change to next count) and set progress and countTransition to 0. Set currentCountState to false
               self.incrementCount()
               self.countTransition = 0
               return false
@@ -233,6 +257,12 @@ class AbstractExercise {
       }
     }
   }
+  
+  
+  func incrementProgress() {
+    self.progress += 1
+  }
+
   
   func incrementCount() {
     self.count += 1
