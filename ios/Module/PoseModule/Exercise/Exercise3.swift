@@ -11,7 +11,7 @@ class Exercise3: AbstractExercise {
     super.init(plan)
     self.code = .E3
     self.side = .both
-    self.name = "原地踏步 + 雙手向上搖擺"
+    self.name = "雙手向上搖擺"
     self.criteriaSets = [
       [
         Criteria(

@@ -158,16 +158,8 @@ class AbstractExercise {
         score_CountingCriteria = score
         level_CountingCriteria = level
       }
-      
-      print("----- Criteria \(index) -----")
-      print("resultValue:", resultValue)
-      print("score:", score)
     }
     weightedScore = weightedScore / weights
-    print("-----------------")
-    print("weightedScore:", weightedScore)
-    print("progress:", self.progress)
-    print()
     
     let frameResult = FrameResult(
       timeStamp: calculationExtraInformation.timeStamp,

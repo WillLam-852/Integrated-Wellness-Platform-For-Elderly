@@ -6,6 +6,7 @@ import { Brand } from "@/components/molecules"
 import { Button } from "react-native-paper"
 import ColorsWatchImage from "@/theme/assets/images/colorswatch.png"
 import { ImageVariant } from "@/components/atoms"
+import { MainStackScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
 import SendImage from "@/theme/assets/images/send.png"
 import TranslateImage from "@/theme/assets/images/translate.png"
@@ -17,8 +18,8 @@ import { useTheme } from "@/theme"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
 
-function Example() {
-    const { t } = useTranslation(["example", "welcome"])
+function ExerciseScreen() {
+    const { t } = useTranslation(["exercise", "welcome"])
 
     const { colors, variant, changeTheme, layout, gutters, fonts, components, backgrounds } = useTheme()
     const { startCameraPressed } = useViewModel()
@@ -26,7 +27,7 @@ function Example() {
     const [currentId, setCurrentId] = useState(-1)
 
     const { isSuccess, data, isFetching } = useQuery({
-        queryKey: ["example", currentId],
+        queryKey: ["exercise", currentId],
         queryFn: () => {
             return fetchOne(currentId)
         },
@@ -35,7 +36,7 @@ function Example() {
 
     useEffect(() => {
         if (isSuccess) {
-            Alert.alert(t("example:welcome", data.name))
+            Alert.alert(t("exercise:welcome", data.name))
         }
     }, [isSuccess, data])
 
@@ -90,4 +91,4 @@ function Example() {
     )
 }
 
-export default Example
+export default ExerciseScreen
