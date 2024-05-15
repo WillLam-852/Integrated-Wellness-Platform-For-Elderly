@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.boilerreactnativeapplication.R
 import com.boilerreactnativeapplication.data.person.Position
+import com.boilerreactnativeapplication.data.plan.ExercisePlan
 import com.boilerreactnativeapplication.databinding.ActivityPoseInspectorBinding
 import com.boilerreactnativeapplication.presentations.viewmodelfactories.PoseInspectorViewModelFactory
 import com.boilerreactnativeapplication.presentations.viewmodels.PoseInspectorViewModel
@@ -70,8 +71,8 @@ class PoseInspectorActivity : AppCompatActivity() {
 
     private fun initActivityBindingAndVM() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pose_inspector)
-        viewModelFactory = PoseInspectorViewModelFactory(application)
-        viewModel = ViewModelProvider(this).get(PoseInspectorViewModel::class.java)
+        viewModelFactory = PoseInspectorViewModelFactory(application, listOf<ExercisePlan>())
+        viewModel = ViewModelProvider(this, viewModelFactory!!).get(PoseInspectorViewModel::class.java)
         binding!!.lifecycleOwner = this
     }
 
@@ -83,7 +84,7 @@ class PoseInspectorActivity : AppCompatActivity() {
 
     private fun initObserveFunction() {
         viewModel?.let { viewModel ->
-            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
+//            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
         }?:Log.e(LOG_TAG, "View Model has no been initialized.")
     }
 
@@ -156,6 +157,7 @@ class PoseInspectorActivity : AppCompatActivity() {
             outputVideoStream
         )
 
+        // Is skeleton detected by camera.
         processor!!.addPacketCallback(
             OUTPUT_LANDMARK_STREAM_NAME
         ) { packet: Packet ->
@@ -169,6 +171,7 @@ class PoseInspectorActivity : AppCompatActivity() {
             }
         }
 
+        // Is person present at camera.
         processor!!.addPacketCallback(
             OUTPUT_POSE_PRESENCE_STREAM_NAME
         ) { packet: Packet ->
