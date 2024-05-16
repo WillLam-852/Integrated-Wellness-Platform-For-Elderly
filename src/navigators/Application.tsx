@@ -1,25 +1,22 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { MainRoute } from "./ScreenRoute"
+import type { MainStackParamList } from "@/navigators/navigation"
+import { NavigationContainer } from "@react-navigation/native"
+import TabScreen from "./TabScreen"
+import { createStackNavigator } from "@react-navigation/stack"
+import { useTheme } from "@/theme"
 
-import { Example, Startup, BotAdvisor } from '@/screens';
-import { useTheme } from '@/theme';
-
-import type { ApplicationStackParamList } from '@/types/navigation';
-
-const Stack = createStackNavigator<ApplicationStackParamList>();
+const Stack = createStackNavigator<MainStackParamList>()
 
 function ApplicationNavigator() {
-	const { variant, navigationTheme } = useTheme();
+    const { variant, navigationTheme } = useTheme()
 
-	return (
-		<NavigationContainer theme={navigationTheme}>
-			<Stack.Navigator key={variant} screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="Startup" component={Startup} />
-				<Stack.Screen name="Example" component={Example} />
-				<Stack.Screen name="BotAdvisor" component={BotAdvisor} />
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
+    return (
+        <NavigationContainer theme={navigationTheme}>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name={MainRoute.TabScreen} component={TabScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
 }
 
-export default ApplicationNavigator;
+export default ApplicationNavigator
