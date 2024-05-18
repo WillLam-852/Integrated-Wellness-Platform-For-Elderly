@@ -2,9 +2,14 @@ package com.boilerreactnativeapplication.utils
 
 import com.boilerreactnativeapplication.data.person.BodyPart
 import com.boilerreactnativeapplication.data.person.*
+import com.boilerreactnativeapplication.data.plan.ExercisePlan
 import com.google.mediapipe.formats.proto.LandmarkProto
 
 object DataConverter {
+
+    fun convertRawReactDataToExercisePlan(): ExercisePlan? {
+        return null
+    }
 
     fun convertLandmarkToPerson(landmarkList: List<LandmarkProto.NormalizedLandmark>): Person {
         val person = Person()

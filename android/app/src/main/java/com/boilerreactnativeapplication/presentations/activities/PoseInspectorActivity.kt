@@ -69,6 +69,11 @@ class PoseInspectorActivity : AppCompatActivity() {
 //------------------------------------- Initialization ---------------------------------------------
 
 
+    //TODO: get the plan list from the intent ( Should do data process when get React Native Data )
+    private fun getExercisePlanFromIntent(): List<ExercisePlan> {
+        return listOf();
+    }
+
     private fun initActivityBindingAndVM() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pose_inspector)
         viewModelFactory = PoseInspectorViewModelFactory(application, listOf<ExercisePlan>())
@@ -83,9 +88,11 @@ class PoseInspectorActivity : AppCompatActivity() {
     }
 
     private fun initObserveFunction() {
-        viewModel?.let { viewModel ->
+        binding?.let { binding ->
+            viewModel?.let { viewModel ->
 //            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
-        }?:Log.e(LOG_TAG, "View Model has no been initialized.")
+            }?:Log.e(LOG_TAG, "View Model has no been initialized.")
+        } ?: Log.e(LOG_TAG, "Binding has ne been initialized.")
     }
 
 //------------------------------------- Lifecycle Functions ----------------------------------------

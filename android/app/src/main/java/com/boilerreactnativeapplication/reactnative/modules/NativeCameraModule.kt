@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.boilerreactnativeapplication.presentations.activities.PoseInspectorActivity
+import com.boilerreactnativeapplication.presentations.activities.SimulateInspectorActivity
 import com.facebook.react.bridge.ActivityEventListener
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.BaseActivityEventListener
@@ -22,6 +23,7 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
         const val MODULE_NAME: String = "CameraModule"
 
         const val REQUEST_CODE_POSE_INSPECTOR_ACTIVITY: Int  = 1;
+        const val REQUEST_CODE_SIMULATE_INSPECTOR_ACTIVITY: Int = 2;
 
         private const val ERROR_CALLBACK_FAIL = "Call back error"
         private const val ERROR_CURRENT_ACTIVITY_NOT_FOUND = "Current activity not found"
@@ -52,7 +54,23 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
                 resultCode: Int,
                 data: Intent?
             ) {
-                if (requestCode == REQUEST_CODE_POSE_INSPECTOR_ACTIVITY && resultCode == Activity.RESULT_OK) {
+//                if (requestCode == REQUEST_CODE_POSE_INSPECTOR_ACTIVITY && resultCode == Activity.RESULT_OK) {
+//                    // Callback: Success.
+//                    try {
+//                        val result: WritableMap = Arguments.createMap()
+//                        result.putInt("code", 16)
+//                        result.putString("action", "finish")
+//                        result.putString("activityName", "basic one")
+//                        val count: Int? = data?.getStringExtra("count")?.toInt()
+//                        successCallback.invoke(result)
+//                    } catch (e: IllegalViewOperationException) {
+//                        failureCallback.invoke(e.message)
+//                    }
+//                } else {
+//                    // Callback: Error.
+//                    failureCallback.invoke(ERROR_CALLBACK_FAIL)
+//                }
+                if (requestCode == REQUEST_CODE_SIMULATE_INSPECTOR_ACTIVITY && resultCode == Activity.RESULT_OK) {
                     // Callback: Success.
                     try {
                         val result: WritableMap = Arguments.createMap()
@@ -77,7 +95,9 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
 //------------------------------------- React Native Bridge Functions ------------------------------
 
 
-
+    /**
+     * Function trigger by react native side.
+     * */
     @ReactMethod
     fun start(
         name: String,
@@ -97,8 +117,15 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
         }
 
         try {
-            val intent = Intent(currentActivity, PoseInspectorActivity::class.java)
-            currentActivity?.startActivityForResult(intent, REQUEST_CODE_POSE_INSPECTOR_ACTIVITY)
+
+            // Navigate to Post Inspector Activity.
+//            val intent = Intent(currentActivity, PoseInspectorActivity::class.java)
+//            currentActivity?.startActivityForResult(intent, REQUEST_CODE_POSE_INSPECTOR_ACTIVITY)
+
+            // Navigate to Simulate Inspector Activity.
+            val intent = Intent(currentActivity, SimulateInspectorActivity::class.java)
+            currentActivity?.startActivityForResult(intent, REQUEST_CODE_SIMULATE_INSPECTOR_ACTIVITY)
+
         } catch (exception: Exception) {
             Log.e(LOG_TAG, exception.message!!)
             this.failureCallback.invoke(ERROR_START_POSE_INSPECTOR_FAIL)

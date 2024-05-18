@@ -4,6 +4,7 @@ import java.io.Serializable
 
 data class ExercisePlan (
     val id: Int,
-    val exercise: String,
+    val name: String,
+    val side: ExerciseSide,
     val targetAmount: Int,
 ): Serializable

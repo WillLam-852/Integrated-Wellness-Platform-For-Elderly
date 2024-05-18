@@ -1,5 +1,6 @@
 package com.boilerreactnativeapplication.usecases.exercisecenter
 
+import android.util.Log
 import com.boilerreactnativeapplication.data.person.Person
 import com.boilerreactnativeapplication.data.plan.ExercisePlan
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
@@ -24,6 +25,26 @@ class ExerciseCenter(private val planList: List<ExercisePlan>) : ExerciseCenterS
 
 
     fun updatePerson(person: Person) {
+        updateProgressByPlan()
+    }
+
+    private fun updateIncreasedProgress() {
+
+    }
+
+    private fun updateDecreasedProgress() {
+
+    }
+
+    private fun updateProgress(isMatchTargets: Boolean) {
+        if(isMatchTargets) {
+            updateIncreasedProgress()
+        } else  {
+            updateDecreasedProgress()
+        }
+    }
+
+    private fun updateProgressByPlan() {
 
     }
 
