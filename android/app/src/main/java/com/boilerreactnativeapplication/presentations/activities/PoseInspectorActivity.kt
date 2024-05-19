@@ -16,11 +16,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.boilerreactnativeapplication.R
 import com.boilerreactnativeapplication.data.person.Position
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE1
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.databinding.ActivityPoseInspectorBinding
 import com.boilerreactnativeapplication.presentations.viewmodelfactories.PoseInspectorViewModelFactory
 import com.boilerreactnativeapplication.presentations.viewmodels.PoseInspectorViewModel
+import com.boilerreactnativeapplication.reactnative.modules.NativeCameraModule
 import com.boilerreactnativeapplication.utils.*
 import com.google.mediapipe.components.CameraHelper
 import com.google.mediapipe.components.CameraXPreviewHelper
@@ -72,12 +74,13 @@ class PoseInspectorActivity : AppCompatActivity() {
 
 
     private fun getExercisePlanFromIntent(): ExercisePlans? {
-        var plans: ExercisePlans? = null
-        plans = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("plans", ExercisePlans::class.java)
-        } else {
-            intent.getSerializableExtra("plans") as ExercisePlans
-        }
+//        var plans: ExercisePlans? = null
+//        plans = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            intent.getSerializableExtra("plans", ExercisePlans::class.java)
+//        } else {
+//            intent.getSerializableExtra("plans") as ExercisePlans
+//        }
+        var plans: ExercisePlans? = ExercisePlans(listOf<AbstractExercisePlan>(ExercisePlanE1()))
         return plans;
     }
 
@@ -97,6 +100,9 @@ class PoseInspectorActivity : AppCompatActivity() {
     private fun initObserveFunction() {
         binding?.let { binding ->
             viewModel?.let { viewModel ->
+                viewModel.plan.observe(this) { binding.execerciseNameTv.text = it.name }
+                viewModel.count.observe(this) { binding.countTv.text = it.toString() }
+                viewModel.progress.observe(this) { binding.progressTv.text = it.toString() }
 //            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
             }?:Log.e(LOG_TAG, "View Model has no been initialized.")
         } ?: Log.e(LOG_TAG, "Binding has ne been initialized.")
@@ -328,10 +334,6 @@ class PoseInspectorActivity : AppCompatActivity() {
 
 //------------------------------------- Observe Update Functions -----------------------------------
 
-
-    private fun updateHeadCoordinate(position: Position) {
-        binding!!.headCooridinateTv.text = getString(R.string.head_coordinate_info, position.x, position.y)
-    }
 
 
 }

@@ -1,9 +1,12 @@
 package com.boilerreactnativeapplication.utils
 
+import android.util.Log
 import com.boilerreactnativeapplication.data.person.BodyPart
 import com.boilerreactnativeapplication.data.person.*
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.google.mediapipe.formats.proto.LandmarkProto
+import kotlin.math.sqrt
+import kotlin.math.acos
 
 object DataConverter {
 
@@ -21,6 +24,33 @@ object DataConverter {
             person.keyPoints[it.indexInPerson] = keyPoint
         }
         return person
+    }
+
+    fun convertPointsToAngle(firstSidePoint: KeyPoint, centerPoint: KeyPoint, secondSidePoint: KeyPoint): Double {
+        Log.i("DataConverter", firstSidePoint.toString())
+        Log.i("DataConverter", centerPoint.toString())
+        Log.i("DataConverter", secondSidePoint.toString())
+
+        val distanceXFirstSidePointToCenter = firstSidePoint.position.x - centerPoint.position.x
+        val distanceYFirstSidePointToCenter = firstSidePoint.position.y - centerPoint.position.y
+        val distanceXSecondSidePointToCenter = secondSidePoint.position.x - centerPoint.position.x
+        val distanceYSecondSidePointToCenter = secondSidePoint.position.y - centerPoint.position.y
+
+        // Calculate dot product of BA and BC
+        val dotProduct = distanceXFirstSidePointToCenter * distanceXSecondSidePointToCenter + distanceYFirstSidePointToCenter * distanceYSecondSidePointToCenter
+
+        // Calculate magnitudes of BA and BC
+        val magnitudeBA = sqrt(distanceXFirstSidePointToCenter * distanceXFirstSidePointToCenter + distanceYFirstSidePointToCenter * distanceYFirstSidePointToCenter)
+        val magnitudeBC = sqrt(distanceXSecondSidePointToCenter * distanceXSecondSidePointToCenter + distanceYSecondSidePointToCenter * distanceYSecondSidePointToCenter)
+
+        // Calculate the cosine of the angle
+        val cosTheta = dotProduct / (magnitudeBA * magnitudeBC)
+
+        // Calculate the angle in radians
+        val angleInRadians = acos(cosTheta)
+
+        // Convert the angle to degrees
+        return Math.toDegrees(angleInRadians.toDouble())
     }
 
 }

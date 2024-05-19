@@ -77,7 +77,6 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
     }
 
     private fun initPlanInfo() {
-        Log.i(LOG_TAG, "initPlanInfo run.")
         exerciseCenter.initPlan()
     }
 
@@ -95,6 +94,7 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
 
 
     fun updatePerson(person: Person) {
+        Log.i(LOG_TAG, person.toString())
         exerciseCenter.updatePerson(person)
     }
 

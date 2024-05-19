@@ -41,7 +41,11 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
 
 
     fun updatePerson(person: Person) {
-        updateProgressByPlan()
+        plans?.let {
+            val listOfAngle: List<Double> = it.list[currentPlanIndex].check(person)
+            progress = listOfAngle[0].toInt()
+            progressChanged()
+        }?: Log.e(LOG_TAG, "Plans is not initialized")
     }
 
     private fun updateIncreasedProgress() {
@@ -71,10 +75,6 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
         } else  {
             updateDecreasedProgress()
         }
-    }
-
-    private fun updateProgressByPlan() {
-
     }
 
 
@@ -111,21 +111,18 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
     }
 
     override fun notifyExerciseCenterPlanObserver() {
-        Log.i(LOG_TAG, "notifyExerciseCenterPlanObserver run.")
         plans?.let {
+            var currentPlan: AbstractExercisePlan? = null
             if(currentPlanIndex != -1 && currentPlanIndex < it.list.size){
-                Log.i(LOG_TAG, "notifyExerciseCenterPlanObserver change plan.")
-                planObservers.forEach { observer ->
-                    observer.updateExerciseCenterPlan(it.list[currentPlanIndex], isFinished)
-                }
+                currentPlan = it.list[currentPlanIndex]
             } else if (currentPlanIndex == it.list.size) {
-                Log.i(LOG_TAG, "notifyExerciseCenterPlanObserver plan finish.")
                 isFinished = true
-                planObservers.forEach { observer ->
-                    observer.updateExerciseCenterPlan(null, isFinished)
-                }
+            }
+            planObservers.forEach { observer ->
+                observer.updateExerciseCenterPlan(currentPlan, isFinished)
             }
         }
+
     }
 
     override fun registerExerciseCenterCountObserver(observer: ExerciseCenterCountObserver) {
@@ -151,5 +148,12 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
     override fun removeExerciseCenterPlanObserver(observer: ExerciseCenterPlanObserver) {
         planObservers.remove(observer)
     }
+
+
+//------------------------------------- Condition Handling -----------------------------------------
+
+
+
+
 
 }
