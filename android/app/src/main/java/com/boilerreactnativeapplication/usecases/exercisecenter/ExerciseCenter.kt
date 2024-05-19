@@ -2,14 +2,19 @@ package com.boilerreactnativeapplication.usecases.exercisecenter
 
 import android.util.Log
 import com.boilerreactnativeapplication.data.person.Person
-import com.boilerreactnativeapplication.data.plan.ExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterPlanObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterProgressObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.subject.ExerciseCenterSubject
 
 
-class ExerciseCenter(private val planList: List<ExercisePlan>) : ExerciseCenterSubject {
+class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject {
+
+    companion object {
+        private const val LOG_TAG: String = "ExerciseCenter"
+    }
 
     private val countObservers: MutableList<ExerciseCenterCountObserver> = mutableListOf()
     private val progressObservers: MutableList<ExerciseCenterProgressObserver> = mutableListOf()
@@ -21,7 +26,18 @@ class ExerciseCenter(private val planList: List<ExercisePlan>) : ExerciseCenterS
     private var isFinished: Boolean = false
 
 
-//------------------------------------- Update Function -------------------------------------------
+//------------------------------------- Initialization ---------------------------------------------
+
+
+    fun initPlan() {
+        if(currentPlanIndex == -1) {
+            currentPlanIndex = 0
+        }
+        planChanged()
+    }
+
+
+//------------------------------------- Update Function --------------------------------------------
 
 
     fun updatePerson(person: Person) {
@@ -29,14 +45,27 @@ class ExerciseCenter(private val planList: List<ExercisePlan>) : ExerciseCenterS
     }
 
     private fun updateIncreasedProgress() {
-
+        progress += 25
+        if(progress >= 100) {
+            count += 1
+            progressResetAndChanged()
+            if(count >= plans!!.list[currentPlanIndex].targetAmount) {
+                currentPlanIndex += 1
+                planChanged()
+            }
+            countChanged()
+        }
+        progressChanged()
     }
 
     private fun updateDecreasedProgress() {
-
+        if(progress > 0) {
+            progress -= 25
+            progressChanged()
+        }
     }
 
-    private fun updateProgress(isMatchTargets: Boolean) {
+    fun updateProgress(isMatchTargets: Boolean) {
         if(isMatchTargets) {
             updateIncreasedProgress()
         } else  {
@@ -82,9 +111,19 @@ class ExerciseCenter(private val planList: List<ExercisePlan>) : ExerciseCenterS
     }
 
     override fun notifyExerciseCenterPlanObserver() {
-        if(currentPlanIndex != -1){
-            planObservers.forEach { observer ->
-                observer.updateExerciseCenterPlan(planList[currentPlanIndex], isFinished)
+        Log.i(LOG_TAG, "notifyExerciseCenterPlanObserver run.")
+        plans?.let {
+            if(currentPlanIndex != -1 && currentPlanIndex < it.list.size){
+                Log.i(LOG_TAG, "notifyExerciseCenterPlanObserver change plan.")
+                planObservers.forEach { observer ->
+                    observer.updateExerciseCenterPlan(it.list[currentPlanIndex], isFinished)
+                }
+            } else if (currentPlanIndex == it.list.size) {
+                Log.i(LOG_TAG, "notifyExerciseCenterPlanObserver plan finish.")
+                isFinished = true
+                planObservers.forEach { observer ->
+                    observer.updateExerciseCenterPlan(null, isFinished)
+                }
             }
         }
     }

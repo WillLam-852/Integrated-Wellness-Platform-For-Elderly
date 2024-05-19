@@ -1,7 +1,7 @@
 package com.boilerreactnativeapplication.presentations.viewmodels
 
 import android.app.Application
-import android.os.CountDownTimer
+import android.util.Log
 import android.util.Size
 import android.view.Surface
 import androidx.lifecycle.AndroidViewModel
@@ -9,7 +9,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.boilerreactnativeapplication.data.person.*
-import com.boilerreactnativeapplication.data.plan.ExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.usecases.exercisecenter.ExerciseCenter
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterPlanObserver
@@ -20,7 +21,7 @@ import com.boilerreactnativeapplication.utils.SupportFunctions
 import com.google.mediapipe.components.CameraHelper
 import kotlinx.coroutines.launch
 
-class PoseInspectorViewModel(application: Application, private val planList: List<ExercisePlan>): AndroidViewModel(application),
+class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): AndroidViewModel(application),
     ExerciseCenterPlanObserver,
     ExerciseCenterCountObserver,
     ExerciseCenterProgressObserver
@@ -40,14 +41,14 @@ class PoseInspectorViewModel(application: Application, private val planList: Lis
     private var displaySize: Size? = null
 
     // Exercise Center
-    private var exerciseCenter: ExerciseCenter = ExerciseCenter(planList)
+    private var exerciseCenter: ExerciseCenter = ExerciseCenter(plans)
 
 
 //------------------------------------- Live Data Part ---------------------------------------------
 
 
-    private val _plan = MutableLiveData<ExercisePlan>()
-    val plan: LiveData<ExercisePlan>
+    private val _plan = MutableLiveData<AbstractExercisePlan>()
+    val plan: LiveData<AbstractExercisePlan>
         get() = _plan
 
     private val _count = MutableLiveData<Int>(0)
@@ -71,22 +72,14 @@ class PoseInspectorViewModel(application: Application, private val planList: Lis
 
 
     init {
-        // initTimer()
         registerExerciseCenterObservers()
-        // initPlanInfo()
+        initPlanInfo()
     }
 
-//    private fun initTimer() {
-//
-//    }
-//
-//    private fun initPlanInfo() {
-//
-//    }
-//
-//    fun getPlanInfo(): Pair<String, Int> {
-//
-//    }
+    private fun initPlanInfo() {
+        Log.i(LOG_TAG, "initPlanInfo run.")
+        exerciseCenter.initPlan()
+    }
 
 
 //------------------------------------- Lifecycle Functions ----------------------------------------
@@ -103,6 +96,11 @@ class PoseInspectorViewModel(application: Application, private val planList: Lis
 
     fun updatePerson(person: Person) {
         exerciseCenter.updatePerson(person)
+    }
+
+    // TODO: Remove it after progress change function is finished.
+    fun updateProgress(isMatchTargets: Boolean) {
+        exerciseCenter.updateProgress(isMatchTargets)
     }
 
     fun updateDisplaySize(size: Size) {
@@ -156,8 +154,8 @@ class PoseInspectorViewModel(application: Application, private val planList: Lis
         _progress.postValue(progress)
     }
 
-    override fun updateExerciseCenterPlan(plan: ExercisePlan, isFinished: Boolean) {
-        _plan.postValue(plan)
+    override fun updateExerciseCenterPlan(plan: AbstractExercisePlan?, isFinished: Boolean) {
+        plan?.let{ _plan.postValue(it) }
         _isFinishExercise.postValue(isFinished)
     }
 

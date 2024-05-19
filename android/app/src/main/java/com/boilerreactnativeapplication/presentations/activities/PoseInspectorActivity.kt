@@ -3,6 +3,7 @@ package com.boilerreactnativeapplication.presentations.activities
 import android.app.Activity
 import android.content.Intent
 import android.graphics.SurfaceTexture
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.boilerreactnativeapplication.R
 import com.boilerreactnativeapplication.data.person.Position
-import com.boilerreactnativeapplication.data.plan.ExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.databinding.ActivityPoseInspectorBinding
 import com.boilerreactnativeapplication.presentations.viewmodelfactories.PoseInspectorViewModelFactory
 import com.boilerreactnativeapplication.presentations.viewmodels.PoseInspectorViewModel
@@ -69,14 +71,19 @@ class PoseInspectorActivity : AppCompatActivity() {
 //------------------------------------- Initialization ---------------------------------------------
 
 
-    //TODO: get the plan list from the intent ( Should do data process when get React Native Data )
-    private fun getExercisePlanFromIntent(): List<ExercisePlan> {
-        return listOf();
+    private fun getExercisePlanFromIntent(): ExercisePlans? {
+        var plans: ExercisePlans? = null
+        plans = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("plans", ExercisePlans::class.java)
+        } else {
+            intent.getSerializableExtra("plans") as ExercisePlans
+        }
+        return plans;
     }
 
-    private fun initActivityBindingAndVM() {
+    private fun initActivityBindingAndVM(plans: ExercisePlans?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pose_inspector)
-        viewModelFactory = PoseInspectorViewModelFactory(application, listOf<ExercisePlan>())
+        viewModelFactory = PoseInspectorViewModelFactory(application, plans)
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(PoseInspectorViewModel::class.java)
         binding!!.lifecycleOwner = this
     }
@@ -100,7 +107,8 @@ class PoseInspectorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initActivityBindingAndVM()
+        val plans: ExercisePlans? = getExercisePlanFromIntent()
+        initActivityBindingAndVM(plans)
         initActivityContentClickListener()
         initObserveFunction()
         initMediapipeModules()

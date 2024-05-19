@@ -3,7 +3,9 @@ package com.boilerreactnativeapplication.reactnative.modules
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
-import com.boilerreactnativeapplication.presentations.activities.PoseInspectorActivity
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE1
+import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.presentations.activities.SimulateInspectorActivity
 import com.facebook.react.bridge.ActivityEventListener
 import com.facebook.react.bridge.Arguments
@@ -29,6 +31,9 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
         private const val ERROR_CURRENT_ACTIVITY_NOT_FOUND = "Current activity not found"
         private const val ERROR_START_POSE_INSPECTOR_FAIL = "Start pose inspector fail"
 
+        private val TEST_LIST_OF_EXERCISE_PLAN = listOf<AbstractExercisePlan>(
+            ExercisePlanE1()
+        )
     }
 
     private lateinit var successCallback: Callback;
@@ -124,6 +129,7 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
 
             // Navigate to Simulate Inspector Activity.
             val intent = Intent(currentActivity, SimulateInspectorActivity::class.java)
+            intent.putExtra("plans", ExercisePlans(TEST_LIST_OF_EXERCISE_PLAN))
             currentActivity?.startActivityForResult(intent, REQUEST_CODE_SIMULATE_INSPECTOR_ACTIVITY)
 
         } catch (exception: Exception) {

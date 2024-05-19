@@ -2,12 +2,12 @@ package com.boilerreactnativeapplication.utils
 
 import com.boilerreactnativeapplication.data.person.BodyPart
 import com.boilerreactnativeapplication.data.person.*
-import com.boilerreactnativeapplication.data.plan.ExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.google.mediapipe.formats.proto.LandmarkProto
 
 object DataConverter {
 
-    fun convertRawReactDataToExercisePlan(): ExercisePlan? {
+    fun convertRawReactDataToExercisePlan(): AbstractExercisePlan? {
         return null
     }
 
