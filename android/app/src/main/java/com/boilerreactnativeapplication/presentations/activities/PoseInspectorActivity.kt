@@ -102,7 +102,10 @@ class PoseInspectorActivity : AppCompatActivity() {
             viewModel?.let { viewModel ->
                 viewModel.plan.observe(this) { binding.execerciseNameTv.text = it.name }
                 viewModel.count.observe(this) { binding.countTv.text = it.toString() }
-                viewModel.progress.observe(this) { binding.progressTv.text = it.toString() }
+                viewModel.progress.observe(this) {
+                    binding.progressTv.text = it.toString()
+                    binding.progressPb.progress = it
+                }
 //            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
             }?:Log.e(LOG_TAG, "View Model has no been initialized.")
         } ?: Log.e(LOG_TAG, "Binding has ne been initialized.")

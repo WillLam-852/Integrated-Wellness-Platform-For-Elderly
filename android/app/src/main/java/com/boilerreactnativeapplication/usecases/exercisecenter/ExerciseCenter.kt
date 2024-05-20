@@ -8,6 +8,7 @@ import com.boilerreactnativeapplication.usecases.exercisecenter.observer.Exercis
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterPlanObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterProgressObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.subject.ExerciseCenterSubject
+import kotlin.time.Duration.Companion.seconds
 
 
 class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject {
@@ -42,9 +43,13 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
 
     fun updatePerson(person: Person) {
         plans?.let {
-            val listOfAngle: List<Double> = it.list[currentPlanIndex].check(person)
-            progress = listOfAngle[0].toInt()
+            val result = it.list[currentPlanIndex].check(person)
+            val currentProgress: Int = result.first
+            val countToAdd: Int = result.second
+            count += countToAdd
+            progress = currentProgress
             progressChanged()
+            countChanged()
         }?: Log.e(LOG_TAG, "Plans is not initialized")
     }
 

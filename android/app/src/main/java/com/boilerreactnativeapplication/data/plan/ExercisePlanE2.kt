@@ -17,9 +17,9 @@ class ExercisePlanE2 (
     targetAmount
 ) {
 
-    override fun check(person: Person): List<Double> {
+    override fun check(person: Person): Pair<Int, Int> {
         TODO("Not yet implemented")
-        return listOf<Double>()
+        return Pair(0,0)
     }
 
 }

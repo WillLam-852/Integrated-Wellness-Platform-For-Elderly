@@ -4,12 +4,14 @@ import com.boilerreactnativeapplication.data.person.BodyPart
 import com.boilerreactnativeapplication.data.person.KeyPoint
 import com.boilerreactnativeapplication.data.person.Person
 import java.io.Serializable
+import kotlin.math.roundToInt
 
 abstract class AbstractExercisePlan (
     val code: ExerciseCode = ExerciseCode.E0,
     val name: String = "undefined",
     val side: ExerciseSide = ExerciseSide.UNDEFINED,
     val targetAmount: Int = 0,
+    val feedback: ExerciseFeedback = ExerciseFeedback(Pair(45.0, 90.0), Pair(90.0, 150.0), Pair(150.0, 180.0))
 ): Serializable {
 
     protected var headKeyPoint: KeyPoint = KeyPoint(bodyPart = BodyPart.HEAD)
@@ -26,6 +28,32 @@ abstract class AbstractExercisePlan (
     protected var leftAnkleKeyPoint: KeyPoint = KeyPoint(bodyPart = BodyPart.LEFT_ANKLE)
     protected var rightAnkleKeyPoint: KeyPoint = KeyPoint(bodyPart = BodyPart.RIGHT_ANKLE)
 
-    abstract fun check(person: Person): List<Double>
+    protected var currentState: ExerciseState = ExerciseState.RESET
+
+    abstract fun check(person: Person): Pair<Int, Int>
+
+    protected fun getNextState(angle: Double): ExerciseState {
+        return when (angle) {
+            in feedback.levelOneRange.first..feedback.levelOneRange.second -> ExerciseState.LEVEL1
+            in feedback.leveTwoRange.first..feedback.leveTwoRange.second -> ExerciseState.LEVEL2
+            in feedback.leveThreeRange.first..feedback.leveThreeRange.second -> ExerciseState.LEVEL3
+            else -> ExerciseState.RESET
+        }
+    }
+
+    private fun getNextProgress(angle: Double): Int {
+        return (((angle/180.0)*100).roundToInt())
+    }
+
+    protected fun updateState(angle: Double): Pair<Int, Int> {
+        val nextState = getNextState(angle)
+        val currentProgress = getNextProgress(angle)
+        var countToAdd = 0
+        if(currentState != ExerciseState.RESET && nextState == ExerciseState.RESET) {
+            countToAdd = 1
+        }
+        currentState = nextState
+        return Pair(currentProgress, countToAdd)
+    }
 
 }
