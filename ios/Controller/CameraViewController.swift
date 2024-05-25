@@ -31,12 +31,8 @@ class CameraViewController: UIViewController {
   private var isSessionRunning = false
   private var isObserving = false
   private let backgroundQueue = DispatchQueue(label: K.DispatchQueueLabel.backgroundQueue)
+  public var exercises: [AbstractExercise] = []
   
-  private var exercises: [AbstractExercise] = [
-    Exercise1(Plan(id: 1, target: 10, disabilityFactor: 1.0)),
-    Exercise2(Plan(id: 1, target: 10, disabilityFactor: 1.0)),
-    Exercise3(Plan(id: 1, target: 10, disabilityFactor: 1.0))
-  ]
   private var currentExerciseIndex: Int = 0
   private var currentExercise: AbstractExercise? {
     get {
@@ -321,7 +317,7 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
         guard let weakSelf = self else { return }
         guard let poseLandmarkerResult = result?.poseLandmarkerResults.first as? PoseLandmarkerResult else { return }
         let imageSize = weakSelf.cameraFeedModule.videoResolution
-        
+                
         if !poseLandmarkerResult.landmarks.isEmpty {
           let pose = Pose(poseLandmarkerResult.landmarks[0])
           do {
@@ -347,6 +343,7 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
   
   private func checkCount(_ pose: Pose) throws {
     let calculationExtraInformation = CalculationExtraInformation(timeStamp: Date(), isFirstStart: self.isExerciseFirstStart)
+    
     if let currentExercise = self.currentExercise {
       let target = currentExercise.plan.target
       
