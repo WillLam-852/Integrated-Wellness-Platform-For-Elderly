@@ -4,8 +4,8 @@ export const enum MainRoute {
 }
 
 export const enum TabRoute {
-    ExerciseScreen = "ExerciseScreen",
-    MealScreen = "MealScreen",
-    ChatbotScreen = "ChatbotScreen",
-    ProfileScreen = "ProfileScreen",
+    ExerciseScreen = "Exercise",
+    MealScreen = "Meal",
+    ChatbotScreen = "Chatbot",
+    ProfileScreen = "Profile",
 }
