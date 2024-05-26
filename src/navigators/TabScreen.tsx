@@ -27,7 +27,7 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                         <MaterialIcons
                             name="sports-gymnastics"
                             size={30}
-                            color={focused ? "#90B44B" : undefined}
+                            color={focused ? "blue" : undefined}
                         />
                     )
                 case TabRoute.MealScreen:
@@ -35,7 +35,7 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                         <MaterialCommunityIcons
                             name="food-apple"
                             size={30}
-                            color={focused ? "#90B44B" : undefined}
+                            color={focused ? "blue" : undefined}
                         />
                     )
                 case TabRoute.ChatbotScreen:
@@ -43,7 +43,7 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                         <MaterialCommunityIcons
                             name="chat-plus"
                             size={30}
-                            color={focused ? "#90B44B" : undefined}
+                            color={focused ? "blue" : undefined}
                         />
                     )
                 case TabRoute.ProfileScreen:
@@ -51,7 +51,7 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                         <MaterialIcons
                             name="person"
                             size={30}
-                            color={focused ? "#90B44B" : undefined}
+                            color={focused ? "blue" : undefined}
                         />
                     )
             }
@@ -61,7 +61,7 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
         (route: RouteProp<BottomTabParamList, keyof BottomTabParamList>) =>
         ({ focused }: any) => {
             return (
-                <Text style={{ color: focused ? "#90B44B" : undefined }}>
+                <Text style={{ color: focused ? "blue" : undefined }}>
                     {t(`screenRoute:${route.name}`)}
                 </Text>
             )

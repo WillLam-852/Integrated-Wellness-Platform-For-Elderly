@@ -1,36 +1,81 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import {
+    Image,
+    KeyboardAvoidingView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native"
+import React, { useState } from "react"
 
+import ChatMessage from "@/models/ChatMessage"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
+import { getChatIconImage } from "@/resources/images"
 import i18next from "i18next"
 import { useTheme } from "@/theme"
 import { useTranslation } from "react-i18next"
-import useViewModel from './useViewModel';
+import useViewModel from "./useViewModel"
 
 function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
     const { t } = useTranslation()
 
-    const {
-        inputText,
-        setInputText,
-        messages,
-        styles,
-    } = useViewModel()
+    const { inputText, setInputText, messages, styles } = useViewModel()
 
-    const { colors, variant, changeTheme, layout, gutters, fonts, components, backgrounds } = useTheme()
+    const {
+        colors,
+        variant,
+        changeTheme,
+        layout,
+        gutters,
+        fonts,
+        components,
+        backgrounds,
+    } = useTheme()
+
+    const UserMessage = ({ message }: { message: ChatMessage }) => (
+        <View style={[styles.messageWrapper, styles.userMessageWrapper]}>
+            <View style={[styles.messageTail, styles.userMessageTail]} />
+            <View style={[styles.message, styles.userMessage]}>
+                <Text style={styles.messageText}>{message.text}</Text>
+            </View>
+            <Image
+                source={getChatIconImage(message.type)}
+                style={styles.icon}
+            />
+        </View>
+    )
+
+    const BotMessage = ({ message }: { message: ChatMessage }) => (
+        <View style={[styles.messageWrapper, styles.botMessageWrapper]}>
+            <Image
+                source={getChatIconImage(message.type)}
+                style={styles.icon}
+            />
+            <View style={[styles.messageTail, styles.botMessageTail]} />
+            <View style={[styles.message, styles.botMessage]}>
+                <Text style={styles.messageText}>{message.text}</Text>
+            </View>
+        </View>
+    )
 
     return (
         <SafeScreen>
-            <ScrollView contentContainerStyle={styles.container}>                
-                <View style={styles.messagesContainer}>
-                    {messages.map((message, index) => (
-                        <View key={index} style={[styles.message, message.type === 'user' ? styles.userMessage : styles.botMessage]}>
-                            <Text style={styles.messageText}>{message.text}</Text>
-                        </View>
-                    ))}
-                </View>
-
+            <KeyboardAvoidingView
+                style={styles.keyboardAvoidingView}
+                behavior="padding"
+            >
+                <ScrollView contentContainerStyle={styles.messagesContainer}>
+                    {messages.map((message, index) =>
+                        message.type === "bot" ? (
+                            <BotMessage message={message} key={index} />
+                        ) : (
+                            <UserMessage message={message} key={index} />
+                        )
+                    )}
+                </ScrollView>
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
@@ -38,11 +83,14 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
                         value={inputText}
                         onChangeText={setInputText}
                     />
-                    <TouchableOpacity style={styles.sendButton} onPress={() => {}}>
+                    <TouchableOpacity
+                        style={styles.sendButton}
+                        onPress={() => {}}
+                    >
                         <Text style={styles.sendButtonText}>Send</Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+            </KeyboardAvoidingView>
         </SafeScreen>
     )
 }

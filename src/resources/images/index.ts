@@ -1,15 +1,18 @@
-export const E1 = require("./E1.png")
-export const E2 = require("./E2.png")
-export const E3 = require("./E3.png")
-export const RecommendMeal1 = require("./recommend_meal_1.jpeg")
-export const RecommendMeal2 = require("./recommend_meal_2.jpeg")
-export const RecommendMeal3 = require("./recommend_meal_3.jpeg")
-export const RecommendRestaurant1 = require("./recommend_restaurant_1.jpeg")
-export const RecommendRestaurant2 = require("./recommend_restaurant_2.jpeg")
-export const RecommendRestaurant3 = require("./recommend_restaurant_3.jpeg")
-export const ProfileIcon = require("./profile_icon.png")
+import ChatIconBot from "./chat_icon_bot.jpeg"
+import ChatIconMan from "./chat_icon_man.jpeg"
+import ChatIconWomen from "./chat_icon_woman.jpeg"
+import E1 from "./E1.png"
+import E2 from "./E2.png"
+import E3 from "./E3.png"
+import ProfileIcon from "./profile_icon.png"
+import RecommendMeal1 from "./recommend_meal_1.jpeg"
+import RecommendMeal2 from "./recommend_meal_2.jpeg"
+import RecommendMeal3 from "./recommend_meal_3.jpeg"
+import RecommendRestaurant1 from "./recommend_restaurant_1.jpeg"
+import RecommendRestaurant2 from "./recommend_restaurant_2.jpeg"
+import RecommendRestaurant3 from "./recommend_restaurant_3.jpeg"
 
-const index: {
+const exerciseIndex: {
     [key: number]: any
 } = {
     1: E1,
@@ -33,14 +36,22 @@ const recommendRestaurantIndex: {
     3: RecommendRestaurant3,
 }
 
-const profileIcon: {
+const ChatIconIndex: {
+    [id: string]: any
+} = {
+    bot: ChatIconBot,
+    man: ChatIconMan,
+    woman: ChatIconWomen,
+}
+
+const profileIconIndex: {
     [key: number]: any
 } = {
     1: ProfileIcon,
 }
 
 export const getExerciseIcon = (id: number) => {
-    return index[id]
+    return exerciseIndex[id]
 }
 
 export const getRecommendMealImage = (id: number) => {
@@ -51,6 +62,10 @@ export const getRecommendRestaurantImage = (id: number) => {
     return recommendRestaurantIndex[id]
 }
 
+export const getChatIconImage = (id: string) => {
+    return ChatIconIndex[id]
+}
+
 export const getProfileIcon = () => {
-    return profileIcon[1]
+    return profileIconIndex[1]
 }
