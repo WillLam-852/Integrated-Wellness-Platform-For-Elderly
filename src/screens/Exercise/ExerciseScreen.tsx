@@ -23,7 +23,7 @@ import useViewModel from "./useViewModel"
 function ExerciseScreen() {
     const { t } = useTranslation(["exercise", "welcome"])
 
-    const { layout, fonts, backgrounds } = useTheme()
+    const { fonts } = useTheme()
 
     const {
         selectedItemIDs,
@@ -55,52 +55,46 @@ function ExerciseScreen() {
 
         return (
             <TouchableOpacity
-                style={[styles.item, isSelected && styles.selectedItem]}
+                style={[styles.exerciseListItem, isSelected && styles.selectedItem]}
                 onPress={() => handleItemPress(item.id)}
             >
                 <Image
-                    style={styles.image}
+                    style={styles.exerciseListImage}
                     source={getExerciseIcon(item.id)}
                     resizeMode="contain"
                 />
                 {isSelected && (
-                    <Text style={[fonts.size_80, styles.tick]}>✓</Text>
+                    <Text style={styles.tick}>✓</Text>
                 )}
-                <Text style={[fonts.size_32, styles.text]}>{item.name}</Text>
+                <View style={styles.exerciseListTextContainer}>
+                    <Text style={[fonts.size_32, styles.text]}>{item.name}</Text>
+                    <Text style={styles.subText}>難度: {item.intensity_level}</Text>
+                    <Text style={styles.subText}>次數: {item.duration}</Text>
+                </View>
             </TouchableOpacity>
         )
     }
     return (
         <SafeScreen>
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    paddingBottom: 10,
-                }}
-            >
-                <Button mode="outlined" onPress={selectAllPressed}>
-                    Select All
-                </Button>
-                <Button mode="outlined" onPress={clearPressed}>
-                    Clear
-                </Button>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={selectAllPressed}>
+                    <Text style={styles.buttonText}>Select All</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={clearPressed}>
+                    <Text style={styles.buttonText}>Clear</Text>
+                </TouchableOpacity>
             </View>
-            <View style={[layout.justifyCenter, layout.itemsStretch]}>
+            <View style={[styles.exerciseListContainer]}>
                 <FlatList
                     data={sampleExercise}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={renderItem}
+                    ItemSeparatorComponent={() => <View style={styles.exerciseListSeparator} />}
                 />
             </View>
-            <Button
-                mode="contained"
-                style={styles.button}
-                contentStyle={{ height: 40 }}
-                onPress={startCameraPressed}
-            >
-                <Text style={fonts.size_16}>Start Camera</Text>
-            </Button>
+            <TouchableOpacity style={styles.buttonStartCamera} onPress={startCameraPressed}>
+                <Text style={styles.buttonTextStartCamera}>Start Camera</Text>
+            </TouchableOpacity>
         </SafeScreen>
     )
 }

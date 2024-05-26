@@ -1,4 +1,7 @@
-import { BottomTabParamList, MainStackScreenProps } from "@/navigators/navigation"
+import {
+    BottomTabParamList,
+    MainStackScreenProps,
+} from "@/navigators/navigation"
 import { ChatbotScreen, ExerciseScreen, ProfileScreen } from "@/screens"
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -20,20 +23,48 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
         ({ focused }: any) => {
             switch (route.name) {
                 case TabRoute.ExerciseScreen:
-                    return <MaterialIcons name="sports-gymnastics" size={30} color={focused ? "blue" : undefined} />
+                    return (
+                        <MaterialIcons
+                            name="sports-gymnastics"
+                            size={30}
+                            color={focused ? "#90B44B" : undefined}
+                        />
+                    )
                 case TabRoute.MealScreen:
-                    return <MaterialCommunityIcons name="food-apple" size={30} color={focused ? "blue" : undefined} />
+                    return (
+                        <MaterialCommunityIcons
+                            name="food-apple"
+                            size={30}
+                            color={focused ? "#90B44B" : undefined}
+                        />
+                    )
                 case TabRoute.ChatbotScreen:
-                    return <MaterialCommunityIcons name="chat-plus" size={30} color={focused ? "blue" : undefined} />
+                    return (
+                        <MaterialCommunityIcons
+                            name="chat-plus"
+                            size={30}
+                            color={focused ? "#90B44B" : undefined}
+                        />
+                    )
                 case TabRoute.ProfileScreen:
-                    return <MaterialIcons name="person" size={30} color={focused ? "blue" : undefined} />
+                    return (
+                        <MaterialIcons
+                            name="person"
+                            size={30}
+                            color={focused ? "#90B44B" : undefined}
+                        />
+                    )
             }
         }
 
     const tabBarLabel =
         (route: RouteProp<BottomTabParamList, keyof BottomTabParamList>) =>
         ({ focused }: any) => {
-            return <Text style={{ color: focused ? "blue" : undefined }}>{t(`screenRoute:${route.name}`)}</Text>
+            return (
+                <Text style={{ color: focused ? "#90B44B" : undefined }}>
+                    {t(`screenRoute:${route.name}`)}
+                </Text>
+            )
         }
 
     return (
@@ -45,10 +76,19 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
             })}
             initialRouteName={TabRoute.ExerciseScreen}
         >
-            <Tab.Screen name={TabRoute.ExerciseScreen} component={ExerciseScreen} />
+            <Tab.Screen
+                name={TabRoute.ExerciseScreen}
+                component={ExerciseScreen}
+            />
             <Tab.Screen name={TabRoute.MealScreen} component={MealScreen} />
-            <Tab.Screen name={TabRoute.ChatbotScreen} component={ChatbotScreen} />
-            <Tab.Screen name={TabRoute.ProfileScreen} component={ProfileScreen} />
+            <Tab.Screen
+                name={TabRoute.ChatbotScreen}
+                component={ChatbotScreen}
+            />
+            <Tab.Screen
+                name={TabRoute.ProfileScreen}
+                component={ProfileScreen}
+            />
         </Tab.Navigator>
     )
 }

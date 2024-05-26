@@ -58,28 +58,83 @@ const useViewModel = () => {
     }
 
     const styles = StyleSheet.create({
-        item: {
-            height: 100,
-            flexDirection: "row",
-        },
         selectedItem: {
             backgroundColor: "#c9c7c7",
         },
         text: {
-            paddingLeft: 10,
-            paddingTop: 10,
+            fontSize: 24,
+            color: '#333',
+        },
+        subText: {
+            fontSize: 18,
+            color: '#666',
+            marginTop: 4,
         },
         tick: {
-            position: "absolute",
-            top: 25,
-            right: 0,
-        },
-        image: {
-            height: 100,
-            width: 100,
+            position: 'absolute',
+            top: 15,
+            right: 15,
+            fontSize: 48,
+            color: '#90B44B',
         },
         button: {
-            margin: 20,
+            backgroundColor: '#90B44B',
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 5,
+            flex: 1,
+            marginHorizontal: 5,
+        },
+        buttonContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginVertical: 10,
+        },
+        buttonStartCamera: {
+            backgroundColor: '#90B44B',
+            paddingVertical: 15,
+            borderRadius: 5,
+            alignItems: 'center',
+            marginHorizontal: 8,
+            marginVertical: 16,
+        },
+        buttonTextStartCamera: {
+            color: '#fff',
+            fontSize: 18,
+        },
+        buttonText: {
+            color: '#fff',
+            fontSize: 16,
+            textAlign: 'center',
+        },
+        exerciseListContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'stretch',
+            padding: 10,
+        },
+        exerciseListItem: {
+            flexDirection: 'row',
+            backgroundColor: '#f9f9f9',
+            padding: 15,
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: '#ddd',
+            marginVertical: 8,
+            alignItems: 'center',
+        },
+        exerciseListImage: {
+            height: 60,
+            width: 60,
+            borderRadius: 30,
+            marginRight: 20,
+        },
+        exerciseListSeparator: {
+            height: 10,
+        },
+        exerciseListTextContainer: {
+            flex: 1,
+            flexDirection: 'column',
         },
     })
 
