@@ -62,11 +62,11 @@ const useViewModel = () => {
             backgroundColor: "#c9c7c7",
         },
         text: {
-            fontSize: 24,
+            fontSize: 32,
             color: '#333',
         },
         subText: {
-            fontSize: 18,
+            fontSize: 16,
             color: '#666',
             marginTop: 4,
         },
@@ -100,11 +100,13 @@ const useViewModel = () => {
         },
         buttonTextStartCamera: {
             color: '#fff',
-            fontSize: 18,
+            fontSize: 32,
+            fontWeight: 'bold',
         },
         buttonText: {
             color: '#fff',
-            fontSize: 16,
+            fontSize: 32,
+            fontWeight: 'bold',
             textAlign: 'center',
         },
         exerciseListContainer: {
@@ -124,9 +126,9 @@ const useViewModel = () => {
             alignItems: 'center',
         },
         exerciseListImage: {
-            height: 60,
-            width: 60,
-            borderRadius: 30,
+            height: 100,
+            width: 100,
+            borderRadius: 50,
             marginRight: 20,
         },
         exerciseListSeparator: {

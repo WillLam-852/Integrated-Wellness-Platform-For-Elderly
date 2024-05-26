@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, KeyboardAvoidingView, Image } from 'react-native';
 
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
@@ -7,6 +7,8 @@ import i18next from "i18next"
 import { useTheme } from "@/theme"
 import { useTranslation } from "react-i18next"
 import useViewModel from './useViewModel';
+import { getChatIconImage } from '@/resources/images';
+import ChatMessage from '@/models/ChatMessage';
 
 function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
     const { t } = useTranslation()
@@ -20,17 +22,36 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
 
     const { colors, variant, changeTheme, layout, gutters, fonts, components, backgrounds } = useTheme()
 
+    const UserMessage = ({message}: {message: ChatMessage}) => (
+        <View style={[styles.messageWrapper, styles.userMessageWrapper]}>
+            <View style={[styles.messageTail, styles.userMessageTail]} />
+            <View style={[styles.message, styles.userMessage ]}>
+                <Text style={styles.messageText}>{message.text}</Text>
+            </View>
+            <Image source={getChatIconImage(message.type)} style={styles.icon}/>
+        </View>
+    )
+
+    const BotMessage = ({message}: {message: ChatMessage}) => (
+        <View style={[styles.messageWrapper, styles.botMessageWrapper]}>
+            <Image source={getChatIconImage(message.type)} style={styles.icon}/>
+            <View style={[styles.messageTail, styles.botMessageTail]} />
+            <View style={[styles.message, styles.botMessage ]}>
+                <Text style={styles.messageText}>{message.text}</Text>
+            </View>
+        </View>
+    )
+
     return (
         <SafeScreen>
-            <ScrollView contentContainerStyle={styles.container}>                
-                <View style={styles.messagesContainer}>
+            <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior="padding">
+                <ScrollView contentContainerStyle={styles.messagesContainer}>
                     {messages.map((message, index) => (
-                        <View key={index} style={[styles.message, message.type === 'user' ? styles.userMessage : styles.botMessage]}>
-                            <Text style={styles.messageText}>{message.text}</Text>
-                        </View>
+                        message.type === 'bot' 
+                            ? <BotMessage message={message} key={index}/> 
+                            : <UserMessage message={message} key={index}/>
                     ))}
-                </View>
-
+                </ScrollView>
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
@@ -42,7 +63,7 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
                         <Text style={styles.sendButtonText}>Send</Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+            </KeyboardAvoidingView>
         </SafeScreen>
     )
 }
