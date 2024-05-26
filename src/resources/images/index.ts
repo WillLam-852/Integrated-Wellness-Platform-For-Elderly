@@ -14,7 +14,9 @@ export const ChatIconBot = require("./chat_icon_bot.jpeg")
 export const ChatIconMan = require("./chat_icon_man.jpeg")
 export const ChatIconWomen = require("./chat_icon_woman.jpeg")
 
-const index: {
+export const ProfileIcon = require("./profile_icon.png")
+
+const exerciseIndex: {
     [key: number]: any
 } = {
     1: E1,
@@ -41,14 +43,19 @@ const recommendRestaurantIndex: {
 const ChatIconIndex: {
     [id: string]: any
 } = {
-    'bot': ChatIconBot,
-    'man': ChatIconMan,
-    'woman': ChatIconWomen,
+    bot: ChatIconBot,
+    man: ChatIconMan,
+    woman: ChatIconWomen,
 }
 
+const profileIconIndex: {
+    [key: number]: any
+} = {
+    1: ProfileIcon,
+}
 
 export const getExerciseIcon = (id: number) => {
-    return index[id]
+    return exerciseIndex[id]
 }
 
 export const getRecommendMealImage = (id: number) => {
@@ -61,4 +68,8 @@ export const getRecommendRestaurantImage = (id: number) => {
 
 export const getChatIconImage = (id: string) => {
     return ChatIconIndex[id]
+}
+
+export const getProfileIcon = () => {
+    return profileIconIndex[1]
 }
