@@ -1,6 +1,20 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
+
+import askPermission from "@/services/healthInformation/healthInformationPermission"
+import { fetchAllFromHealthKit } from "@/services/healthInformation/healthInformationGetter"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
 
 const useViewModel = () => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (Platform.OS == "ios") {
+            askPermission()
+            fetchAllFromHealthKit(dispatch)
+        }
+    }, [])
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,

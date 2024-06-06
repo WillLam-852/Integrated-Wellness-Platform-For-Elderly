@@ -1,42 +1,61 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, KeyboardAvoidingView, Image } from 'react-native';
+import {
+    Image,
+    KeyboardAvoidingView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native"
+import React, { useState } from "react"
 
+import ChatMessage from "@/models/ChatMessage"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
+import { getChatIconImage } from "@/resources/images"
 import i18next from "i18next"
 import { useTheme } from "@/theme"
 import { useTranslation } from "react-i18next"
-import useViewModel from './useViewModel';
-import { getChatIconImage } from '@/resources/images';
-import ChatMessage from '@/models/ChatMessage';
+import useViewModel from "./useViewModel"
 
 function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
     const { t } = useTranslation()
 
+    const { inputText, setInputText, messages, styles } = useViewModel()
+
     const {
-        inputText,
-        setInputText,
-        messages,
-        styles,
-    } = useViewModel()
+        colors,
+        variant,
+        changeTheme,
+        layout,
+        gutters,
+        fonts,
+        components,
+        backgrounds,
+    } = useTheme()
 
-    const { colors, variant, changeTheme, layout, gutters, fonts, components, backgrounds } = useTheme()
-
-    const UserMessage = ({message}: {message: ChatMessage}) => (
+    const UserMessage = ({ message }: { message: ChatMessage }) => (
         <View style={[styles.messageWrapper, styles.userMessageWrapper]}>
             <View style={[styles.messageTail, styles.userMessageTail]} />
-            <View style={[styles.message, styles.userMessage ]}>
+            <View style={[styles.message, styles.userMessage]}>
                 <Text style={styles.messageText}>{message.text}</Text>
             </View>
-            <Image source={getChatIconImage(message.type)} style={styles.icon}/>
+            <Image
+                source={getChatIconImage(message.type)}
+                style={styles.icon}
+            />
         </View>
     )
 
-    const BotMessage = ({message}: {message: ChatMessage}) => (
+    const BotMessage = ({ message }: { message: ChatMessage }) => (
         <View style={[styles.messageWrapper, styles.botMessageWrapper]}>
-            <Image source={getChatIconImage(message.type)} style={styles.icon}/>
+            <Image
+                source={getChatIconImage(message.type)}
+                style={styles.icon}
+            />
             <View style={[styles.messageTail, styles.botMessageTail]} />
-            <View style={[styles.message, styles.botMessage ]}>
+            <View style={[styles.message, styles.botMessage]}>
                 <Text style={styles.messageText}>{message.text}</Text>
             </View>
         </View>
@@ -44,13 +63,18 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
 
     return (
         <SafeScreen>
-            <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior="padding">
+            <KeyboardAvoidingView
+                style={styles.keyboardAvoidingView}
+                behavior="padding"
+            >
                 <ScrollView contentContainerStyle={styles.messagesContainer}>
-                    {messages.map((message, index) => (
-                        message.type === 'bot' 
-                            ? <BotMessage message={message} key={index}/> 
-                            : <UserMessage message={message} key={index}/>
-                    ))}
+                    {messages.map((message, index) =>
+                        message.type === "bot" ? (
+                            <BotMessage message={message} key={index} />
+                        ) : (
+                            <UserMessage message={message} key={index} />
+                        )
+                    )}
                 </ScrollView>
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -59,7 +83,10 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
                         value={inputText}
                         onChangeText={setInputText}
                     />
-                    <TouchableOpacity style={styles.sendButton} onPress={() => {}}>
+                    <TouchableOpacity
+                        style={styles.sendButton}
+                        onPress={() => {}}
+                    >
                         <Text style={styles.sendButtonText}>Send</Text>
                     </TouchableOpacity>
                 </View>

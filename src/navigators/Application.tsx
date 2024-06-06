@@ -13,7 +13,10 @@ function ApplicationNavigator() {
     return (
         <NavigationContainer theme={navigationTheme}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name={MainRoute.TabScreen} component={TabScreen} />
+                <Stack.Screen
+                    name={MainRoute.TabScreen}
+                    component={TabScreen}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )

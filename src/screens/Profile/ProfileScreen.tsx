@@ -1,5 +1,6 @@
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { Button } from "react-native-paper"
+import HealthInformationView from "./HealthInformaionView/HealthInformationView"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import ProfileIcon from "./ProfileIcon"
 import ProfileItem from "./ProfileItem"
@@ -23,8 +24,9 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
             <ProfileItem title={"Phone"} description={user.phone} />
             <ProfileItem title={"Age"} description={user.age} />
             <ProfileItem title={"Gender"} description={user.gender} />
-            <ProfileItem title={"Height"} description={user.height + " cm"} />
-            <ProfileItem title={"Weight"} description={user.weight + " kg"} />
+            {/* <ProfileItem title={"Height"} description={user.height + " cm"} />
+            <ProfileItem title={"Weight"} description={user.weight + " kg"} /> */}
+            <HealthInformationView />
             <Button
                 mode="text"
                 style={styles.logoutButton}
