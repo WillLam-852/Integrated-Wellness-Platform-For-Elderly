@@ -11,6 +11,9 @@ import RecommendMeal3 from "./recommend_meal_3.jpeg"
 import RecommendRestaurant1 from "./recommend_restaurant_1.jpeg"
 import RecommendRestaurant2 from "./recommend_restaurant_2.jpeg"
 import RecommendRestaurant3 from "./recommend_restaurant_3.jpeg"
+import LogoBistro from "./logo_bistro.jpeg";
+import LogoPizza from "./logo_pizza.jpeg";
+import LogoSushi from "./logo_sushi.jpeg";
 
 const exerciseIndex: {
     [key: number]: any
@@ -34,6 +37,14 @@ const recommendRestaurantIndex: {
     1: RecommendRestaurant1,
     2: RecommendRestaurant2,
     3: RecommendRestaurant3,
+}
+
+const recommendRestaurantLogoIndex: {
+    [key: number]: any
+} = {
+    1: LogoBistro,
+    2: LogoSushi,
+    3: LogoPizza,
 }
 
 const ChatIconIndex: {
@@ -60,6 +71,10 @@ export const getRecommendMealImage = (id: number) => {
 
 export const getRecommendRestaurantImage = (id: number) => {
     return recommendRestaurantIndex[id]
+}
+
+export const getRecommendRestaurantLogoImage = (id: number) => {
+    return recommendRestaurantLogoIndex[id]
 }
 
 export const getChatIconImage = (id: string) => {

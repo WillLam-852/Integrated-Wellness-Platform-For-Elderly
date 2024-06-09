@@ -8,4 +8,5 @@ export const enum TabRoute {
     MealScreen = "Meal",
     ChatbotScreen = "Chatbot",
     ProfileScreen = "Profile",
+    QuizScreen = "Quiz",
 }
