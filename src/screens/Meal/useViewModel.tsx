@@ -117,6 +117,50 @@ const useViewModel = () => {
     restaurantTextContainer: {
         flex: 1,
     },
+    restaurantDiscountCard: {
+        width: 200,
+        height: 300,
+        flexDirection: 'column',  // Ensures the logo and text are side by side
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 15,  // More padding for better spacing
+        marginBottom: 16,
+        marginRight: 16,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 4,
+        borderWidth: 1,
+        borderColor: '#ddd'
+    },
+    restaurantDiscountTextContainer: {
+        flex: 1,
+        justifyContent: 'center',  // Center content vertically within the container
+        marginRight: 12,  // Space between text and the image
+    },
+    restaurantDiscountTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 4,  // Space between title and category
+        color: '#34495e'
+    },
+    restaurantDiscountTerm: {
+        fontSize: 14,
+        color: '#7f8c8d',
+        marginBottom: 4  // Optional, can adjust based on your content
+    },
+    restanrantDiscountEndDate: {
+        fontSize: 14,
+        color: '#7f8c8d',
+        marginBottom: 4  // Optional, can adjust based on your content
+    },
+    restaurantDiscountLogo: {
+        width: 100,  // Adjusted to a more reasonable size
+        height: 100,
+        borderRadius: 5
+    }
   });
   
   return {

@@ -5,7 +5,7 @@ import sampleRecommendMeal from '@/sample-data/sample-recommendmeal';
 import sampleRestaurants from '@/sample-data/sample-recommendrestaurant';
 import useViewModel from './useViewModel';
 import RecommendMeal from '@/models/RecommendMeal';
-import { getRecommendMealImage, getRecommendRestaurantImage } from '@/resources/images';
+import { getRecommendMealImage, getRecommendRestaurantLogoImage, getRecommendRestaurantImage } from '@/resources/images';
 import RecommendRestaurant from '@/models/RecommendRestaurant';
 
 const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
@@ -24,6 +24,17 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 <Text style={styles.seeMore}>See More</Text>
             </TouchableOpacity>
         </View>
+    );
+
+    const renderRestaurantDicountItem = ({ item }: { item: RecommendRestaurant}) => (
+        <TouchableOpacity style={styles.restaurantDiscountCard} onPress={() => {}}>
+            <Image source={getRecommendRestaurantLogoImage(item.id)} style={styles.restaurantImage} />
+            <View style={styles.restaurantDiscountTextContainer}>
+                <Text style={styles.restaurantDiscountTitle}>{item.discount[0].discountPercentage}% OFF</Text>
+                <Text style={styles.restaurantDiscountTerm}>{item.discount[0].terms}</Text>
+                <Text style={styles.restanrantDiscountEndDate}>{item.discount[0].validUntil}</Text>
+            </View>
+        </TouchableOpacity>
     );
 
     const RecommendedRestaurantItem = ({ item }: { item: RecommendRestaurant }) => (
@@ -58,6 +69,14 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
             </View>
             <Text style={styles.header}>Get Discount And Stay Healthy</Text>
             <Text style={styles.subHeader}>See the promotion</Text>
+            <FlatList
+                data={sampleRestaurants}
+                renderItem={renderRestaurantDicountItem}
+                keyExtractor={(item) => item.id.toString()}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.list}
+            />
         </ScrollView>
     );
 }
