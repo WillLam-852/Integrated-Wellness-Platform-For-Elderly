@@ -80,6 +80,16 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                 tabBarIcon: tabBarIcon(route),
                 tabBarLabel: tabBarLabel(route),
                 headerShown: false,
+                tabBarStyle: { 
+                    backgroundColor: '#ffffff', // A clean white background
+                    borderTopColor: '#dddddd', // Light grey border at the top for subtle separation
+                    borderTopWidth: 1, // Thin border width
+                    shadowColor: '#000000', // Black color for shadow to add depth
+                    shadowOffset: { width: 0, height: -1 }, // Shadow placed at the top of the tab bar
+                    shadowOpacity: 0.1, // Slightly visible shadow for subtle depth
+                    shadowRadius: 3, // Soft shadow edges
+                    elevation: 5, // Elevation for Android to create shadow effect
+                },
             })}
             initialRouteName={TabRoute.ExerciseScreen}
         >
