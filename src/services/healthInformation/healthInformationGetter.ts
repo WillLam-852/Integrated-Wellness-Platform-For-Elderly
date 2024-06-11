@@ -1,6 +1,5 @@
 import AppleHealthKit, {
     BloodPressureSampleValue,
-    HealthUnit,
     HealthValue,
 } from "react-native-health"
 import {
