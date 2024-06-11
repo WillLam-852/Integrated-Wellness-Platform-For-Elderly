@@ -15,6 +15,7 @@ import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
 import { getChatIconImage } from "@/resources/images"
 import i18next from "i18next"
+import { useQuery } from "@tanstack/react-query"
 import { useTheme } from "@/theme"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
@@ -34,6 +35,13 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
         components,
         backgrounds,
     } = useTheme()
+
+    const { isSuccess, isFetching, isError } = useQuery({
+        queryKey: ["startup"],
+        queryFn: () => {
+            return Promise.resolve(true)
+        },
+    })
 
     const UserMessage = ({ message }: { message: ChatMessage }) => (
         <View style={[styles.messageWrapper, styles.userMessageWrapper]}>

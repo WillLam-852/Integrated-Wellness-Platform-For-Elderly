@@ -15,6 +15,7 @@ export type BottomTabParamList = {
     [TabRoute.MealScreen]: undefined
     [TabRoute.ChatbotScreen]: undefined
     [TabRoute.ProfileScreen]: undefined
+    [TabRoute.QuizScreen]: undefined
 }
 
 export type MainBottomTabScreenProps = BottomTabScreenProps<BottomTabParamList>
