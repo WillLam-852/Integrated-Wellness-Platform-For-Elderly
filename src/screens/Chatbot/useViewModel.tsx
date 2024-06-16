@@ -105,6 +105,7 @@ const useViewModel = () => {
         inputText,
         setInputText,
         messages,
+        setMessages,
         styles,
     }
 }

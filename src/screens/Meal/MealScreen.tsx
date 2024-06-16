@@ -21,6 +21,7 @@ import { SafeScreen } from "@/components/template"
 import sampleRecommendMeal from "@/sample-data/sample-recommendmeal"
 import sampleRestaurants from "@/sample-data/sample-recommendrestaurant"
 import useViewModel from "./useViewModel"
+import { MainBottomTabScreenProps } from "@/navigators/navigation"
 
 const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
     const { styles } = useViewModel()

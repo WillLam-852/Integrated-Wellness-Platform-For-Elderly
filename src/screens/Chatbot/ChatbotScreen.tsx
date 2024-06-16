@@ -8,8 +8,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native"
-import React, { useState } from "react"
-
+import React, { useState, useEffect } from "react"
 import ChatMessage from "@/models/ChatMessage"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
@@ -23,25 +22,32 @@ import useViewModel from "./useViewModel"
 function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
     const { t } = useTranslation()
 
-    const { inputText, setInputText, messages, styles } = useViewModel()
+    const { messages, setMessages, styles } = useViewModel()
+    const question = "Give me some dietary advice for the elderly";
+
+    // Define the fetch function for getting dietary advice
+    const fetchAdvice = async ({ message }: { message: string }) => {
+        const url = 'https://whippet-one-brightly.ngrok-free.app/ai/generate';
+        const params = new URLSearchParams({message});
+        
+        const response = await fetch(`${url}?${params.toString()}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch dietary advice');
+        }
+        return response.json();
+    };
 
     const {
-        colors,
-        variant,
-        changeTheme,
-        layout,
-        gutters,
-        fonts,
-        components,
-        backgrounds,
-    } = useTheme()
-
-    const { isSuccess, isFetching, isError } = useQuery({
-        queryKey: ["startup"],
-        queryFn: () => {
-            return Promise.resolve(true)
-        },
-    })
+        data,
+        isSuccess,
+        isFetching,
+        isError,
+        error,
+    } = useQuery({
+        queryKey: ['advice', question], // Include message in the query key for cache uniqueness
+        queryFn: () => fetchAdvice({message: question}),
+        enabled: !!question, // Only run the query if message is not empty
+    });
 
     const UserMessage = ({ message }: { message: ChatMessage }) => (
         <View style={[styles.messageWrapper, styles.userMessageWrapper]}>
@@ -69,6 +75,23 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
         </View>
     )
 
+    // TODO: Give a pop up window to show update the data successfully.
+    useEffect(() => {
+        console.log("The value of isSuccess is: ", isSuccess);
+        if(isSuccess) {
+            console.log("The advice data is: ", data);
+            setMessages([...messages, new ChatMessage('bot', data.generation)]);
+        }
+    }, [isSuccess]);
+
+    if (isFetching) {
+        return <Text> Loading... </Text>
+    }
+
+    if (isError) {
+        return <Text> Error: {error.message} </Text>
+    }
+
     return (
         <SafeScreen>
             <KeyboardAvoidingView
@@ -84,20 +107,6 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
                         )
                     )}
                 </ScrollView>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Enter your message..."
-                        value={inputText}
-                        onChangeText={setInputText}
-                    />
-                    <TouchableOpacity
-                        style={styles.sendButton}
-                        onPress={() => {}}
-                    >
-                        <Text style={styles.sendButtonText}>Send</Text>
-                    </TouchableOpacity>
-                </View>
             </KeyboardAvoidingView>
         </SafeScreen>
     )
