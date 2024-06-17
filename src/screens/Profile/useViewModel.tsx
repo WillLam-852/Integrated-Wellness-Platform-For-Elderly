@@ -45,6 +45,16 @@ const useViewModel = () => {
             borderWidth: 1,
             borderRadius: 15,
         },
+        languageSwitchButton: {
+            marginTop: 15,       // Keeps the same top margin as the logout button for consistency
+            borderRadius: 15,    // Same border radius for a uniform look
+            elevation: 2,        // Consistent elevation for a similar shadow effect
+        },
+        languageSwitchContent: {
+            borderColor: "#0000ff", // A different color, here blue, to distinguish it from the logout button
+            borderWidth: 1,         // Consistent border width
+            borderRadius: 15,       // Same border radius for a uniform look
+        },
         icon: {
             borderRadius: 100 / 2,
             width: 100,

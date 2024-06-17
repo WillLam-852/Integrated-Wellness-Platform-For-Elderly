@@ -14,6 +14,7 @@ import {
     getRecommendRestaurantLogoImage,
 } from "@/resources/images"
 
+import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import React from "react"
 import RecommendMeal from "@/models/RecommendMeal"
 import RecommendRestaurant from "@/models/RecommendRestaurant"
