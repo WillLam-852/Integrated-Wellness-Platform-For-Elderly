@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react"
 
 import ActResult from "@/native-module/dto/ActResult"
-import Exercise from "@/models/Exercise"
+import { ExerciseDetailsScreenProps } from "@/navigators/navigation"
+import { MainRoute } from "@/navigators/ScreenRoute"
 import NativeCameraModule from "@/native-module/NativeCameraModule"
 import PlannedExercise from "@/models/PlannedExercise"
 import { StyleSheet } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 
 const useViewModel = () => {
     const [selectedItemIDs, setSelectedItemIDs] = useState<number[]>([])
+    const { navigate } =
+        useNavigation<ExerciseDetailsScreenProps["navigation"]>()
 
     const [selectedPlannedExercises, setSelectedPlannedExercises] = useState<
         PlannedExercise[]
@@ -57,6 +61,16 @@ const useViewModel = () => {
         }
     }
 
+    const goToDetailScreenPressed = (
+        exerciseName: string,
+        exerciseVideoLink?: string
+    ) => {
+        navigate(MainRoute.ExerciseDetailsScreen, {
+            exerciseName,
+            exerciseVideoLink,
+        })
+    }
+
     const styles = StyleSheet.create({
         selectedItem: {
             backgroundColor: "#c9c7c7",
@@ -72,7 +86,7 @@ const useViewModel = () => {
         },
         tick: {
             position: "absolute",
-            top: 15,
+            bottom: 15,
             right: 15,
             fontSize: 48,
             color: "#90B44B",
@@ -138,6 +152,11 @@ const useViewModel = () => {
             flex: 1,
             flexDirection: "column",
         },
+        detailsButton: {
+            position: "absolute",
+            top: 10,
+            right: 10,
+        },
     })
 
     return {
@@ -146,6 +165,7 @@ const useViewModel = () => {
         startCameraPressed,
         selectAllPressed,
         clearPressed,
+        goToDetailScreenPressed,
         styles,
     }
 }

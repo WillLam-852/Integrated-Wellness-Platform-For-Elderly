@@ -9,7 +9,7 @@ const sampleExercise: Exercise[] = [
         3,
         "Standard",
         "Strength Training",
-        "https://www.example.com/video-link"
+        "mDar6pYF2Pw"
     ),
     new Exercise(
         2,
@@ -19,7 +19,7 @@ const sampleExercise: Exercise[] = [
         3,
         "Standard",
         "Strength Training",
-        "https://www.example.com/video-link"
+        "Xcs00t5bec8"
     ),
     new Exercise(
         3,
@@ -29,7 +29,7 @@ const sampleExercise: Exercise[] = [
         3,
         "Standard",
         "Strength Training",
-        "https://www.example.com/video-link"
+        "anzJjhpkLkU"
     ),
 ]
 

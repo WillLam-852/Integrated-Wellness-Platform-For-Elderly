@@ -11,7 +11,7 @@ public enum K {
   // SAIL-Wifi
   public static let SAILWIFI = "http://192.168.88.21:8081/index.bundle?platform=ios"
   // HKU WiFi
-  public static let HKU = "http://10.69.120.111:8081/index.bundle?platform=ios"
+  public static let HKU = "http://10.69.3.226:8081/index.bundle?platform=ios"
   // Home WiFi
   public static let Home = "http://192.168.50.12:8081/index.bundle?platform=ios"
 
