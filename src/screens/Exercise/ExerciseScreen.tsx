@@ -9,8 +9,8 @@ import {
 } from "react-native"
 import { useEffect, useState } from "react"
 
-import { Button } from "react-native-paper"
 import Exercise from "@/models/Exercise"
+import Ionicons from "react-native-vector-icons/Ionicons"
 import { SafeScreen } from "@/components/template"
 import { fetchOne } from "@/services/users"
 import { getExerciseIcon } from "@/resources/images"
@@ -31,6 +31,7 @@ function ExerciseScreen() {
         selectAllPressed,
         clearPressed,
         startCameraPressed,
+        goToDetailScreenPressed,
         styles,
     } = useViewModel()
 
@@ -55,7 +56,10 @@ function ExerciseScreen() {
 
         return (
             <TouchableOpacity
-                style={[styles.exerciseListItem, isSelected && styles.selectedItem]}
+                style={[
+                    styles.exerciseListItem,
+                    isSelected && styles.selectedItem,
+                ]}
                 onPress={() => handleItemPress(item.id)}
             >
                 <Image
@@ -63,21 +67,37 @@ function ExerciseScreen() {
                     source={getExerciseIcon(item.id)}
                     resizeMode="contain"
                 />
-                {isSelected && (
-                    <Text style={styles.tick}>✓</Text>
-                )}
+                {isSelected && <Text style={styles.tick}>✓</Text>}
                 <View style={styles.exerciseListTextContainer}>
-                    <Text style={[fonts.size_32, styles.text]}>{item.name}</Text>
-                    <Text style={styles.subText}>難度: {item.intensity_level}</Text>
+                    <Text style={[fonts.size_32, styles.text]}>
+                        {item.name}
+                    </Text>
+                    <Text style={styles.subText}>
+                        難度: {item.intensity_level}
+                    </Text>
                     <Text style={styles.subText}>次數: {item.duration}</Text>
                 </View>
+                <TouchableOpacity
+                    onPress={() =>
+                        goToDetailScreenPressed(item.name, item.video_link)
+                    }
+                    style={styles.detailsButton}
+                >
+                    <Ionicons
+                        name="ellipsis-horizontal-circle-outline"
+                        size={40}
+                    />
+                </TouchableOpacity>
             </TouchableOpacity>
         )
     }
     return (
         <SafeScreen>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={selectAllPressed}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={selectAllPressed}
+                >
                     <Text style={styles.buttonText}>Select All</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={clearPressed}>
@@ -89,10 +109,15 @@ function ExerciseScreen() {
                     data={sampleExercise}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={renderItem}
-                    ItemSeparatorComponent={() => <View style={styles.exerciseListSeparator} />}
+                    ItemSeparatorComponent={() => (
+                        <View style={styles.exerciseListSeparator} />
+                    )}
                 />
             </View>
-            <TouchableOpacity style={styles.buttonStartCamera} onPress={startCameraPressed}>
+            <TouchableOpacity
+                style={styles.buttonStartCamera}
+                onPress={startCameraPressed}
+            >
                 <Text style={styles.buttonTextStartCamera}>Start Camera</Text>
             </TouchableOpacity>
         </SafeScreen>

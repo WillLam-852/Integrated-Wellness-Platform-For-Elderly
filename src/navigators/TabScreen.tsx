@@ -2,14 +2,18 @@ import {
     BottomTabParamList,
     MainStackScreenProps,
 } from "@/navigators/navigation"
-import { ChatbotScreen, ExerciseScreen, ProfileScreen, QuizScreen } from "@/screens"
+import {
+    ChatbotScreen,
+    ExerciseScreen,
+    ProfileScreen,
+    QuizScreen,
+} from "@/screens"
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import MealScreen from "@/screens/Meal/MealScreen"
 import { RouteProp } from "@react-navigation/native"
 import { TabRoute } from "./ScreenRoute"
 import { Text } from "react-native-paper"
-import { View } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { useTranslation } from "react-i18next"
 
@@ -80,11 +84,11 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                 tabBarIcon: tabBarIcon(route),
                 tabBarLabel: tabBarLabel(route),
                 headerShown: false,
-                tabBarStyle: { 
-                    backgroundColor: '#ffffff', // A clean white background
-                    borderTopColor: '#dddddd', // Light grey border at the top for subtle separation
+                tabBarStyle: {
+                    backgroundColor: "#ffffff", // A clean white background
+                    borderTopColor: "#dddddd", // Light grey border at the top for subtle separation
                     borderTopWidth: 1, // Thin border width
-                    shadowColor: '#000000', // Black color for shadow to add depth
+                    shadowColor: "#000000", // Black color for shadow to add depth
                     shadowOffset: { width: 0, height: -1 }, // Shadow placed at the top of the tab bar
                     shadowOpacity: 0.1, // Slightly visible shadow for subtle depth
                     shadowRadius: 3, // Soft shadow edges
@@ -97,18 +101,12 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                 name={TabRoute.ExerciseScreen}
                 component={ExerciseScreen}
             />
-            <Tab.Screen 
-                name={TabRoute.MealScreen} 
-                component={MealScreen} 
-            />
+            <Tab.Screen name={TabRoute.MealScreen} component={MealScreen} />
             <Tab.Screen
                 name={TabRoute.ChatbotScreen}
                 component={ChatbotScreen}
             />
-            <Tab.Screen
-                name={TabRoute.QuizScreen} 
-                component={QuizScreen} 
-            />
+            <Tab.Screen name={TabRoute.QuizScreen} component={QuizScreen} />
             <Tab.Screen
                 name={TabRoute.ProfileScreen}
                 component={ProfileScreen}

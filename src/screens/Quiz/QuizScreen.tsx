@@ -1,14 +1,20 @@
-import { Animated, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import {
+    Animated,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native"
 import React, { useEffect } from "react"
-import { useQuery } from '@tanstack/react-query';
+
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { SafeScreen } from "@/components/template"
 import { TabRoute } from "@/navigators/ScreenRoute"
+import { useQuery } from "@tanstack/react-query"
 import useViewModel from "./useViewModel"
 
 function QuizScreen({ navigation }: MainBottomTabScreenProps) {
-
     const {
         questions,
         userAnswers,
@@ -72,18 +78,19 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
                                 Welcome to Elderly Nutrition Assessment Tool!
                             </Text>
                             <Text style={styles.description}>
-                                Welcome to the Elderly Nutrition Assessment Tool.
-                                This questionnaire is designed to help us understand
-                                the dietary needs and health challenges faced by
-                                older adults. Your responses will enable us to
-                                provide tailored nutritional advice that can
-                                contribute to improved health and well-being. The
-                                questionnaire consists of multiple-choice questions
-                                and should take about 5-10 minutes to complete.
-                                Please answer each question based on the current
-                                conditions and daily habits of the elderly
-                                individual in question. Thank you for participating
-                                and helping us better serve the nutritional needs of
+                                Welcome to the Elderly Nutrition Assessment
+                                Tool. This questionnaire is designed to help us
+                                understand the dietary needs and health
+                                challenges faced by older adults. Your responses
+                                will enable us to provide tailored nutritional
+                                advice that can contribute to improved health
+                                and well-being. The questionnaire consists of
+                                multiple-choice questions and should take about
+                                5-10 minutes to complete. Please answer each
+                                question based on the current conditions and
+                                daily habits of the elderly individual in
+                                question. Thank you for participating and
+                                helping us better serve the nutritional needs of
                                 the elderly community. Tap 'Start' to begin!
                             </Text>
                             <TouchableOpacity
@@ -114,7 +121,10 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
                                 ]}
                             >
                                 <Text style={styles.question}>
-                                    {questions[currentQuestionIndex].questionText}
+                                    {
+                                        questions[currentQuestionIndex]
+                                            .questionText
+                                    }
                                 </Text>
                                 {questions[currentQuestionIndex].options.map(
                                     (option, oIndex) => (

@@ -1,36 +1,32 @@
 import { Button, Text } from "react-native-paper"
+import React, { useEffect } from "react"
+
 import HealthInformationView from "./HealthInformaionView/HealthInformationView"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import ProfileIcon from "./ProfileIcon"
 import ProfileItem from "./ProfileItem"
-import React, { useEffect } from "react"
 import { SafeScreen } from "@/components/template"
 import { ScrollView } from "react-native"
 import User from "@/models/User"
 import sampleUser from "@/sample-data/sample-user"
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query"
 import useViewModel from "./useViewModel"
 
 const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
-
     const fetchUsers = async () => {
-        const response = await fetch('https://whippet-one-brightly.ngrok-free.app/users/get/1');
+        const response = await fetch(
+            "https://whippet-one-brightly.ngrok-free.app/users/get/1"
+        )
         if (!response.ok) {
-            throw new Error('Failed to fetch users');
+            throw new Error("Failed to fetch users")
         }
-        return response.json();
-    };
+        return response.json()
+    }
 
-    const {
-        data,
-        isSuccess,
-        isFetching,
-        isError,
-        error,
-    } = useQuery({
-        queryKey: ['profile'],
+    const { data, isSuccess, isFetching, isError, error } = useQuery({
+        queryKey: ["profile"],
         queryFn: fetchUsers,
-    });
+    })
 
     const user: User = sampleUser
     const viewModel = useViewModel()
@@ -38,17 +34,18 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
 
     // TODO: Give a pop up window to show update the data successfully.
     useEffect(() => {
-        console.log("The value of isSuccess is: ", isSuccess);
-        if(isSuccess)
-            console.log("The user data is: ", data);
-    }, [isSuccess]);
+        console.log("The value of isSuccess is: ", isSuccess)
+        if (isSuccess) console.log("The user data is: ", data)
+    }, [isSuccess])
 
     if (isFetching) {
         return <Text style={styles.menuItemTitle}> Loading... </Text>
     }
 
     if (isError) {
-        return <Text style={styles.menuItemTitle}> Error: {error.message} </Text>
+        return (
+            <Text style={styles.menuItemTitle}> Error: {error.message} </Text>
+        )
     }
 
     return (
