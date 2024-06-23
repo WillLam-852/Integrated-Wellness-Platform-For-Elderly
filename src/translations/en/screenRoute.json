@@ -1,8 +1,8 @@
 {
     "SignInScreen": "Sign In",
-    "ExerciseScreen": "Exercise",
-    "MealScreen": "Meal",
-    "ChatbotScreen": "Chatbot",
-    "ProfileScreen": "Profile",
-    "QuizScreen": "Quiz"
+    "Exercise": "Exercise",
+    "Meal": "Meal",
+    "Chatbot": "Chatbot",
+    "Profile": "Profile",
+    "Quiz": "Quiz"
 }

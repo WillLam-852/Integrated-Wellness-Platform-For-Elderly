@@ -22,8 +22,11 @@ import { SafeScreen } from "@/components/template"
 import sampleRecommendMeal from "@/sample-data/sample-recommendmeal"
 import sampleRestaurants from "@/sample-data/sample-recommendrestaurant"
 import useViewModel from "./useViewModel"
+import { useTranslation } from "react-i18next"
 
 const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
+
+    const { t } = useTranslation(['mealScreen']);
     const { styles } = useViewModel()
 
     const renderRecommendedMealItem = ({ item }: { item: RecommendMeal }) => (
@@ -33,10 +36,10 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 style={styles.image}
             />
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.calories}>{item.calories} Calories</Text>
+            <Text style={styles.calories}>{item.calories} {t('mealScreen:calories')}</Text>
             <Text style={styles.description}>"{item.description}"</Text>
             <TouchableOpacity>
-                <Text style={styles.seeMore}>See More</Text>
+                <Text style={styles.seeMore}>{t('mealScreen:seeMore')}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -92,10 +95,10 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
         <SafeScreen>
             <ScrollView style={styles.container}>
                 <Text style={styles.header}>
-                    Let's Check Food Nutrition & Calories
+                    {t('mealScreen:recommendMealSectionTitle')}
                 </Text>
                 <Text style={styles.subHeader}>
-                    Select food type to see calories
+                    {t('mealScreen:recommendMealSectionSubTitle')}
                 </Text>
                 <FlatList
                     data={sampleRecommendMeal}
@@ -106,16 +109,16 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
                     contentContainerStyle={styles.list}
                 />
                 <Text style={styles.header}>
-                    Let's See Recommend Restaurants
+                    {t('mealScreen:recommendRestaurantSectionTitle')}
                 </Text>
-                <Text style={styles.subHeader}>Your health matters</Text>
+                <Text style={styles.subHeader}>{t('mealScreen:recommendRestaurantSectionSubtitle')}</Text>
                 <View style={styles.restaurantList}>
                     {sampleRestaurants.map((item) => (
                         <RecommendedRestaurantItem key={item.id} item={item} />
                     ))}
                 </View>
-                <Text style={styles.header}>Get Discount And Stay Healthy</Text>
-                <Text style={styles.subHeader}>See the promotion</Text>
+                <Text style={styles.header}>{t('mealScreen:discountSectionTitle')}</Text>
+                <Text style={styles.subHeader}>{t('mealScreen:discountSectionSubTitle')}</Text>
                 <FlatList
                     data={sampleRestaurants}
                     renderItem={renderRestaurantDicountItem}

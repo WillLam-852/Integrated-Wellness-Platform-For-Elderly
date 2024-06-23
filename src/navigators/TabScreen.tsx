@@ -18,7 +18,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { useTranslation } from "react-i18next"
 
 const TabScreen = ({ navigation }: MainStackScreenProps) => {
-    const { t } = useTranslation(["screenRoute"])
+    const { t } = useTranslation(["tabScreen"])
     const Tab = createBottomTabNavigator<BottomTabParamList>()
 
     const tabBarIcon =
@@ -73,7 +73,7 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
         ({ focused }: any) => {
             return (
                 <Text style={{ color: focused ? "#86C166" : "#BDC0BA" }}>
-                    {t(`screenRoute:${route.name}`)}
+                    {t(`${route.name}`)}
                 </Text>
             )
         }

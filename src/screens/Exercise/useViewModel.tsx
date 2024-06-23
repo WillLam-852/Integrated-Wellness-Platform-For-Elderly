@@ -76,7 +76,7 @@ const useViewModel = () => {
             backgroundColor: "#c9c7c7",
         },
         text: {
-            fontSize: 32,
+            fontSize: 24,
             color: "#333",
         },
         subText: {

@@ -17,11 +17,12 @@ import { getExerciseIcon } from "@/resources/images"
 import sampleExercise from "@/sample-data/sample-exercise"
 import { useQuery } from "@tanstack/react-query"
 import { useTheme } from "@/theme"
+import i18next from "i18next"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
 
 function ExerciseScreen() {
-    const { t } = useTranslation(["exercise", "welcome"])
+    const { t } = useTranslation(['exerciseScreen', 'exercise'])
 
     const { fonts } = useTheme()
 
@@ -70,16 +71,16 @@ function ExerciseScreen() {
                 {isSelected && <Text style={styles.tick}>✓</Text>}
                 <View style={styles.exerciseListTextContainer}>
                     <Text style={[fonts.size_32, styles.text]}>
-                        {item.name}
+                        {i18next.language === 'zh' ? item.nameZH : item.nameEN}
                     </Text>
                     <Text style={styles.subText}>
-                        難度: {item.intensity_level}
+                        {t('exerciseScreen:difficultyLevel')} {item.intensity_level}
                     </Text>
-                    <Text style={styles.subText}>次數: {item.duration}</Text>
+                    <Text style={styles.subText}>{t('exerciseScreen:totalTargetCount')} {item.duration}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={() =>
-                        goToDetailScreenPressed(item.name, item.video_link)
+                        goToDetailScreenPressed(item.nameEN, item.video_link)
                     }
                     style={styles.detailsButton}
                 >
@@ -98,10 +99,10 @@ function ExerciseScreen() {
                     style={styles.button}
                     onPress={selectAllPressed}
                 >
-                    <Text style={styles.buttonText}>Select All</Text>
+                    <Text style={styles.buttonText}>{t('exerciseScreen:selectAll')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={clearPressed}>
-                    <Text style={styles.buttonText}>Clear</Text>
+                    <Text style={styles.buttonText}>{t('exerciseScreen:clear')}</Text>
                 </TouchableOpacity>
             </View>
             <View style={[styles.exerciseListContainer]}>
@@ -118,7 +119,7 @@ function ExerciseScreen() {
                 style={styles.buttonStartCamera}
                 onPress={startCameraPressed}
             >
-                <Text style={styles.buttonTextStartCamera}>Start Camera</Text>
+                <Text style={styles.buttonTextStartCamera}>{t('exerciseScreen:startCamera')}</Text>
             </TouchableOpacity>
         </SafeScreen>
     )
