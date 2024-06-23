@@ -80,7 +80,7 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
         console.log("The value of isSuccess is: ", isSuccess);
         if(isSuccess) {
             console.log("The advice data is: ", data);
-            setMessages([...messages, new ChatMessage('bot', data.generation)]);
+            setMessages([...messages, new ChatMessage('bot', data.data)]);
         }
     }, [isSuccess]);
 

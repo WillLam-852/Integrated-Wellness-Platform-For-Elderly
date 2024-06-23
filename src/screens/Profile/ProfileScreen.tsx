@@ -11,6 +11,8 @@ import User from "@/models/User"
 import sampleUser from "@/sample-data/sample-user"
 import { useQuery } from "@tanstack/react-query"
 import useViewModel from "./useViewModel"
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     const fetchUsers = async () => {
@@ -31,6 +33,10 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     const user: User = sampleUser
     const viewModel = useViewModel()
     const { styles } = viewModel
+
+    const onChangeLanguage = (lang: 'zh' | 'en') => {
+		void i18next.changeLanguage(lang);
+	};
 
     // TODO: Give a pop up window to show update the data successfully.
     useEffect(() => {
@@ -67,6 +73,9 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
                     contentStyle={styles.languageSwitchContent}
                     textColor="blue"
                     buttonColor="#fff"
+                    onPress={() =>
+                        onChangeLanguage(i18next.language === 'en' ? 'zh' : 'en')
+                    }
                 >
                     Switch Language
                 </Button>
