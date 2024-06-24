@@ -1,12 +1,12 @@
 import { Button, Text } from "react-native-paper"
 import React, { useEffect } from "react"
+import { ScrollView, View } from "react-native"
 
 import HealthInformationView from "./HealthInformaionView/HealthInformationView"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import ProfileIcon from "./ProfileIcon"
 import ProfileItem from "./ProfileItem"
 import { SafeScreen } from "@/components/template"
-import { ScrollView } from "react-native"
 import User from "@/models/User"
 import i18next from "i18next"
 import sampleUser from "@/sample-data/sample-user"
@@ -34,14 +34,14 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
 
     const user: User = sampleUser
     const viewModel = useViewModel()
-    const { styles } = viewModel
+    const { signOutOnPress, styles } = viewModel
 
     const onChangeLanguage = (lang: "zh" | "en") => {
         void i18next.changeLanguage(lang)
     }
 
     const ButtonsContainer = () => (
-        <>
+        <View style={styles.buttonsContainer}>
             <Button
                 mode="text"
                 style={styles.languageSwitchButton}
@@ -60,11 +60,11 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 contentStyle={styles.logoutContent}
                 textColor="red"
                 buttonColor="#fff"
-                // onPress={onPress}
+                onPress={signOutOnPress}
             >
                 {t("profileScreen:signOut")}
             </Button>
-        </>
+        </View>
     )
 
     // TODO: Give a pop up window to show update the data successfully.
@@ -75,10 +75,13 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
 
     if (isFetching) {
         return (
-            <Text style={styles.menuItemTitle}>
-                {" "}
-                {t("profileScreen:loading")}{" "}
-            </Text>
+            <SafeScreen>
+                <Text style={styles.menuItemTitle}>
+                    {" "}
+                    {t("profileScreen:loading")}{" "}
+                </Text>
+                <ButtonsContainer />
+            </SafeScreen>
         )
     }
 
