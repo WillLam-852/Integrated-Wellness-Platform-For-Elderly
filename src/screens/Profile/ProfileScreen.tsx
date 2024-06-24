@@ -8,15 +8,14 @@ import ProfileItem from "./ProfileItem"
 import { SafeScreen } from "@/components/template"
 import { ScrollView } from "react-native"
 import User from "@/models/User"
+import i18next from "i18next"
 import sampleUser from "@/sample-data/sample-user"
 import { useQuery } from "@tanstack/react-query"
+import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
-import i18next from 'i18next';
-import { useTranslation } from 'react-i18next';
 
 const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
-
-    const { t } = useTranslation(['profileScreen']);
+    const { t } = useTranslation(["profileScreen"])
 
     const fetchUsers = async () => {
         const response = await fetch(
@@ -37,9 +36,9 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     const viewModel = useViewModel()
     const { styles } = viewModel
 
-    const onChangeLanguage = (lang: 'zh' | 'en') => {
-		void i18next.changeLanguage(lang);
-	};
+    const onChangeLanguage = (lang: "zh" | "en") => {
+        void i18next.changeLanguage(lang)
+    }
 
     const ButtonsContainer = () => (
         <>
@@ -50,10 +49,10 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 textColor="blue"
                 buttonColor="#fff"
                 onPress={() =>
-                    onChangeLanguage(i18next.language === 'en' ? 'zh' : 'en')
+                    onChangeLanguage(i18next.language === "en" ? "zh" : "en")
                 }
             >
-                {t('profileScreen:switchLanguage')}
+                {t("profileScreen:switchLanguage")}
             </Button>
             <Button
                 mode="text"
@@ -63,10 +62,10 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 buttonColor="#fff"
                 // onPress={onPress}
             >
-                {t('profileScreen:signOut')}
+                {t("profileScreen:signOut")}
             </Button>
         </>
-    );
+    )
 
     // TODO: Give a pop up window to show update the data successfully.
     useEffect(() => {
@@ -75,13 +74,20 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     }, [isSuccess])
 
     if (isFetching) {
-        return <Text style={styles.menuItemTitle}> {t('profileScreen:loading')} </Text>
+        return (
+            <Text style={styles.menuItemTitle}>
+                {" "}
+                {t("profileScreen:loading")}{" "}
+            </Text>
+        )
     }
 
     if (isError) {
         return (
             <SafeScreen>
-                <Text style={styles.menuItemTitle}>{t('profileScreen:error')} {error.message} </Text>
+                <Text style={styles.menuItemTitle}>
+                    {t("profileScreen:error")} {error.message}{" "}
+                </Text>
                 <ButtonsContainer />
             </SafeScreen>
         )

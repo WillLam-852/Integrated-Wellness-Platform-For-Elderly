@@ -14,15 +14,15 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import { SafeScreen } from "@/components/template"
 import { fetchOne } from "@/services/users"
 import { getExerciseIcon } from "@/resources/images"
+import i18next from "i18next"
 import sampleExercise from "@/sample-data/sample-exercise"
 import { useQuery } from "@tanstack/react-query"
 import { useTheme } from "@/theme"
-import i18next from "i18next"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
 
 function ExerciseScreen() {
-    const { t } = useTranslation(['exerciseScreen', 'exercise'])
+    const { t } = useTranslation(["exerciseScreen", "exercise"])
 
     const { fonts } = useTheme()
 
@@ -71,12 +71,15 @@ function ExerciseScreen() {
                 {isSelected && <Text style={styles.tick}>✓</Text>}
                 <View style={styles.exerciseListTextContainer}>
                     <Text style={[fonts.size_32, styles.text]}>
-                        {i18next.language === 'zh' ? item.nameZH : item.nameEN}
+                        {i18next.language === "zh" ? item.nameZH : item.nameEN}
                     </Text>
                     <Text style={styles.subText}>
-                        {t('exerciseScreen:difficultyLevel')} {item.intensity_level}
+                        {t("exerciseScreen:difficultyLevel")}{" "}
+                        {item.intensity_level}
                     </Text>
-                    <Text style={styles.subText}>{t('exerciseScreen:totalTargetCount')} {item.duration}</Text>
+                    <Text style={styles.subText}>
+                        {t("exerciseScreen:totalTargetCount")} {item.duration}
+                    </Text>
                 </View>
                 <TouchableOpacity
                     onPress={() =>
@@ -99,10 +102,14 @@ function ExerciseScreen() {
                     style={styles.button}
                     onPress={selectAllPressed}
                 >
-                    <Text style={styles.buttonText}>{t('exerciseScreen:selectAll')}</Text>
+                    <Text style={styles.buttonText}>
+                        {t("exerciseScreen:selectAll")}
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={clearPressed}>
-                    <Text style={styles.buttonText}>{t('exerciseScreen:clear')}</Text>
+                    <Text style={styles.buttonText}>
+                        {t("exerciseScreen:clear")}
+                    </Text>
                 </TouchableOpacity>
             </View>
             <View style={[styles.exerciseListContainer]}>
@@ -119,7 +126,9 @@ function ExerciseScreen() {
                 style={styles.buttonStartCamera}
                 onPress={startCameraPressed}
             >
-                <Text style={styles.buttonTextStartCamera}>{t('exerciseScreen:startCamera')}</Text>
+                <Text style={styles.buttonTextStartCamera}>
+                    {t("exerciseScreen:startCamera")}
+                </Text>
             </TouchableOpacity>
         </SafeScreen>
     )

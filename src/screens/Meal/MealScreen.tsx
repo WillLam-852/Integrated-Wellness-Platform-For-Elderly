@@ -21,12 +21,11 @@ import RecommendRestaurant from "@/models/RecommendRestaurant"
 import { SafeScreen } from "@/components/template"
 import sampleRecommendMeal from "@/sample-data/sample-recommendmeal"
 import sampleRestaurants from "@/sample-data/sample-recommendrestaurant"
-import useViewModel from "./useViewModel"
 import { useTranslation } from "react-i18next"
+import useViewModel from "./useViewModel"
 
 const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
-
-    const { t } = useTranslation(['mealScreen']);
+    const { t } = useTranslation(["mealScreen"])
     const { styles } = useViewModel()
 
     const renderRecommendedMealItem = ({ item }: { item: RecommendMeal }) => (
@@ -36,10 +35,12 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 style={styles.image}
             />
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.calories}>{item.calories} {t('mealScreen:calories')}</Text>
+            <Text style={styles.calories}>
+                {item.calories} {t("mealScreen:calories")}
+            </Text>
             <Text style={styles.description}>"{item.description}"</Text>
             <TouchableOpacity>
-                <Text style={styles.seeMore}>{t('mealScreen:seeMore')}</Text>
+                <Text style={styles.seeMore}>{t("mealScreen:seeMore")}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -95,10 +96,10 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
         <SafeScreen>
             <ScrollView style={styles.container}>
                 <Text style={styles.header}>
-                    {t('mealScreen:recommendMealSectionTitle')}
+                    {t("mealScreen:recommendMealSectionTitle")}
                 </Text>
                 <Text style={styles.subHeader}>
-                    {t('mealScreen:recommendMealSectionSubTitle')}
+                    {t("mealScreen:recommendMealSectionSubTitle")}
                 </Text>
                 <FlatList
                     data={sampleRecommendMeal}
@@ -109,16 +110,22 @@ const MealScreen = ({ navigation }: MainBottomTabScreenProps) => {
                     contentContainerStyle={styles.list}
                 />
                 <Text style={styles.header}>
-                    {t('mealScreen:recommendRestaurantSectionTitle')}
+                    {t("mealScreen:recommendRestaurantSectionTitle")}
                 </Text>
-                <Text style={styles.subHeader}>{t('mealScreen:recommendRestaurantSectionSubtitle')}</Text>
+                <Text style={styles.subHeader}>
+                    {t("mealScreen:recommendRestaurantSectionSubtitle")}
+                </Text>
                 <View style={styles.restaurantList}>
                     {sampleRestaurants.map((item) => (
                         <RecommendedRestaurantItem key={item.id} item={item} />
                     ))}
                 </View>
-                <Text style={styles.header}>{t('mealScreen:discountSectionTitle')}</Text>
-                <Text style={styles.subHeader}>{t('mealScreen:discountSectionSubTitle')}</Text>
+                <Text style={styles.header}>
+                    {t("mealScreen:discountSectionTitle")}
+                </Text>
+                <Text style={styles.subHeader}>
+                    {t("mealScreen:discountSectionSubTitle")}
+                </Text>
                 <FlatList
                     data={sampleRestaurants}
                     renderItem={renderRestaurantDicountItem}
