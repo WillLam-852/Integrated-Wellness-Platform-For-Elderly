@@ -4,6 +4,7 @@ import askPermission from "@/services/healthInformation/healthInformationPermiss
 import { fetchAllFromHealthKit } from "@/services/healthInformation/healthInformationGetter"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
+import { userSignOut } from "@/redux/authentication/slice"
 
 const useViewModel = () => {
     const dispatch = useDispatch()
@@ -14,6 +15,10 @@ const useViewModel = () => {
             fetchAllFromHealthKit(dispatch)
         }
     }, [])
+
+    const signOutOnPress = () => {
+        dispatch(userSignOut())
+    }
 
     const styles = StyleSheet.create({
         container: {
@@ -46,14 +51,17 @@ const useViewModel = () => {
             borderRadius: 15,
         },
         languageSwitchButton: {
-            marginTop: 15,       // Keeps the same top margin as the logout button for consistency
-            borderRadius: 15,    // Same border radius for a uniform look
-            elevation: 2,        // Consistent elevation for a similar shadow effect
+            marginTop: 15, // Keeps the same top margin as the logout button for consistency
+            borderRadius: 15, // Same border radius for a uniform look
+            elevation: 2, // Consistent elevation for a similar shadow effect
         },
         languageSwitchContent: {
             borderColor: "#0000ff", // A different color, here blue, to distinguish it from the logout button
-            borderWidth: 1,         // Consistent border width
-            borderRadius: 15,       // Same border radius for a uniform look
+            borderWidth: 1, // Consistent border width
+            borderRadius: 15, // Same border radius for a uniform look
+        },
+        buttonsContainer: {
+            marginHorizontal: 30,
         },
         icon: {
             borderRadius: 100 / 2,
@@ -69,6 +77,7 @@ const useViewModel = () => {
     })
 
     return {
+        signOutOnPress,
         styles,
     }
 }

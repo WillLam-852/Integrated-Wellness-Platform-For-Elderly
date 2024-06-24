@@ -4,6 +4,10 @@ import ChatIconWomen from "./chat_icon_woman.jpeg"
 import E1 from "./E1.png"
 import E2 from "./E2.png"
 import E3 from "./E3.png"
+import LogoBistro from "./logo_bistro.jpeg"
+import LogoPizza from "./logo_pizza.jpeg"
+import LogoSushi from "./logo_sushi.jpeg"
+import PlatformLogo from "./platform_logo.png"
 import ProfileIcon from "./profile_icon.png"
 import RecommendMeal1 from "./recommend_meal_1.jpeg"
 import RecommendMeal2 from "./recommend_meal_2.jpeg"
@@ -11,9 +15,6 @@ import RecommendMeal3 from "./recommend_meal_3.jpeg"
 import RecommendRestaurant1 from "./recommend_restaurant_1.jpeg"
 import RecommendRestaurant2 from "./recommend_restaurant_2.jpeg"
 import RecommendRestaurant3 from "./recommend_restaurant_3.jpeg"
-import LogoBistro from "./logo_bistro.jpeg";
-import LogoPizza from "./logo_pizza.jpeg";
-import LogoSushi from "./logo_sushi.jpeg";
 
 const exerciseIndex: {
     [key: number]: any
@@ -83,4 +84,8 @@ export const getChatIconImage = (id: string) => {
 
 export const getProfileIcon = () => {
     return profileIconIndex[1]
+}
+
+export const getPlatformLogo = () => {
+    return PlatformLogo
 }
