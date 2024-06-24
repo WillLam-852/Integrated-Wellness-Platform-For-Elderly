@@ -1,4 +1,6 @@
 {
-  "helloUser": "Hi, my name is {{name}}"
+    "id1": "Draw large circles with both hands",
+    "id2": "Torso rotation",
+    "id3": "Swing both hands upwards"
 }
 

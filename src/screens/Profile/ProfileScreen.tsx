@@ -8,11 +8,15 @@ import ProfileItem from "./ProfileItem"
 import { SafeScreen } from "@/components/template"
 import { ScrollView } from "react-native"
 import User from "@/models/User"
+import i18next from "i18next"
 import sampleUser from "@/sample-data/sample-user"
 import { useQuery } from "@tanstack/react-query"
+import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
 
 const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
+    const { t } = useTranslation(["profileScreen"])
+
     const fetchUsers = async () => {
         const response = await fetch(
             "https://whippet-one-brightly.ngrok-free.app/users/get/1"
@@ -32,6 +36,37 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     const viewModel = useViewModel()
     const { styles } = viewModel
 
+    const onChangeLanguage = (lang: "zh" | "en") => {
+        void i18next.changeLanguage(lang)
+    }
+
+    const ButtonsContainer = () => (
+        <>
+            <Button
+                mode="text"
+                style={styles.languageSwitchButton}
+                contentStyle={styles.languageSwitchContent}
+                textColor="blue"
+                buttonColor="#fff"
+                onPress={() =>
+                    onChangeLanguage(i18next.language === "en" ? "zh" : "en")
+                }
+            >
+                {t("profileScreen:switchLanguage")}
+            </Button>
+            <Button
+                mode="text"
+                style={styles.logoutButton}
+                contentStyle={styles.logoutContent}
+                textColor="red"
+                buttonColor="#fff"
+                // onPress={onPress}
+            >
+                {t("profileScreen:signOut")}
+            </Button>
+        </>
+    )
+
     // TODO: Give a pop up window to show update the data successfully.
     useEffect(() => {
         console.log("The value of isSuccess is: ", isSuccess)
@@ -39,12 +74,22 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     }, [isSuccess])
 
     if (isFetching) {
-        return <Text style={styles.menuItemTitle}> Loading... </Text>
+        return (
+            <Text style={styles.menuItemTitle}>
+                {" "}
+                {t("profileScreen:loading")}{" "}
+            </Text>
+        )
     }
 
     if (isError) {
         return (
-            <Text style={styles.menuItemTitle}> Error: {error.message} </Text>
+            <SafeScreen>
+                <Text style={styles.menuItemTitle}>
+                    {t("profileScreen:error")} {error.message}{" "}
+                </Text>
+                <ButtonsContainer />
+            </SafeScreen>
         )
     }
 
@@ -61,25 +106,7 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
                 {/* <ProfileItem title={"Height"} description={user.height + " cm"} />
             <ProfileItem title={"Weight"} description={user.weight + " kg"} /> */}
                 <HealthInformationView />
-                <Button
-                    mode="text"
-                    style={styles.languageSwitchButton}
-                    contentStyle={styles.languageSwitchContent}
-                    textColor="blue"
-                    buttonColor="#fff"
-                >
-                    Switch Language
-                </Button>
-                <Button
-                    mode="text"
-                    style={styles.logoutButton}
-                    contentStyle={styles.logoutContent}
-                    textColor="red"
-                    buttonColor="#fff"
-                    // onPress={onPress}
-                >
-                    Sign Out
-                </Button>
+                <ButtonsContainer />
             </ScrollView>
         </SafeScreen>
     )

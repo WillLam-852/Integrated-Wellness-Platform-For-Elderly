@@ -1,6 +1,7 @@
 class Exercise {
     id: number
-    name: string
+    nameZH: string
+    nameEN: string
     description: string
     duration: number
     intensity_level: number
@@ -10,7 +11,8 @@ class Exercise {
 
     constructor(
         id: number,
-        name: string,
+        nameZH: string,
+        nameEN: string,
         description: string,
         duration: number,
         intensity_level: number,
@@ -19,7 +21,8 @@ class Exercise {
         video_link?: string
     ) {
         this.id = id
-        this.name = name
+        this.nameZH = nameZH
+        this.nameEN = nameEN
         this.description = description
         this.duration = duration
         this.intensity_level = intensity_level
