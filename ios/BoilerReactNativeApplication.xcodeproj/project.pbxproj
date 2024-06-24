@@ -60,6 +60,9 @@
 		0D7FC1542BE88C40009E6060 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D7FC1402BE88C40009E6060 /* Octicons.ttf */; };
 		0D7FC1552BE88C40009E6060 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D7FC1412BE88C40009E6060 /* SimpleLineIcons.ttf */; };
 		0D7FC1562BE88C40009E6060 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D7FC1422BE88C40009E6060 /* Zocial.ttf */; };
+		0D864C362C296639006D263E /* level1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0D864C332C296639006D263E /* level1.mp3 */; };
+		0D864C392C296642006D263E /* level2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0D864C382C296642006D263E /* level2.mp3 */; };
+		0D864C3B2C296647006D263E /* level3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0D864C3A2C296647006D263E /* level3.mp3 */; };
 		0DBFCD5D2BD8FA9B00E9DED9 /* Exercise1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBFCD5C2BD8FA9B00E9DED9 /* Exercise1.swift */; };
 		0DFEAC692BCAD349001651BE /* BridgingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC682BCAD349001651BE /* BridgingModule.m */; };
 		0DFEAC6A2BCAD518001651BE /* CameraModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEAC672BCAD218001651BE /* CameraModule.swift */; };
@@ -138,6 +141,9 @@
 		0D7FC1402BE88C40009E6060 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		0D7FC1412BE88C40009E6060 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		0D7FC1422BE88C40009E6060 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		0D864C332C296639006D263E /* level1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = level1.mp3; sourceTree = "<group>"; };
+		0D864C382C296642006D263E /* level2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = level2.mp3; sourceTree = "<group>"; };
+		0D864C3A2C296647006D263E /* level3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = level3.mp3; sourceTree = "<group>"; };
 		0DBFCD5C2BD8FA9B00E9DED9 /* Exercise1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise1.swift; sourceTree = "<group>"; };
 		0DFEAC672BCAD218001651BE /* CameraModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModule.swift; sourceTree = "<group>"; };
 		0DFEAC682BCAD349001651BE /* BridgingModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingModule.m; sourceTree = "<group>"; };
@@ -388,6 +394,16 @@
 			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		0D864C312C29660A006D263E /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				0D864C332C296639006D263E /* level1.mp3 */,
+				0D864C382C296642006D263E /* level2.mp3 */,
+				0D864C3A2C296647006D263E /* level3.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		0DFEAC702BCAD716001651BE /* CameraFeedModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +423,7 @@
 				0D18CBF32BCACAE900717213 /* BridgingFiles */,
 				0D18CBF42BCACAF200717213 /* Extensions */,
 				0D7FC1432BE88C40009E6060 /* Fonts */,
+				0D864C312C29660A006D263E /* Sounds */,
 				0D18CBEC2BCAC68500717213 /* AppDelegate.swift */,
 				0D18CBEB2BCAC68500717213 /* SceneDelegate.swift */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -581,10 +598,13 @@
 				0D7FC14B2BE88C40009E6060 /* FontAwesome5_Solid.ttf in Resources */,
 				0D7FC14E2BE88C40009E6060 /* FontAwesome6_Solid.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				0D864C3B2C296647006D263E /* level3.mp3 in Resources */,
 				0D7FC1452BE88C40009E6060 /* Entypo.ttf in Resources */,
 				0D7FC14C2BE88C40009E6060 /* FontAwesome6_Brands.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				0D7FC1492BE88C40009E6060 /* FontAwesome5_Brands.ttf in Resources */,
+				0D864C392C296642006D263E /* level2.mp3 in Resources */,
+				0D864C362C296639006D263E /* level1.mp3 in Resources */,
 				0D7FC1462BE88C40009E6060 /* EvilIcons.ttf in Resources */,
 				0D72FAAE2BCAE01000113BE2 /* pose_landmarker_full.task in Resources */,
 			);

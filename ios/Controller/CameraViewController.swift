@@ -44,6 +44,9 @@ class CameraViewController: UIViewController {
   }
   
   private var isExerciseFirstStart: Bool = true
+  private var currentCount: Int = 0
+  private var audioPlayer: AVAudioPlayer?
+  private let soundPlaybackQueue = DispatchQueue(label: "soundPlaybackQueue", qos: .userInitiated)
   
   
     // MARK: - Button Actions
@@ -350,10 +353,9 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
       let shownFrameInformation = try currentExercise.check(pose, calculationExtraInformation) { [weak self] in
         self?.isExerciseFirstStart = false
       }
-      
-//      print(shownFrameInformation)
-      
+            
       if let shownFrameInformation = shownFrameInformation {
+        self.voiceFeedback(shownFrameInformation)
         self.handleScore(shownFrameInformation)
         self.handleCount(shownFrameInformation, target)
       }
@@ -369,12 +371,38 @@ extension CameraViewController: PoseLandmarkerServiceLiveStreamDelegate {
   
   
   private func handleCount(_ shownFrameInformation: ShownFrameInformation, _ target: Int) {
-    let count = shownFrameInformation.count
+    self.currentCount = shownFrameInformation.count
     DispatchQueue.main.async { [weak self] in
-      self?.countLabel.text = "\(count) / \(target)"
+      guard let self = self else {
+        return
+      }
+      self.countLabel.text = "\(self.currentCount) / \(target)"
     }
-    if count >= target {
+    if self.currentCount >= target {
       self.changeExercise()
+    }
+  }
+  
+  
+  private func voiceFeedback(_ shownFrameInformation: ShownFrameInformation) {
+    let count = shownFrameInformation.count
+    if count != self.currentCount && count % 2 == 0 {
+      guard let levelLastCount = shownFrameInformation.levelLastCount,
+            let soundFilePath = Bundle.main.path(forResource: levelLastCount.rawValue, ofType: "mp3") else {
+        return
+      }
+      let soundFileURL = URL(fileURLWithPath: soundFilePath)
+      self.soundPlaybackQueue.async {
+        DispatchQueue.main.async { [weak self] in
+          do {
+            self?.audioPlayer = try AVAudioPlayer(contentsOf: soundFileURL)
+            self?.audioPlayer?.prepareToPlay()
+            self?.audioPlayer?.play()
+          } catch {
+            print("ERROR Playing Sound: \(error.localizedDescription)")
+          }
+        }
+      }
     }
   }
 
