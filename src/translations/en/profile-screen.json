@@ -1,0 +1,7 @@
+{
+    "loading": "loading...",
+    "error": "Error:",
+    "failedToFetchUsers" : "Fail to Fetch User Information",
+    "switchLanguage": "Switch Language",
+    "signOut": "Sign Out"
+}
