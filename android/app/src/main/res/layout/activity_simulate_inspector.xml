@@ -10,34 +10,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentations.activities.PoseInspectorActivity">
-
-        <FrameLayout
-            android:id="@+id/preview_display_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/no_camera_access_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:text="No Camera Access"
-                android:textColor="#E91E63" />
-
-        </FrameLayout>
+        tools:context=".presentations.activities.SimulateInspectorActivity">
 
         <Button
             android:id="@+id/finishBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
             android:text="Finish"
-            app:layout_constraintBottom_toBottomOf="@+id/preview_display_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,12 +31,23 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:textColor="#E91E63"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/progressIncreaseBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Increase Progress"
+            app:layout_constraintBottom_toTopOf="@+id/finishBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/countTv"
@@ -61,8 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="0"
-            android:textColor="#4CAF50"
-            android:textSize="60sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -75,23 +68,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="0"
-            android:textColor="#E91E63"
-            android:textSize="60sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/execerciseNameTv" />
 
-        <ProgressBar
-            android:id="@+id/progressPb"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        <Button
+            android:id="@+id/progressDecreaseBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Decrease Progress"
+            app:layout_constraintBottom_toTopOf="@+id/progressIncreaseBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countTv" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
