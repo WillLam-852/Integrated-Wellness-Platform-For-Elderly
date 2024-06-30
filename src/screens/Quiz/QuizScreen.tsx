@@ -6,15 +6,18 @@ import {
     View,
 } from "react-native"
 import React, { useEffect } from "react"
-
+import { Checkbox } from "react-native-paper"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { SafeScreen } from "@/components/template"
 import { TabRoute } from "@/navigators/ScreenRoute"
-import { useQuery } from "@tanstack/react-query"
 import useViewModel from "./useViewModel"
+import { useTranslation } from "react-i18next"
+import i18next from "i18next"
+import Question from "@/models/Question"
 
 function QuizScreen({ navigation }: MainBottomTabScreenProps) {
+    const { t } = useTranslation(["quizScreen"]);
     const {
         questions,
         userAnswers,
@@ -27,6 +30,8 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
         setCurrentQuestionIndex,
         stage,
         setStage,
+        isHealthInformationEmbeded,
+        setIsHealthInformationEmbeded,
     } = useViewModel()
 
     const handleGetHealthInformation = () => {
@@ -38,11 +43,11 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
         fadeIn()
     }
 
-    const handleAnswer = (option: string) => {
+    const handleAnswer = (question: string, option: string) => {
         const newAnswers = [
             ...userAnswers,
             {
-                question: questions[currentQuestionIndex].questionText,
+                question: question,
                 answer: option,
             },
         ]
@@ -59,8 +64,126 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
     const handleRestart = () => {
         setStage("start")
         setCurrentQuestionIndex(0)
+        setUserAnswers([])
         fadeIn()
     }
+
+    const QuizStartSection = () => (
+        <View style={styles.startContainer}>
+            <Text style={styles.title}>{t("quizScreen:startQuizTitle")}</Text>
+            <Text style={styles.description}>{t("quizScreen:startQuizDescription")}</Text>
+            <TouchableOpacity
+                style={styles.startButton}
+                onPress={handleStart}
+            >
+                <Text style={styles.buttonText}>{t("quizScreen:startQuizButtonText")}</Text>
+            </TouchableOpacity>
+        </View>
+    )
+
+    const QuizProgressSection = ({questions, currentQuestionIndex}: {questions: Question[], currentQuestionIndex: number}) => (
+        <View style={styles.quizContainer}>
+            <QuizProgressSectionRestartButton />
+            <Animated.View
+                style={[
+                    styles.fadeContainer,
+                    { opacity: fadeAnim },
+                ]}
+            >
+                <QuizProgressSectionQuestion lang={i18next.language} questions={questions} currentQuestionIndex={currentQuestionIndex}/>
+                <QuizProgrssSectionOptions lang={i18next.language} questions={questions} currentQuestionIndex={currentQuestionIndex}/>
+            </Animated.View>
+        </View>
+    )
+
+    const QuizProgressSectionRestartButton = () => (
+        <TouchableOpacity
+        style={styles.restartButton}
+        onPress={handleRestart}
+        >
+            <MaterialCommunityIcons
+                name="restart"
+                size={32}
+                color="#000"
+            />
+        </TouchableOpacity>
+    )
+
+    const QuizProgressSectionQuestion = ( { lang, questions, currentQuestionIndex }: { lang: string, questions: Question[], currentQuestionIndex: number}) => (
+        <Text style={styles.question}>
+        {
+            lang === "en"
+            ? questions[currentQuestionIndex].questionTextEn
+            : questions[currentQuestionIndex].questionTextZh
+        }
+        </Text>
+    )
+
+    const QuizProgrssSectionOptions = ( { lang, questions, currentQuestionIndex }: { lang: string, questions: Question[], currentQuestionIndex: number}) => {
+        const currentQuestion = lang === "en" ? questions[currentQuestionIndex].questionTextEn : questions[currentQuestionIndex].questionTextZh
+        const currentOptionSet = lang === "en" ? questions[currentQuestionIndex].optionsEn : questions[currentQuestionIndex].optionsZh  
+        return (
+            currentOptionSet.map(
+                (option, oIndex) => (
+                    <TouchableOpacity
+                        key={oIndex}
+                        style={styles.optionButton}
+                        onPress={() => handleAnswer(currentQuestion, option)}
+                    >
+                        <Text style={styles.optionText}>
+                            {option}
+                        </Text>
+                    </TouchableOpacity>
+                )
+            )
+        )
+    }
+
+    const QuizEndSection = () => (
+        <View style={styles.endContainer}>
+            <View style={styles.stretchContainer}>
+                <Text style={styles.finishText}>
+                    {t("quizScreen:endQuizTitle")}
+                </Text>
+                <Text style={styles.resultsTitle}>
+                    {t("quizScreen:endQuizSubtitle")}
+                </Text>
+                {userAnswers.map((item, index) => (
+                    <View key={index} style={styles.resultView}>
+                        <Text style={styles.questionText}>
+                            Q: {item.question}
+                        </Text>
+                        <Text style={styles.answerText}>
+                            A: {item.answer}
+                        </Text>
+                    </View>
+                ))}
+            </View>
+            <TouchableOpacity
+                style={styles.functionalButton}
+                onPress={handleRestart}
+            >
+                <Text style={styles.buttonText}>
+                    {t("quizScreen:endQuizRestartButtonText")}
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.functionalButton}
+                // onPress={handleAPIFetching}
+            >
+                <Text style={styles.buttonText}>
+                    {t("quizScreen:endQuizGetAdvice")}
+                </Text>
+            </TouchableOpacity>
+            <View style={styles.checkboxContainer}>
+                <Checkbox
+                    status={isHealthInformationEmbeded ? 'checked' : "unchecked"}
+                    onPress={() => {setIsHealthInformationEmbeded(!isHealthInformationEmbeded)}}
+                />
+                <Text style={styles.checkboxLabel}>{t("quizScreen:endQuizAddHealthInformation")}</Text>
+            </View>
+        </View>
+    )
 
     useEffect(() => {
         if (stage === "quiz") {
@@ -72,120 +195,15 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
         <SafeScreen>
             <ScrollView>
                 <View style={styles.container}>
-                    {stage === "start" && (
-                        <View style={styles.startContainer}>
-                            <Text style={styles.title}>
-                                Welcome to Elderly Nutrition Assessment Tool!
-                            </Text>
-                            <Text style={styles.description}>
-                                Welcome to the Elderly Nutrition Assessment
-                                Tool. This questionnaire is designed to help us
-                                understand the dietary needs and health
-                                challenges faced by older adults. Your responses
-                                will enable us to provide tailored nutritional
-                                advice that can contribute to improved health
-                                and well-being. The questionnaire consists of
-                                multiple-choice questions and should take about
-                                5-10 minutes to complete. Please answer each
-                                question based on the current conditions and
-                                daily habits of the elderly individual in
-                                question. Thank you for participating and
-                                helping us better serve the nutritional needs of
-                                the elderly community. Tap 'Start' to begin!
-                            </Text>
-                            <TouchableOpacity
-                                style={styles.startButton}
-                                onPress={handleStart}
-                            >
-                                <Text style={styles.buttonText}>Start</Text>
-                            </TouchableOpacity>
-                        </View>
+                    {stage === "start" && ( <QuizStartSection/> )}
+                    {stage === "quiz" && ( 
+                        <QuizProgressSection 
+                            questions={questions} 
+                            currentQuestionIndex={currentQuestionIndex}
+                        /> 
                     )}
-
-                    {stage === "quiz" && (
-                        <View style={styles.quizContainer}>
-                            <TouchableOpacity
-                                style={styles.restartButton}
-                                onPress={handleRestart}
-                            >
-                                <MaterialCommunityIcons
-                                    name="restart"
-                                    size={32}
-                                    color="#000"
-                                />
-                            </TouchableOpacity>
-                            <Animated.View
-                                style={[
-                                    styles.fadeContainer,
-                                    { opacity: fadeAnim },
-                                ]}
-                            >
-                                <Text style={styles.question}>
-                                    {
-                                        questions[currentQuestionIndex]
-                                            .questionText
-                                    }
-                                </Text>
-                                {questions[currentQuestionIndex].options.map(
-                                    (option, oIndex) => (
-                                        <TouchableOpacity
-                                            key={oIndex}
-                                            style={styles.optionButton}
-                                            onPress={() => handleAnswer(option)}
-                                        >
-                                            <Text style={styles.optionText}>
-                                                {option}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    )
-                                )}
-                            </Animated.View>
-                        </View>
-                    )}
-
                     {stage === "end" && (
-                        <View style={styles.endContainer}>
-                            <View style={styles.stretchContainer}>
-                                <Text style={styles.finishText}>
-                                    You have finished the quiz!
-                                </Text>
-                                <Text style={styles.resultsTitle}>
-                                    Your Answers:
-                                </Text>
-                                {userAnswers.map((item, index) => (
-                                    <View key={index} style={styles.resultView}>
-                                        <Text style={styles.questionText}>
-                                            Q: {item.question}
-                                        </Text>
-                                        <Text style={styles.answerText}>
-                                            A: {item.answer}
-                                        </Text>
-                                    </View>
-                                ))}
-                            </View>
-                            <TouchableOpacity
-                                style={styles.homeButton}
-                                onPress={handleRestart}
-                            >
-                                <Text style={styles.buttonText}>Restart</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.getHealthInformationButton}
-                                onPress={handleGetHealthInformation}
-                            >
-                                <Text style={styles.buttonText}>
-                                    View Health Information
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.homeButton}
-                                onPress={handleAPIFetching}
-                            >
-                                <Text style={styles.buttonText}>
-                                    Fetching API
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        <QuizEndSection />
                     )}
                 </View>
             </ScrollView>

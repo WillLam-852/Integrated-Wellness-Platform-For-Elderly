@@ -1,0 +1,10 @@
+{
+    "startQuizTitle": "Welcome to Elderly Nutrition Assessment Tool!",
+    "startQuizDescription": "Welcome to the Elderly Nutrition Assessment Tool. This questionnaire is designed to help us understand the dietary needs and health challenges faced by older adults. Your responses will enable us to provide tailored nutritional advice that can contribute to improved health and well-being. The questionnaire consists of multiple-choice questions and should take about 5-10 minutes to complete. Please answer each question based on the current conditions and daily habits of the elderly individual in question. Thank you for participating and helping us better serve the nutritional needs of the elderly community. Tap 'Start' to begin!",
+    "startQuizButtonText": "Start",
+    "endQuizTitle": "You have finished the quiz!",
+    "endQuizSubtitle": "Your Answers:",
+    "endQuizRestartButtonText": "Restart",
+    "endQuizAddHealthInformation": "Add Health Information",
+    "endQuizGetAdvice": "Get Health Advice"
+}

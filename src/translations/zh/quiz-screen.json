@@ -1,0 +1,10 @@
+{
+    "startQuizTitle": "欢迎使用老年人营养评估工具！",
+    "startQuizDescription": "欢迎使用老年人营养评估工具。本问卷旨在帮助我们了解老年人的饮食需求和健康挑战。您的回答将使我们能够提供量身定制的营养建议，从而有助于改善健康和福祉。问卷包含多项选择题，完成大约需要5-10分钟。请根据老年人的当前状况和日常习惯回答每个问题。感谢您的参与，帮助我们更好地服务老年人的营养需求。点击“开始”以开始问卷！",
+    "startQuizButtonText": "开始",
+    "endQuizTitle": "評估已結束",
+    "endQuizSubtitle": "你的答案:",
+    "endQuizRestartButtonText": "重新開始",
+    "endQuizAddHealthInformation": "添加健康信息",
+    "endQuizGetAdvice": "獲取健康建議"
+}

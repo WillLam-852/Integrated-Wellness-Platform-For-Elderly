@@ -19,6 +19,7 @@ const useViewModel = () => {
         UserQuestionAndAnswerResult[]
     >([])
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+    const [isHealthInformationEmbeded, setIsHealthInformationEmbeded] = useState(false)
     const fadeAnim = useRef(new Animated.Value(0)).current
 
     const fadeIn = () => {
@@ -118,11 +119,12 @@ const useViewModel = () => {
             fontWeight: "bold",
             marginBottom: 20,
         },
-        homeButton: {
-            backgroundColor: "#3498db",
-            padding: 15,
+        functionalButton: {
+            alignSelf: 'stretch',
+            backgroundColor: "#90B44B",
+            padding: 16,
+            marginVertical: 8,
             borderRadius: 10,
-            width: "80%", // Consistent width with the start button for design uniformity
         },
         quizContainer: {
             flex: 1,
@@ -164,6 +166,20 @@ const useViewModel = () => {
             fontWeight: "bold",
             marginBottom: 5,
         },
+        checkboxContainer: {
+            flex: 1,
+            flexDirection: 'row',
+            marginBottom: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        checkbox: {
+            alignSelf: 'center',
+        },
+        checkboxLabel: {
+            fontSize: 24,
+            margin: 8,
+        },
     })
 
     return {
@@ -178,6 +194,8 @@ const useViewModel = () => {
         setCurrentQuestionIndex,
         stage,
         setStage,
+        isHealthInformationEmbeded,
+        setIsHealthInformationEmbeded,
     }
 }
 

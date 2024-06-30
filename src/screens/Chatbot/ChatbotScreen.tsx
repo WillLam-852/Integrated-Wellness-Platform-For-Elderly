@@ -27,7 +27,7 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
 
     // Define the fetch function for getting dietary advice
     const fetchAdvice = async ({ message }: { message: string }) => {
-        const url = 'https://whippet-one-brightly.ngrok-free.app/ai/generate';
+        const url = 'http://8.138.125.164/ai/generate';
         const params = new URLSearchParams({message});
         
         const response = await fetch(`${url}?${params.toString()}`);

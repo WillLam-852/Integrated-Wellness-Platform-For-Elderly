@@ -19,7 +19,7 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
 
     const fetchUsers = async () => {
         const response = await fetch(
-            "https://whippet-one-brightly.ngrok-free.app/users/get/1"
+            "https://8.138.125.164/users/get/1"
         )
         if (!response.ok) {
             throw new Error("Failed to fetch users")
