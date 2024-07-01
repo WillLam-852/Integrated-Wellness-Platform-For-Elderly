@@ -1,12 +1,17 @@
 class Question {
     id: number;
-    questionText: string;
-    options: string[];
+    questionTextEn: string;
+    optionsEn: string[];
+    questionTextZh: string;
+    optionsZh: string[];
 
-    constructor(id: number, questionText: string, options: string[]) {
+
+    constructor(id: number, questionTextEn: string, optionsEn: string[], questionTextZh: string, optionsZh: string[]) {
         this.id = id;
-        this.questionText = questionText;
-        this.options = options;
+        this.questionTextEn = questionTextEn;
+        this.optionsEn = optionsEn;
+        this.questionTextZh = questionTextZh;
+        this.optionsZh = optionsZh;
     }
 }
 

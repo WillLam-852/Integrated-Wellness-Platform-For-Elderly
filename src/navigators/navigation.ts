@@ -17,7 +17,10 @@ export type MainStackScreenProps = StackScreenProps<MainStackParamList>
 export type BottomTabParamList = {
     [TabRoute.ExerciseScreen]: undefined
     [TabRoute.MealScreen]: undefined
-    [TabRoute.ChatbotScreen]: undefined
+    [TabRoute.ChatbotScreen]: { 
+        isNeedToFetchHealthAdvice: false | true 
+        requestQuestion: string
+    } | undefined
     [TabRoute.ProfileScreen]: undefined
     [TabRoute.QuizScreen]: undefined
 }

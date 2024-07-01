@@ -1,6 +1,6 @@
 import { Button, Text } from "react-native-paper"
 import React, { useEffect } from "react"
-import { ScrollView, View } from "react-native"
+import { ScrollView, View, ActivityIndicator } from "react-native"
 
 import HealthInformationView from "./HealthInformaionView/HealthInformationView"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
@@ -19,7 +19,7 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
 
     const fetchUsers = async () => {
         const response = await fetch(
-            "https://whippet-one-brightly.ngrok-free.app/users/get/1"
+            "https://8.138.125.164/users/get/1"
         )
         if (!response.ok) {
             throw new Error("Failed to fetch users")
@@ -67,7 +67,6 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
         </View>
     )
 
-    // TODO: Give a pop up window to show update the data successfully.
     useEffect(() => {
         console.log("The value of isSuccess is: ", isSuccess)
         if (isSuccess) console.log("The user data is: ", data)
@@ -76,10 +75,12 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     if (isFetching) {
         return (
             <SafeScreen>
-                <Text style={styles.menuItemTitle}>
-                    {" "}
-                    {t("profileScreen:loading")}{" "}
-                </Text>
+                <View style={styles.indicatorContainer}>
+                    <ActivityIndicator size="large" color="#90B44B"/>
+                    <Text style={styles.menuItemTitle}>
+                        {t("profileScreen:loading")}
+                    </Text>
+                </View>
                 <ButtonsContainer />
             </SafeScreen>
         )
