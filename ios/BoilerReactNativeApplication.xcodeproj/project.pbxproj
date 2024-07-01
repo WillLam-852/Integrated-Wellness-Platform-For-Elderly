@@ -34,7 +34,6 @@
 		0D515ACB2BD56E4D00643DC1 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D515ACA2BD56E4D00643DC1 /* Plan.swift */; };
 		0D6836E62BDE9D7A004C0E27 /* Exercise2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6836E52BDE9D7A004C0E27 /* Exercise2.swift */; };
 		0D6836E82BDF8D05004C0E27 /* Exercise3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6836E72BDF8D05004C0E27 /* Exercise3.swift */; };
-=======
 		0D72FAAE2BCAE01000113BE2 /* pose_landmarker_full.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAB2BCAE01000113BE2 /* pose_landmarker_full.task */; };
 		0D72FAAF2BCAE01000113BE2 /* pose_landmarker_heavy.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAC2BCAE01000113BE2 /* pose_landmarker_heavy.task */; };
 		0D72FAB02BCAE01000113BE2 /* pose_landmarker_lite.task in Resources */ = {isa = PBXBuildFile; fileRef = 0D72FAAD2BCAE01000113BE2 /* pose_landmarker_lite.task */; };
@@ -353,7 +352,7 @@
 		0D72FAB12BCAE03500113BE2 /* MediaPipe */ = {
 			isa = PBXGroup;
 			children = (
-        0D515A9C2BD4FF6A00643DC1 /* Models */,
+				0D515A9C2BD4FF6A00643DC1 /* Models */,
 				0D515A9D2BD4FF7400643DC1 /* Configurations */,
 				0D515A9E2BD4FF8500643DC1 /* Service */,
 			);
@@ -1008,7 +1007,10 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "$(inherited)  ";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -1079,7 +1081,10 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "$(inherited)  ";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
