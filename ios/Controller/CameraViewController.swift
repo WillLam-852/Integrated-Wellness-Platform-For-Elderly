@@ -54,7 +54,6 @@ class CameraViewController: UIViewController {
   @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
     self.dismiss(animated: true)
   }
-
   
     // MARK: Controllers that manage functionality
     // Handles all the camera related functionality
@@ -81,8 +80,7 @@ class CameraViewController: UIViewController {
       }
     }
   }
-  
-  
+    
     // MARK: - View Handling Methods
 
 #if !targetEnvironment(simulator)
@@ -174,12 +172,10 @@ class CameraViewController: UIViewController {
   
   
     // MARK: - Pose Landmark Service
-  
   private func initializePoseLandmarkerServiceOnSessionResumption() {
     clearAndInitializePoseLandmarkerService()
     startObserveConfigChanges()
   }
-
   
   @objc private func clearAndInitializePoseLandmarkerService() {
       // Clear the existing poseLandmarkerService
@@ -196,8 +192,7 @@ class CameraViewController: UIViewController {
         liveStreamDelegate: self,
         delegate: InferenceConfigurationManager.sharedInstance.delegate)
   }
-  
-  
+    
   private func clearPoseLandmarkerServiceOnSessionInterruption() {
     stopObserveConfigChanges()
     

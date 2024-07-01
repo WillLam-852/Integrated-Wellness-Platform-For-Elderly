@@ -67,6 +67,7 @@ class OverlayView: UIView {
   func redrawPoseOverlays(forNewDeviceOrientation deviceOrientation: UIDeviceOrientation) {
       // Set the new device orientation
     self.orientation = deviceOrientation
+
     switch orientation {
       case .portrait:
         fallthrough
@@ -79,8 +80,7 @@ class OverlayView: UIView {
         return
     }
   }
-  
-  
+    
     // Function to clear all pose overlays from the view
   func clear() {
       // Clear the pose overlays
@@ -107,8 +107,7 @@ class OverlayView: UIView {
       drawDots(poseOverlay.dots)
     }
   }
-  
-  
+    
     // MARK: Private Functions
   
     // Function to calculate the adjusted rectangle based on the view bounds and orientation
@@ -203,8 +202,7 @@ class OverlayView: UIView {
       path.fill()
     }
   }
-  
-  
+    
     // Function to draw lines on the view
   private func drawLines(_ lines: [Line]) {
     let path = UIBezierPath()
