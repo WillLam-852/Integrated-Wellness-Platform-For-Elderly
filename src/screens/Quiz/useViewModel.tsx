@@ -1,5 +1,4 @@
-import { useRef, useState } from "react"
-
+import React, { useRef, useState } from "react"
 import { Animated } from "react-native"
 import Question from "@/models/Question"
 import { StyleSheet } from "react-native"
@@ -21,6 +20,13 @@ const useViewModel = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
     const [isHealthInformationEmbeded, setIsHealthInformationEmbeded] = useState(false)
     const fadeAnim = useRef(new Animated.Value(0)).current
+
+    const getRequestQuestion = ({ preSetMessage, userAnswers } : { preSetMessage: string, userAnswers: UserQuestionAndAnswerResult[] }) => {
+        userAnswers.forEach((userAnswer, index) => {
+            preSetMessage += `${index + 1}. ${userAnswer.question}\nAnswer: ${userAnswer.answer}\n\n`;
+        });
+        return preSetMessage.trim();
+    }
 
     const fadeIn = () => {
         Animated.timing(fadeAnim, {
@@ -196,6 +202,7 @@ const useViewModel = () => {
         setStage,
         isHealthInformationEmbeded,
         setIsHealthInformationEmbeded,
+        getRequestQuestion,
     }
 }
 

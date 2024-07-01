@@ -6,5 +6,6 @@
     "endQuizSubtitle": "Your Answers:",
     "endQuizRestartButtonText": "Restart",
     "endQuizAddHealthInformation": "Add Health Information",
-    "endQuizGetAdvice": "Get Health Advice"
+    "endQuizGetAdvice": "Get Health Advice",
+    "endQuezGetAdvicePrefix": "I need health advice based on the following information. Please provide the most important 6 points, keep the advice short and easily executable for the target user:\n\n"
 }

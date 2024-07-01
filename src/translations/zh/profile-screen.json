@@ -1,5 +1,5 @@
 {
-    "loading": "加載中",
+    "loading": "加載中...",
     "failedToFetchUsers" : "獲取用戶信息失敗",
     "switchLanguage": "切換語言",
     "error": "錯誤發生: ",

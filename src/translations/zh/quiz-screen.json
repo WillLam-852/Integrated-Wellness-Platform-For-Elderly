@@ -6,5 +6,6 @@
     "endQuizSubtitle": "你的答案:",
     "endQuizRestartButtonText": "重新開始",
     "endQuizAddHealthInformation": "添加健康信息",
-    "endQuizGetAdvice": "獲取健康建議"
+    "endQuizGetAdvice": "獲取健康建議",
+    "endQuezGetAdvicePrefix": "请提供健康建议，基于以下信息。请给出最重要的6点建议，简洁易执行。\n\n"
 }

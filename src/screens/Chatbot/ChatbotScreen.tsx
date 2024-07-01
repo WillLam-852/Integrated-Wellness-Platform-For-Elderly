@@ -2,10 +2,9 @@ import {
     Image,
     KeyboardAvoidingView,
     ScrollView,
-    StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
+    ActivityIndicator,
     View,
 } from "react-native"
 import React, { useState, useEffect } from "react"
@@ -13,23 +12,26 @@ import ChatMessage from "@/models/ChatMessage"
 import { MainBottomTabScreenProps } from "@/navigators/navigation"
 import { SafeScreen } from "@/components/template"
 import { getChatIconImage } from "@/resources/images"
-import i18next from "i18next"
 import { useQuery } from "@tanstack/react-query"
-import { useTheme } from "@/theme"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
+import { TabRoute } from "@/navigators/ScreenRoute"
 
-function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
-    const { t } = useTranslation()
-
+function ChatbotScreen({ route, navigation }: MainBottomTabScreenProps) {
+    const { t } = useTranslation(["chatbotScreen"]);
+    const isNeedToFetchHealthAdvice = route.params?.isNeedToFetchHealthAdvice;
+    const requestQuestion = route.params?.requestQuestion;
     const { messages, setMessages, styles } = useViewModel()
-    const question = "Give me some dietary advice for the elderly";
+
+    const handleNavigateToQuizScreen = () => {
+        navigation.navigate(TabRoute.QuizScreen)
+    }
 
     // Define the fetch function for getting dietary advice
-    const fetchAdvice = async ({ message }: { message: string }) => {
+    const fetchAdvice = async ({ message }: { message: string | undefined }) => {
+        if ( message === undefined ) return;
         const url = 'http://8.138.125.164/ai/generate';
         const params = new URLSearchParams({message});
-        
         const response = await fetch(`${url}?${params.toString()}`);
         if (!response.ok) {
             throw new Error('Failed to fetch dietary advice');
@@ -44,9 +46,9 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
         isError,
         error,
     } = useQuery({
-        queryKey: ['advice', question], // Include message in the query key for cache uniqueness
-        queryFn: () => fetchAdvice({message: question}),
-        enabled: !!question, // Only run the query if message is not empty
+        queryKey: ['advice', requestQuestion],
+        queryFn: () => fetchAdvice({message: requestQuestion}),
+        enabled: !!requestQuestion && isNeedToFetchHealthAdvice,
     });
 
     const UserMessage = ({ message }: { message: ChatMessage }) => (
@@ -84,12 +86,41 @@ function ChatbotScreen({ navigation }: MainBottomTabScreenProps) {
         }
     }, [isSuccess]);
 
+    if (!isNeedToFetchHealthAdvice) {
+        return (
+            <SafeScreen>
+                <View style={styles.needAccessmentInformationContainer}>
+                    <Text style={styles.needAccessmentNotification}>
+                        {t("chatbotScreen:AccessmentNotification")}
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.needAccessmentButton}
+                        onPress={() => handleNavigateToQuizScreen()}
+                    >
+                        <Text style={styles.needAccessmentButtonText}>
+                            {t("chatbotScreen:AccessmentNavigateButtonText")}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeScreen> 
+        )
+    }
+
     if (isFetching) {
-        return <Text> Loading... </Text>
+        return (
+            <SafeScreen>
+                <View style={styles.indicatorContainer}>
+                    <ActivityIndicator size="large" color="#90B44B"/>
+                    <Text style={styles.indicatorInformation}>
+                        {t("chatbotScreen:loading")}
+                    </Text>
+                </View>
+            </SafeScreen>
+        )
     }
 
     if (isError) {
-        return <Text> Error: {error.message} </Text>
+        return <Text>{t("chatbotScreen:error")}{error.message} </Text>
     }
 
     return (

@@ -32,10 +32,17 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
         setStage,
         isHealthInformationEmbeded,
         setIsHealthInformationEmbeded,
+        getRequestQuestion
     } = useViewModel()
 
     const handleGetHealthInformation = () => {
         navigation.navigate(TabRoute.ProfileScreen)
+    }
+
+    const handleResultSubmitToChatbot = () => {
+        const requestQuestionPrefix = t("quizScreen:endQuezGetAdvicePrefix")
+        const requestQuestion = getRequestQuestion({ preSetMessage: requestQuestionPrefix, userAnswers: userAnswers});
+        navigation.navigate(TabRoute.ChatbotScreen, { isNeedToFetchHealthAdvice: true, requestQuestion: requestQuestion})
     }
 
     const handleStart = () => {
@@ -169,7 +176,7 @@ function QuizScreen({ navigation }: MainBottomTabScreenProps) {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.functionalButton}
-                // onPress={handleAPIFetching}
+                onPress={handleResultSubmitToChatbot}
             >
                 <Text style={styles.buttonText}>
                     {t("quizScreen:endQuizGetAdvice")}
