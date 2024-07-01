@@ -101,12 +101,22 @@ const TabScreen = ({ navigation }: MainStackScreenProps) => {
                 name={TabRoute.ExerciseScreen}
                 component={ExerciseScreen}
             />
-            <Tab.Screen name={TabRoute.MealScreen} component={MealScreen} />
+            <Tab.Screen 
+                name={TabRoute.MealScreen} 
+                component={MealScreen} 
+            />
             <Tab.Screen
                 name={TabRoute.ChatbotScreen}
                 component={ChatbotScreen}
+                initialParams={{ 
+                    isNeedToFetchHealthAdvice: false,
+                    requestQuestion: ""
+                }}
             />
-            <Tab.Screen name={TabRoute.QuizScreen} component={QuizScreen} />
+            <Tab.Screen 
+                name={TabRoute.QuizScreen} 
+                component={QuizScreen} 
+            />
             <Tab.Screen
                 name={TabRoute.ProfileScreen}
                 component={ProfileScreen}

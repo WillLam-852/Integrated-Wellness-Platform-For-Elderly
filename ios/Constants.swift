@@ -9,9 +9,9 @@ public enum K {
   
   // MARK: - React Server IP Address
   // SAIL-Wifi
-  public static let SAILWIFI = "http://192.168.88.69:8081/index.bundle?platform=ios"
+  public static let SAILWIFI = "http://192.168.88.21:8081/index.bundle?platform=ios"
   // HKU WiFi
-  public static let HKU = "http://10.69.120.111:8081/index.bundle?platform=ios"
+  public static let HKU = "http://10.69.150.71:8081/index.bundle?platform=ios"
   // Home WiFi
   public static let Home = "http://192.168.50.12:8081/index.bundle?platform=ios"
 
@@ -27,10 +27,15 @@ public enum K {
 //  public static let apiBaseUrl = "\(protocal)://\(domain)/\(mobileAPI)";
   public static let apiBaseUrl = "Pending...";
   
-  // MARK: - DispatchQueueLabel
+  // MARK: - Dispatch Queue Label
   struct DispatchQueueLabel {
-      public static let sessionQueue = "SessionQueue"
-      public static let detectionQueue = "DetectionQueue"
+      public static let backgroundQueue = "mediapipe.cameraController.backgroundQueue"
+      public static let poseLandmarkerServiceQueue = "mediapipe.cameraController.poseLandmarkerServiceQueue"
+  }
+  
+  // MARK: - Notification Name
+  struct NotificationName {
+    public static let inferenceConfigChanged = "mediapipe.inferenceConfigChanged"
   }
   
     // MARK: - ViewControllerID
@@ -41,7 +46,16 @@ public enum K {
     public static let CameraViewControllerID = "CameraViewControllerID"
   }
   
-
+    // MARK: - Exercise
+  struct Exercise {
+      /// Number of frames before proceed to analyze frame to reduce memory used (i.e. save 1 frame for each 3 frames)
+    public static let frameIndexThreshold: Int = 3
+      /// Number of same state required before transition (i.e. 6 frames, around 0.3 seconds)
+    public static let countTransitionThreshold: Int = 6
+    public static let ShoulderAngleMinimum = 17.0
+  }
+  
+    // MARK: - Localization
   struct Localization {
     public static let error = "error"
     public static let tryAgain = "tryAgain"

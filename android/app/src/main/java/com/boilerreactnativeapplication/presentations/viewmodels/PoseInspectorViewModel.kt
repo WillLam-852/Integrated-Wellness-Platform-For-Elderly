@@ -43,7 +43,6 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
     // Exercise Center
     private var exerciseCenter: ExerciseCenter = ExerciseCenter(plans)
 
-
 //------------------------------------- Live Data Part ---------------------------------------------
 
 
@@ -158,6 +157,5 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
         plan?.let{ _plan.postValue(it) }
         _isFinishExercise.postValue(isFinished)
     }
-
 
 }

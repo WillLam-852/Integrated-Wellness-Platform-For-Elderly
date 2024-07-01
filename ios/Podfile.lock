@@ -18,9 +18,9 @@ PODS:
   - MediaPipeTasksCommon (0.10.12)
   - MediaPipeTasksVision (0.10.12):
     - MediaPipeTasksCommon (= 0.10.12)
-  - MMKV (1.3.4):
-    - MMKVCore (~> 1.3.4)
-  - MMKVCore (1.3.4)
+  - MMKV (1.3.5):
+    - MMKVCore (~> 1.3.5)
+  - MMKVCore (1.3.5)
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -897,6 +897,10 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.9.0):
     - React-Core
+  - react-native-webview (13.10.4):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - React-nativeconfig (0.73.4)
   - React-NativeModulesApple (0.73.4):
     - glog
@@ -1064,13 +1068,17 @@ PODS:
     - React-jsi (= 0.73.4)
     - React-logger (= 0.73.4)
     - React-perflogger (= 0.73.4)
+  - RNAppleHealthKit (1.7.0):
+    - React
+  - RNCAsyncStorage (1.23.1):
+    - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
   - RNGestureHandler (2.15.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNReanimated (3.7.0):
+  - RNReanimated (3.12.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1078,6 +1086,8 @@ PODS:
   - RNScreens (3.29.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+  - RNSVG (15.3.0):
     - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
@@ -1116,6 +1126,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1136,10 +1147,13 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNAppleHealthKit (from `../node_modules/react-native-health`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1212,6 +1226,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1252,6 +1268,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAppleHealthKit:
+    :path: "../node_modules/react-native-health"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNGestureHandler:
@@ -1260,6 +1280,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1274,8 +1296,8 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MediaPipeTasksCommon: 254e6bff77804b262f6ecf180477142ea551e802
   MediaPipeTasksVision: 78d5c47cd7996b4d815bacba0a52dbf01458dfaf
-  MMKV: ed58ad794b3f88c24d604a5b74f3fba17fcbaf74
-  MMKVCore: a67a1cede26175c413176f404a7cedec43f96a0b
+  MMKV: 506311d0494023c2f7e0b62cc1f31b7370fa3cfb
+  MMKVCore: 9e2e5fd529b64a9fe15f1a7afb3d73b2e27b4db9
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: ab7f915c15569f04a49669e573e6e319a53f9faa
   RCTTypeSafety: 63b97ced7b766865057e7154db0e81ce4ee6cf1e
@@ -1299,6 +1321,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 63913773ed7f96b814a2521e13e6d010282096ad
   react-native-mmkv: 124b22209aacdcd172b6ac39071b9647080f0411
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
+  react-native-webview: 492d3b7828fca1c68168438f0e7c99bb8194050f
   React-nativeconfig: d7af5bae6da70fa15ce44f045621cf99ed24087c
   React-NativeModulesApple: 0123905d5699853ac68519607555a9a4f5c7b3ac
   React-perflogger: 8a1e1af5733004bdd91258dcefbde21e0d1faccd
@@ -1319,13 +1342,16 @@ SPEC CHECKSUMS:
   React-runtimescheduler: ed48e5faac6751e66ee1261c4bd01643b436f112
   React-utils: 6e5ad394416482ae21831050928ae27348f83487
   ReactCommon: 840a955d37b7f3358554d819446bffcf624b2522
+  RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
+  RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNGestureHandler: deda62b8339496ba721a45e0f3e2d7a319932cee
-  RNReanimated: 7d6d32f238f914f13d9d6fb45c0aef557f7f901e
+  RNReanimated: 60feb9b752e2cbe60bbb8d90da29672a81fa59b2
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
+  RNSVG: a48668fd382115bc89761ce291a81c4ca5f2fd2e
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 1b901a6d6eeba4e8a2e8f308f708691cdb5db312
 
-PODFILE CHECKSUM: a3177b8fc324b14e6914e76887072bd90b06f5a3
+PODFILE CHECKSUM: 03f097e772f52de217e39dfeab4e766a3bb130fc
 
 COCOAPODS: 1.15.2

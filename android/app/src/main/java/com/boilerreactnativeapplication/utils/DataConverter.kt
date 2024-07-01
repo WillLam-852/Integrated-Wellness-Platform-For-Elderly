@@ -52,5 +52,4 @@ object DataConverter {
         // Convert the angle to degrees
         return Math.toDegrees(angleInRadians.toDouble())
     }
-
 }

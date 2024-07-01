@@ -37,11 +37,12 @@ class ReactViewController: UIViewController {
     }
   
     
-    func showCameraView() {
+    func showCameraView(_ exercises: [AbstractExercise]) {
         let navVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.NavigationControllerID) as! UINavigationController
         let camVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: K.ViewControllerID.CameraViewControllerID) as! CameraViewController
         navVC.setViewControllers([camVC], animated: false)
         navVC.modalPresentationStyle = .fullScreen
+        camVC.exercises = exercises
         self.present(navVC, animated: true, completion: nil)
     }
     

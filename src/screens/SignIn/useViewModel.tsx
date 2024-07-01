@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
+
 import { useDispatch } from "react-redux"
 import { useState } from "react"
 import { userSignIn } from "@/redux/authentication/slice"
@@ -16,35 +17,67 @@ const useViewModel = () => {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
+        },
+        backgroundImage: {
+            flex: 1,
+            resizeMode: "cover", // or 'contain', 'stretch', 'center'
+            paddingTop: Platform.OS == "ios" ? 100 : 16,
             padding: 16,
-            backgroundColor: "#cbf5dd",
+            justifyContent: "center",
+        },
+        header: {
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            paddingHorizontal: 16,
+            paddingVertical: 8,
+        },
+        languageButton: {
+            borderRadius: 12,
+            padding: 8,
+        },
+        languageButtonText: {
+            color: "#fff",
+            fontWeight: "bold",
         },
         title: {
-            marginTop: 25,
-            fontSize: 35,
+            fontSize: 32,
             textAlign: "center",
             fontWeight: "bold",
-            alignSelf: "center",
+            marginBottom: 24,
+            color: "#333",
         },
         logo: {
-            width: 150,
-            height: 150,
-            marginTop: 25,
-            marginBottom: 50,
+            width: 240,
+            height: 240,
+            marginBottom: 24,
             alignSelf: "center",
+            borderRadius: 120,
         },
         input: {
-            height: 50,
-            marginBottom: 12,
-            marginHorizontal: 20,
-            paddingHorizontal: 8,
+            height: 48,
+            paddingHorizontal: 16,
+            fontSize: 16,
+            marginVertical: 8,
+            backgroundColor: "#fff",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            elevation: 2,
         },
-        button: {
-            marginTop: 30,
-            marginHorizontal: 20,
+        signInButton: {
+            marginTop: 32,
+            borderRadius: 15,
+            elevation: 2,
+            marginBottom: 32,
+            backgroundColor: "#8E354A",
+            paddingVertical: 16,
+            alignItems: "center",
         },
-        buttonLabel: {
+        signInButtonLabel: {
             fontWeight: "bold",
+            color: "#fff",
+            fontSize: 24,
         },
     })
 

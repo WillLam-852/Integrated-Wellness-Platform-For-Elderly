@@ -338,5 +338,4 @@ class PoseInspectorActivity : AppCompatActivity() {
 //------------------------------------- Observe Update Functions -----------------------------------
 
 
-
 }

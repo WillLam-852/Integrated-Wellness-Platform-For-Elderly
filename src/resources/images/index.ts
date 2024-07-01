@@ -8,6 +8,7 @@ import LogoBistro from "./logo_bistro.jpeg"
 import LogoPizza from "./logo_pizza.jpeg"
 import LogoSushi from "./logo_sushi.jpeg"
 import PlatformLogo from "./platform_logo.png"
+import PlatformBackround from "./signin_screen_background.jpeg"
 import ProfileIcon from "./profile_icon.png"
 import RecommendMeal1 from "./recommend_meal_1.jpeg"
 import RecommendMeal2 from "./recommend_meal_2.jpeg"
@@ -88,4 +89,8 @@ export const getProfileIcon = () => {
 
 export const getPlatformLogo = () => {
     return PlatformLogo
+}
+
+export const getPlatformBackground = () => {
+    return PlatformBackround
 }

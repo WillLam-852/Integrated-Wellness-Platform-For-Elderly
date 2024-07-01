@@ -99,6 +99,42 @@ const useViewModel = () => {
             height: 64,
             marginHorizontal: 5,
         },
+        needAccessmentInformationContainer: {
+            flex: 1,
+            padding: 32,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        needAccessmentNotification: {
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#90B44B",
+        },
+        needAccessmentButton: {
+            backgroundColor: "#90B44B",
+            marginTop: 32,
+            padding: 10,
+            borderRadius: 10,
+            width: "80%", // Set a specific width for the start button to make it stand out
+        },
+        needAccessmentButtonText: {
+            color: "#fff",
+            fontSize: 24,
+            textAlign: "center", // Center-align text for uniformity
+        },
+        indicatorContainer: {
+            flex: 1,
+            flexDirection: 'column',
+            alignSelf: "center",
+            alignItems: "center",
+            padding: 8,
+            marginVertical: 16,
+        },
+        indicatorInformation: {
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#90B44B",
+        },
     })
 
     return {

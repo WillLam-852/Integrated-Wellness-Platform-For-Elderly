@@ -74,6 +74,13 @@ const useViewModel = () => {
             justifyContent: "center",
             backgroundColor: "#fff0",
         },
+        indicatorContainer: {
+            flexDirection: 'column',
+            alignSelf: "center",
+            alignItems: "center",
+            padding: 8,
+            marginVertical: 16,
+        }
     })
 
     return {
