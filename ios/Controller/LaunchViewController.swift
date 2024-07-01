@@ -12,7 +12,7 @@ class LaunchViewController: UIViewController {
 
     // MARK: Dev React Server
     /// current react native location with IP address of computer
-    let jsCodeLocation = URL(string: K.HKU)!
+    let jsCodeLocation = URL(string: K.Home)!
 
     /// local react native location in the device
     let bundleLocation = Bundle.main.url(forResource: "main", withExtension: "jsbundle")

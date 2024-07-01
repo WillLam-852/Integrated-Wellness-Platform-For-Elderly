@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
+
 import { useDispatch } from "react-redux"
 import { useState } from "react"
 import { userSignIn } from "@/redux/authentication/slice"
@@ -19,13 +20,14 @@ const useViewModel = () => {
         },
         backgroundImage: {
             flex: 1,
-            resizeMode: 'cover', // or 'contain', 'stretch', 'center'
+            resizeMode: "cover", // or 'contain', 'stretch', 'center'
+            paddingTop: Platform.OS == "ios" ? 100 : 16,
             padding: 16,
-            justifyContent: 'center',
+            justifyContent: "center",
         },
         header: {
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
+            flexDirection: "row",
+            justifyContent: "flex-end",
             paddingHorizontal: 16,
             paddingVertical: 8,
         },
