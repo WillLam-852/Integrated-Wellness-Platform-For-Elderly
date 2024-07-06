@@ -13,6 +13,7 @@ import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.usecases.exercisecenter.ExerciseCenter
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
+import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterDebugMsgObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterPlanObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterProgressObserver
 import com.boilerreactnativeapplication.utils.CAMERA_FACING_BACK
@@ -24,7 +25,8 @@ import kotlinx.coroutines.launch
 class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): AndroidViewModel(application),
     ExerciseCenterPlanObserver,
     ExerciseCenterCountObserver,
-    ExerciseCenterProgressObserver
+    ExerciseCenterProgressObserver,
+    ExerciseCenterDebugMsgObserver
 {
 
     companion object {
@@ -66,6 +68,10 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
     private val _isShowCountTick = MutableLiveData<Boolean>(false)
     val isShowCountTick: LiveData<Boolean>
         get() = _isShowCountTick
+
+    private val _debugMsg = MutableLiveData<String>("")
+    val debugMsg: LiveData<String>
+        get() = _debugMsg
 
 
 //------------------------------------- Initialization ---------------------------------------------
@@ -137,12 +143,14 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
         exerciseCenter.registerExerciseCenterCountObserver(this)
         exerciseCenter.registerExerciseCenterProgressObserver(this)
         exerciseCenter.registerExerciseCenterPlanObserver(this)
+        exerciseCenter.registerExerciseCenterDebugMsgObserver(this)
     }
 
     private fun removeExerciseCenterObservers() {
         exerciseCenter.removeExerciseCenterCountObserver(this)
         exerciseCenter.removeExerciseCenterProgressObserver(this)
         exerciseCenter.removeExerciseCenterPlanObserver(this)
+        exerciseCenter.removeExerciseCenterDebugMsgObserver(this)
     }
 
     override fun updateExerciseCenterCount(count: Int) {
@@ -159,5 +167,7 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
         _isFinishExercise.postValue(isFinished)
     }
 
-
+    override fun updateExerciseCenterDebugMsg(message: String) {
+        _debugMsg.postValue(message)
+    }
 }

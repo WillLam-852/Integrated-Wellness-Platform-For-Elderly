@@ -5,4 +5,5 @@ enum class ExerciseState {
     LEVEL1,
     LEVEL2,
     LEVEL3,
+    ABNORMAL
 }

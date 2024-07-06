@@ -11,7 +11,9 @@ abstract class AbstractExercisePlan (
     val name: String = "undefined",
     val side: ExerciseSide = ExerciseSide.UNDEFINED,
     val targetAmount: Int = 0,
-    val feedback: ExerciseFeedback = ExerciseFeedback(Pair(45.0, 90.0), Pair(90.0, 150.0), Pair(150.0, 180.0))
+    val feedbackList: List<ExerciseFeedback> = listOf<ExerciseFeedback>(
+        ExerciseFeedback(Pair(0.0, 45.0), Pair(45.0, 90.0), Pair(90.0, 150.0), Pair(150.0, 180.0))
+    )
 ): Serializable {
 
     protected var headKeyPoint: KeyPoint = KeyPoint(bodyPart = BodyPart.HEAD)
@@ -32,22 +34,29 @@ abstract class AbstractExercisePlan (
 
     abstract fun check(person: Person): Pair<Int, Int>
 
-    protected fun getNextState(angle: Double): ExerciseState {
-        return when (angle) {
-            in feedback.levelOneRange.first..feedback.levelOneRange.second -> ExerciseState.LEVEL1
-            in feedback.leveTwoRange.first..feedback.leveTwoRange.second -> ExerciseState.LEVEL2
-            in feedback.leveThreeRange.first..feedback.leveThreeRange.second -> ExerciseState.LEVEL3
-            else -> ExerciseState.RESET
+    abstract fun getDebugMsg(person: Person): String
+
+    // For most common case, we only focus on single feedback.
+    open protected fun getNextState(angles: List<Double>): ExerciseState {
+        return when {
+            angles.all { it in feedbackList[0].resetRange.first..feedbackList[0].resetRange.second } -> ExerciseState.RESET
+            angles.all { it in feedbackList[0].levelOneRange.first..feedbackList[0].levelOneRange.second } -> ExerciseState.LEVEL1
+            angles.all { it in feedbackList[0].levelTwoRange.first..feedbackList[0].levelTwoRange.second } -> ExerciseState.LEVEL2
+            angles.all { it in feedbackList[0].levelThreeRange.first..feedbackList[0].levelThreeRange.second } -> ExerciseState.LEVEL3
+            else -> ExerciseState.ABNORMAL
         }
     }
 
-    private fun getNextProgress(angle: Double): Int {
-        return (((angle/180.0)*100).roundToInt())
+    // For most common case, we only focus on single feedback.
+    open protected fun getNextProgress(angles: List<Double>): Int {
+        if (angles.isEmpty()) return 0
+        val averageAngle = angles.average()
+        return (((averageAngle / feedbackList[0].levelThreeRange.second) * 100).roundToInt())
     }
 
-    protected fun updateState(angle: Double): Pair<Int, Int> {
-        val nextState = getNextState(angle)
-        val currentProgress = getNextProgress(angle)
+    protected fun updateState(angles: List<Double>): Pair<Int, Int> {
+        val nextState = getNextState(angles)
+        val currentProgress = getNextProgress(angles)
         var countToAdd = 0
         if(currentState != ExerciseState.RESET && nextState == ExerciseState.RESET) {
             countToAdd = 1

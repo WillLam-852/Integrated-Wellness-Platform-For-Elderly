@@ -11,17 +11,35 @@ class ExercisePlanE1(
     code: ExerciseCode = ExerciseCode.E1,
     name: String = "雙手畫大圈",
     side: ExerciseSide = ExerciseSide.BOTH,
-    targetAmount: Int = 2,
-    feedback: ExerciseFeedback = ExerciseFeedback(Pair(60.0, 100.0), Pair(100.0, 150.0), Pair(150.0, 180.0))
+    targetAmount: Int = 5,
+    feedbackList: List<ExerciseFeedback> = listOf<ExerciseFeedback>(
+        ExerciseFeedback(
+            Pair(0.0, 50.0),
+            Pair(50.0, 100.0),
+            Pair(100.0, 150.0),
+            Pair(150.0, 180.0)
+        )
+    )
 ) : AbstractExercisePlan(
     code,
     name,
     side,
     targetAmount,
-    feedback
+    feedbackList
 ) {
 
     override fun check(person: Person): Pair<Int, Int> {
+        val listOfTargetAngle: List<Double> = getListOfTargetAngle(person)
+        val progressAndCountPair = updateState(listOfTargetAngle)
+        return progressAndCountPair
+    }
+
+    override fun getDebugMsg(person: Person): String {
+        val listOfTargetAngle: List<Double> = getListOfTargetAngle(person)
+        return "listOfTargetAngle = left: ${"%.2f".format(listOfTargetAngle[0])}, right: ${"%.2f".format(listOfTargetAngle[1])}"
+    }
+
+    private fun getListOfTargetAngle(person:Person): List<Double> {
         leftShoulderKeyPoint = person.keyPoints[1]
         rightShoulderKeyPoint = person.keyPoints[2]
         leftElbowKeyPoint = person.keyPoints[3]
@@ -31,10 +49,7 @@ class ExercisePlanE1(
 
         val leftAngle: Double = DataConverter.convertPointsToAngle(leftElbowKeyPoint, leftShoulderKeyPoint, leftHipKeyPoint)
         val rightAngle: Double = DataConverter.convertPointsToAngle(rightElbowKeyPoint, rightShoulderKeyPoint, rightHipKeyPoint)
-
-        val progressAndCountPair = updateState(leftAngle)
-
-        return progressAndCountPair
+        return listOf<Double>(leftAngle, rightAngle)
     }
 
 }

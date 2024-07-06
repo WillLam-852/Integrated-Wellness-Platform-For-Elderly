@@ -5,6 +5,7 @@ import com.boilerreactnativeapplication.data.person.Person
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
+import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterDebugMsgObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterPlanObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterProgressObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.subject.ExerciseCenterSubject
@@ -20,11 +21,13 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
     private val countObservers: MutableList<ExerciseCenterCountObserver> = mutableListOf()
     private val progressObservers: MutableList<ExerciseCenterProgressObserver> = mutableListOf()
     private val planObservers: MutableList<ExerciseCenterPlanObserver> = mutableListOf()
+    private val debugMsgObservers: MutableList<ExerciseCenterDebugMsgObserver> = mutableListOf()
 
     private var count: Int = 0
     private var progress: Int = 0
     private var currentPlanIndex: Int = -1
     private var isFinished: Boolean = false
+    private var debugMsg: String = ""
 
 
 //------------------------------------- Initialization ---------------------------------------------
@@ -41,6 +44,7 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
 //------------------------------------- Update Function --------------------------------------------
 
 
+    //TODO: Comment the debugMsg assign and the change notification when debug function disable.
     fun updatePerson(person: Person) {
         plans?.let {
             val result = it.list[currentPlanIndex].check(person)
@@ -48,8 +52,10 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
             val countToAdd: Int = result.second
             count += countToAdd
             progress = currentProgress
+            //debugMsg = it.list[currentPlanIndex].getDebugMsg(person)
             progressChanged()
             countChanged()
+            //debugMsgChanged()
         }?: Log.e(LOG_TAG, "Plans is not initialized")
     }
 
@@ -98,6 +104,10 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
         notifyExerciseCenterPlanObserver()
     }
 
+    private fun debugMsgChanged() {
+        notifyExerciseCenterDebugMsgObserver()
+    }
+
     private fun progressResetAndChanged() {
         progress = 0
         notifyExerciseCenterProgressObserver()
@@ -127,7 +137,12 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
                 observer.updateExerciseCenterPlan(currentPlan, isFinished)
             }
         }
+    }
 
+    override fun notifyExerciseCenterDebugMsgObserver() {
+        debugMsgObservers.forEach { observer ->
+            observer.updateExerciseCenterDebugMsg(debugMsg)
+        }
     }
 
     override fun registerExerciseCenterCountObserver(observer: ExerciseCenterCountObserver) {
@@ -142,6 +157,10 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
         planObservers.add(observer)
     }
 
+    override fun registerExerciseCenterDebugMsgObserver(observer: ExerciseCenterDebugMsgObserver) {
+        debugMsgObservers.add(observer)
+    }
+
     override fun removeExerciseCenterCountObserver(observer: ExerciseCenterCountObserver) {
         countObservers.remove(observer)
     }
@@ -154,6 +173,9 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
         planObservers.remove(observer)
     }
 
+    override fun removeExerciseCenterDebugMsgObserver(observer: ExerciseCenterDebugMsgObserver) {
+        debugMsgObservers.remove(observer)
+    }
 
 //------------------------------------- Condition Handling -----------------------------------------
 
