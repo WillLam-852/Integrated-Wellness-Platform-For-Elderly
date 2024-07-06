@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.boilerreactnativeapplication.R
 import com.boilerreactnativeapplication.data.person.Position
 import com.boilerreactnativeapplication.data.plan.ExercisePlanE1
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE2
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE3
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.databinding.ActivityPoseInspectorBinding
@@ -80,7 +82,7 @@ class PoseInspectorActivity : AppCompatActivity() {
 //        } else {
 //            intent.getSerializableExtra("plans") as ExercisePlans
 //        }
-        var plans: ExercisePlans? = ExercisePlans(listOf<AbstractExercisePlan>(ExercisePlanE1()))
+        var plans: ExercisePlans? = ExercisePlans(listOf<AbstractExercisePlan>(ExercisePlanE3()))
         return plans;
     }
 
@@ -102,10 +104,8 @@ class PoseInspectorActivity : AppCompatActivity() {
             viewModel?.let { viewModel ->
                 viewModel.plan.observe(this) { binding.execerciseNameTv.text = it.name }
                 viewModel.count.observe(this) { binding.countTv.text = it.toString() }
-                viewModel.progress.observe(this) {
-                    binding.progressTv.text = it.toString()
-                    binding.progressPb.progress = it
-                }
+                viewModel.progress.observe(this) { binding.progressPb.progress = it }
+                viewModel.debugMsg.observe(this) { binding.debugMsgTv.text = it }
 //            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
             }?:Log.e(LOG_TAG, "View Model has no been initialized.")
         } ?: Log.e(LOG_TAG, "Binding has ne been initialized.")

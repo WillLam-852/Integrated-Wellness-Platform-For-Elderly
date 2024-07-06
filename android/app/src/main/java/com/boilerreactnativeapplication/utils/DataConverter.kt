@@ -52,4 +52,33 @@ object DataConverter {
         // Convert the angle to degrees
         return Math.toDegrees(angleInRadians.toDouble())
     }
+
+    fun convertPositionToAngle(firstSidePosition: Position, centerPosition: Position, secondSidePosition: Position): Double {
+        val distanceXFirstSidePointToCenter = firstSidePosition.x - centerPosition.x
+        val distanceYFirstSidePointToCenter = firstSidePosition.y - centerPosition.y
+        val distanceXSecondSidePointToCenter = secondSidePosition.x - centerPosition.x
+        val distanceYSecondSidePointToCenter = secondSidePosition.y - centerPosition.y
+
+        // Calculate dot product of BA and BC
+        val dotProduct = distanceXFirstSidePointToCenter * distanceXSecondSidePointToCenter + distanceYFirstSidePointToCenter * distanceYSecondSidePointToCenter
+
+        // Calculate magnitudes of BA and BC
+        val magnitudeBA = sqrt(distanceXFirstSidePointToCenter * distanceXFirstSidePointToCenter + distanceYFirstSidePointToCenter * distanceYFirstSidePointToCenter)
+        val magnitudeBC = sqrt(distanceXSecondSidePointToCenter * distanceXSecondSidePointToCenter + distanceYSecondSidePointToCenter * distanceYSecondSidePointToCenter)
+
+        // Calculate the cosine of the angle
+        val cosTheta = dotProduct / (magnitudeBA * magnitudeBC)
+
+        // Calculate the angle in radians
+        val angleInRadians = acos(cosTheta)
+
+        // Convert the angle to degrees
+        return Math.toDegrees(angleInRadians.toDouble())
+    }
+
+    fun getMidPoint(p1: Position, p2: Position): Position {
+        val midX = (p1.x + p2.x) / 2
+        val midY = (p1.y + p2.y) / 2
+        return Position(midX, midY)
+    }
 }
