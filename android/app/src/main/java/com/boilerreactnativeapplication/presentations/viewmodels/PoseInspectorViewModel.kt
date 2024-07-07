@@ -35,7 +35,7 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
     }
 
     //----------------------- Activity Attributes -------------------
-    var cameraFacing: CameraHelper.CameraFacing = CAMERA_FACING_BACK
+    var cameraFacing: CameraHelper.CameraFacing = CAMERA_FACING_FRONT
     var isSurfaceDestroyed: Boolean = false
     var rotation: Int = Surface.ROTATION_0
     var preRotation: Int = Surface.ROTATION_0
