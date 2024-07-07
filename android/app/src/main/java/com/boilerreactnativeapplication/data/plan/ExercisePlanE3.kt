@@ -32,13 +32,13 @@ class ExercisePlanE3 (
             if (angles.all { it in feedback.resetRange.first..feedback.resetRange.second }) {
                 return ExerciseState.RESET
             }
-            if (angles.all { it in feedback.levelOneRange.first..feedback.levelOneRange.second }) {
+            if (angles.any { it in feedback.levelOneRange.first..feedback.levelOneRange.second }) {
                 return ExerciseState.LEVEL1
             }
-            if (angles.all { it in feedback.levelTwoRange.first..feedback.levelTwoRange.second }) {
+            if (angles.any { it in feedback.levelTwoRange.first..feedback.levelTwoRange.second }) {
                 return ExerciseState.LEVEL2
             }
-            if (angles.all { it in feedback.levelThreeRange.first..feedback.levelThreeRange.second }) {
+            if (angles.any { it in feedback.levelThreeRange.first..feedback.levelThreeRange.second }) {
                 return ExerciseState.LEVEL3
             }
         }

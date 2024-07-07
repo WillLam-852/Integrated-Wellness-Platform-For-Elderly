@@ -16,8 +16,8 @@ class ExercisePlanE1(
     targetAmount: Int = 5,
     feedbackList: List<ExerciseFeedback> = listOf<ExerciseFeedback>(
         ExerciseFeedback(
-            Pair(0.0, 60.0),
-            Pair(60.0, 100.0),
+            Pair(0.0, 50.0),
+            Pair(50.0, 100.0),
             Pair(100.0, 150.0),
             Pair(150.0, 180.0)
         )

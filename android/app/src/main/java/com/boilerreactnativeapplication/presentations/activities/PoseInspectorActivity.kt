@@ -111,7 +111,7 @@ class PoseInspectorActivity : AppCompatActivity() {
                 viewModel.plan.observe(this) { binding.execerciseNameTv.text = it.name }
                 viewModel.count.observe(this) { binding.countTv.text = it.toString() }
                 viewModel.countExerciseState.observe(this) {
-                    binding.countExerciseStateTv.text = it.toString()
+//                    binding.countExerciseStateTv.text = it.toString()
                     playSound(it)
                 }
                 viewModel.progress.observe(this) { binding.progressPb.progress = it }
