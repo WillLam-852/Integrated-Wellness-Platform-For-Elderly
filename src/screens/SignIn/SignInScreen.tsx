@@ -19,7 +19,7 @@ import useViewModel from "./useViewModel"
 const SignInScreen = () => {
     const { t } = useTranslation(["signInScreen"])
     const viewModel = useViewModel()
-    const { username, password, setUsername, setPassword, signIn, styles } =
+    const { userName, password, setUserName, setPassword, signIn, styles } =
         viewModel
 
     const onChangeLanguage = (lang: "zh" | "en") => {
@@ -63,8 +63,8 @@ const SignInScreen = () => {
                         mode="flat"
                         style={styles.input}
                         placeholder={t("signInScreen:username")}
-                        onChangeText={setUsername}
-                        value={username}
+                        onChangeText={setUserName}
+                        value={userName}
                         autoCapitalize="none"
                         placeholderTextColor="#7d7d7d"
                     />

@@ -48,30 +48,3 @@ class ReactViewController: UIViewController {
     
     
 }
-
-
-// MARK: - Extension
-
-//extension ReactViewController: CameraViewDelegate {
-//    func cameraViewCompleted(_ isCompleted: Bool) {
-//        if let camCallback = camCallback {
-//            let activityResult: ActivityResult?
-//            if isCompleted {
-//                // Leave camera view with result
-//                activityResult = ActivityResult(code: -1, action: "actFinished", activityName: nil)
-//            } else {
-//                // Leave camera view with no result
-//                activityResult = ActivityResult(code: -1, action: "close", activityName: nil)
-//            }
-//            print("activityResult", activityResult!)
-//            do {
-//                let data = try JSONEncoder().encode(activityResult!)
-//                camCallback.0(String(data: data, encoding: .utf8))
-//            } catch {
-//                camCallback.1("FORMAT", error.localizedDescription, nil)
-//            }
-//        } else {
-//            print("ERROR: No Camera Callback")
-//        }
-//    }
-//}

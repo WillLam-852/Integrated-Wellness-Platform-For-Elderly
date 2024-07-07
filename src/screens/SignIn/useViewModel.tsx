@@ -5,13 +5,13 @@ import { useState } from "react"
 import { userSignIn } from "@/redux/authentication/slice"
 
 const useViewModel = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [userName, setUserName] = useState("Carlosccc")
+    const [password, setPassword] = useState("20010918")
     const dispatch = useDispatch()
 
     const signIn = () => {
         // Perform sign-in logic here using username and password
-        dispatch(userSignIn())
+        dispatch(userSignIn({ userName, password }))
     }
 
     const styles = StyleSheet.create({
@@ -82,9 +82,9 @@ const useViewModel = () => {
     })
 
     return {
-        username,
+        userName,
         password,
-        setUsername,
+        setUserName,
         setPassword,
         signIn,
         styles,
