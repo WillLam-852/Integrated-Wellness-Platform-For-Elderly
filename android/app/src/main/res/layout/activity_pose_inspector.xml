@@ -36,11 +36,11 @@
             android:id="@+id/finishBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="32dp"
             android:text="Finish"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/execerciseNameTv"
@@ -50,11 +50,11 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textColor="#E91E63"
-            android:textSize="24sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/finishBtn" />
+            app:layout_constraintTop_toTopOf="@+id/preview_display_layout" />
 
         <TextView
             android:id="@+id/countTv"
@@ -101,11 +101,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#E91E63"
-            android:textSize="48sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/countExerciseStateTv"
+            android:layout_width="0dp"
+            android:textColor="#E91E63"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressPb" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

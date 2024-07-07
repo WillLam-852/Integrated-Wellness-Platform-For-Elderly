@@ -11,9 +11,9 @@ namespace NativeCameraModule {
                 callback("CameraModule not found!", undefined)
                 return
             }
+            // console.log("Exercise is: ", JSON.stringify(exercises))
             CameraModule.start(
-                'CameraModule',
-                'CatemraLocation',
+                JSON.stringify(exercises),
                 (error: any) => {
                     console.log(`Error found in native callback module ${error}`);
                 },

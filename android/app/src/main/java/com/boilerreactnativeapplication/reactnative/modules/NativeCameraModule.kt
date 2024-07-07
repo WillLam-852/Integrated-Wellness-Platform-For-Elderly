@@ -5,9 +5,13 @@ import android.content.Intent
 import android.util.Log
 import com.boilerreactnativeapplication.data.plan.ExercisePlanE1
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlanInput
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlanInputList
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
 import com.boilerreactnativeapplication.presentations.activities.PoseInspectorActivity
 import com.boilerreactnativeapplication.presentations.activities.SimulateInspectorActivity
+import com.boilerreactnativeapplication.utils.DataConverter.convertExercisePlanInputToPlan
+import com.boilerreactnativeapplication.utils.DataConverter.convertJsonArrayStringToExercisePlan
 import com.facebook.react.bridge.ActivityEventListener
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.BaseActivityEventListener
@@ -17,6 +21,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.IllegalViewOperationException
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class NativeCameraModule(reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext) {
@@ -31,10 +37,6 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
         private const val ERROR_CALLBACK_FAIL = "Call back error"
         private const val ERROR_CURRENT_ACTIVITY_NOT_FOUND = "Current activity not found"
         private const val ERROR_START_POSE_INSPECTOR_FAIL = "Start pose inspector fail"
-
-        private val TEST_LIST_OF_EXERCISE_PLAN = listOf<AbstractExercisePlan>(
-            ExercisePlanE1()
-        )
     }
 
     private lateinit var successCallback: Callback;
@@ -106,17 +108,14 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
      * */
     @ReactMethod
     fun start(
-        name: String,
-        location: String,
+        exercisesJsonString: String,
         failureCallback: Callback,
         successCallback: Callback
     ) {
-        val callbackDataId: Int = 16
-        Log.d(LOG_TAG, "Create callback event called with name: $name and location $location")
-
+        Log.d(LOG_TAG, "The exercisesJsonString is: ${exercisesJsonString}")
         this.failureCallback = failureCallback
         this.successCallback = successCallback
-
+        val exercises = convertJsonArrayStringToExercisePlan(exercisesJsonString)
         if(currentActivity == null) {
             this.failureCallback.invoke(ERROR_CURRENT_ACTIVITY_NOT_FOUND)
             return
@@ -124,10 +123,9 @@ class NativeCameraModule(reactContext: ReactApplicationContext) :
 
         try {
 
-            // TODO: Update the intent.
             // Navigate to Post Inspector Activity.
             val intent = Intent(currentActivity, PoseInspectorActivity::class.java)
-            // intent.putExtra("plans", ExercisePlans(TEST_LIST_OF_EXERCISE_PLAN))
+            intent.putExtra("exercises", exercises)
             currentActivity?.startActivityForResult(intent, REQUEST_CODE_POSE_INSPECTOR_ACTIVITY)
 
             // Navigate to Simulate Inspector Activity.

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.boilerreactnativeapplication.data.person.*
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
+import com.boilerreactnativeapplication.data.plan.model.ExerciseState
 import com.boilerreactnativeapplication.usecases.exercisecenter.ExerciseCenter
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterDebugMsgObserver
@@ -34,7 +35,7 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
     }
 
     //----------------------- Activity Attributes -------------------
-    var cameraFacing: CameraHelper.CameraFacing = CAMERA_FACING_FRONT
+    var cameraFacing: CameraHelper.CameraFacing = CAMERA_FACING_BACK
     var isSurfaceDestroyed: Boolean = false
     var rotation: Int = Surface.ROTATION_0
     var preRotation: Int = Surface.ROTATION_0
@@ -56,6 +57,10 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
     private val _count = MutableLiveData<Int>(0)
     val count: LiveData<Int>
         get() = _count
+
+    private val _countExerciseState = MutableLiveData<ExerciseState>()
+    val countExerciseState: LiveData<ExerciseState>
+        get() = _countExerciseState
 
     private val _progress = MutableLiveData<Int>(0)
     val progress: LiveData<Int>
@@ -153,9 +158,10 @@ class PoseInspectorViewModel(application: Application, plans: ExercisePlans?): A
         exerciseCenter.removeExerciseCenterDebugMsgObserver(this)
     }
 
-    override fun updateExerciseCenterCount(count: Int) {
+    override fun updateExerciseCenterCount(count: Int, countExerciseState: ExerciseState?) {
         _count.postValue(count)
         _isShowCountTick.postValue(true)
+        countExerciseState?.let { _countExerciseState.postValue(it) }
     }
 
     override fun updateExerciseCenterProgress(progress: Int) {

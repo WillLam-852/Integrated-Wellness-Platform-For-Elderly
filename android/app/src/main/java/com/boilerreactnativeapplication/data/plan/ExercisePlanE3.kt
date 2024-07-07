@@ -3,6 +3,7 @@ package com.boilerreactnativeapplication.data.plan
 import android.util.Log
 import com.boilerreactnativeapplication.data.person.Person
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExerciseCheckResult
 import com.boilerreactnativeapplication.data.plan.model.ExerciseCode
 import com.boilerreactnativeapplication.data.plan.model.ExerciseFeedback
 import com.boilerreactnativeapplication.data.plan.model.ExerciseSide
@@ -48,7 +49,7 @@ class ExercisePlanE3 (
         return super.getNextProgress(angles)
     }
 
-    override fun check(person: Person): Pair<Int, Int> {
+    override fun check(person: Person, availableCountExerciseState: ExerciseState?): ExerciseCheckResult {
         leftShoulderKeyPoint = person.keyPoints[1]
         rightShoulderKeyPoint = person.keyPoints[2]
         leftElbowKeyPoint = person.keyPoints[3]
@@ -60,9 +61,9 @@ class ExercisePlanE3 (
         val rightElbowAngle: Double = DataConverter.convertPointsToAngle(rightShoulderKeyPoint, rightElbowKeyPoint, rightWristKeyPoint)
 
         return if(leftElbowAngle > rightElbowAngle) {
-            updateState(listOf(leftElbowAngle, rightElbowAngle))
+            updateState(listOf(leftElbowAngle, rightElbowAngle), availableCountExerciseState)
         } else {
-            updateState(listOf(rightElbowAngle, leftElbowAngle))
+            updateState(listOf(rightElbowAngle, leftElbowAngle), availableCountExerciseState)
         }
     }
 
@@ -80,7 +81,6 @@ class ExercisePlanE3 (
         val rightElbowAngle: Double = DataConverter.convertPointsToAngle(rightShoulderKeyPoint, rightElbowKeyPoint, rightWristKeyPoint)
         val leftShoulderAngle: Double = DataConverter.convertPointsToAngle(leftElbowKeyPoint, leftShoulderKeyPoint, leftHipKeyPoint)
         val rightShoulderAngle: Double = DataConverter.convertPointsToAngle(rightElbowKeyPoint, rightShoulderKeyPoint, rightHipKeyPoint)
-
 //        val deBugMsg =
 //                "leftElbowAngle = ${"%.2f".format(leftElbowAngle)},\n " +
 //                "rightElbowAngle = ${"%.2f".format(rightElbowAngle)},\n" +
