@@ -4,12 +4,12 @@ import android.util.Log
 import com.boilerreactnativeapplication.data.person.Person
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
+import com.boilerreactnativeapplication.data.plan.model.ExerciseState
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterCountObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterDebugMsgObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterPlanObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.observer.ExerciseCenterProgressObserver
 import com.boilerreactnativeapplication.usecases.exercisecenter.subject.ExerciseCenterSubject
-import kotlin.time.Duration.Companion.seconds
 
 
 class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject {
@@ -24,6 +24,7 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
     private val debugMsgObservers: MutableList<ExerciseCenterDebugMsgObserver> = mutableListOf()
 
     private var count: Int = 0
+    private var availableCountExerciseState: ExerciseState? = null
     private var progress: Int = 0
     private var currentPlanIndex: Int = -1
     private var isFinished: Boolean = false
@@ -47,15 +48,15 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
     //TODO: Comment the debugMsg assign and the change notification when debug function disable.
     fun updatePerson(person: Person) {
         plans?.let {
-            val result = it.list[currentPlanIndex].check(person)
-            val currentProgress: Int = result.first
-            val countToAdd: Int = result.second
+            val result = it.list[currentPlanIndex].check(person, availableCountExerciseState)
+            val currentProgress: Int = result.progress
+            val countToAdd: Int = result.countToAdd
+            val currentCountExerciseState: ExerciseState? = result.countExerciseState
             count += countToAdd
             progress = currentProgress
-            //debugMsg = it.list[currentPlanIndex].getDebugMsg(person)
-            progressChanged()
-            countChanged()
-            //debugMsgChanged()
+            availableCountExerciseState = currentCountExerciseState
+            progressCheckedAndChanged(progress)
+            countCheckedAndChanged(plans, count)
         }?: Log.e(LOG_TAG, "Plans is not initialized")
     }
 
@@ -92,6 +93,24 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
 //-------------------------------------  Observer Functions ----------------------------------------
 
 
+    private fun countCheckedAndChanged(plans: ExercisePlans, count: Int) {
+        if(count >= plans.list[currentPlanIndex].targetAmount) {
+            currentPlanIndex += 1
+            countResetAndChange()
+            planChanged()
+        } else {
+            countChanged()
+        }
+    }
+
+    private fun progressCheckedAndChanged(progress: Int) {
+        if(progress >= 100) {
+            progressResetAndChanged()
+        } else {
+            progressChanged()
+        }
+    }
+
     private fun countChanged() {
         notifyExerciseCenterCountObserver()
     }
@@ -108,6 +127,11 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
         notifyExerciseCenterDebugMsgObserver()
     }
 
+    private fun countResetAndChange() {
+        count = 0
+        notifyExerciseCenterCountObserver()
+    }
+
     private fun progressResetAndChanged() {
         progress = 0
         notifyExerciseCenterProgressObserver()
@@ -115,7 +139,7 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
 
     override fun notifyExerciseCenterCountObserver() {
         countObservers.forEach { observer ->
-            observer.updateExerciseCenterCount(count)
+            observer.updateExerciseCenterCount(count, availableCountExerciseState)
         }
     }
 
@@ -128,6 +152,7 @@ class ExerciseCenter(private val plans: ExercisePlans?) : ExerciseCenterSubject 
     override fun notifyExerciseCenterPlanObserver() {
         plans?.let {
             var currentPlan: AbstractExercisePlan? = null
+            Log.i(LOG_TAG, "Current Plan Index is: ${currentPlanIndex}")
             if(currentPlanIndex != -1 && currentPlanIndex < it.list.size){
                 currentPlan = it.list[currentPlanIndex]
             } else if (currentPlanIndex == it.list.size) {

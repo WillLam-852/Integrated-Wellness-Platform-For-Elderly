@@ -3,9 +3,11 @@ package com.boilerreactnativeapplication.data.plan
 import com.boilerreactnativeapplication.data.person.Person
 import com.boilerreactnativeapplication.data.person.Position
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExerciseCheckResult
 import com.boilerreactnativeapplication.data.plan.model.ExerciseCode
 import com.boilerreactnativeapplication.data.plan.model.ExerciseFeedback
 import com.boilerreactnativeapplication.data.plan.model.ExerciseSide
+import com.boilerreactnativeapplication.data.plan.model.ExerciseState
 import com.boilerreactnativeapplication.utils.DataConverter
 import kotlin.math.abs
 
@@ -30,9 +32,9 @@ class ExercisePlanE2 (
     feedbackList
 ) {
 
-    override fun check(person: Person): Pair<Int, Int> {
+    override fun check(person: Person, availableCountExerciseState: ExerciseState?): ExerciseCheckResult {
         val angleDifference = getDifferenceOfTargetAngles(person)
-        val progressAndCountPair = updateState(listOf(angleDifference))
+        val progressAndCountPair = updateState(listOf(angleDifference), availableCountExerciseState)
         return progressAndCountPair
     }
 

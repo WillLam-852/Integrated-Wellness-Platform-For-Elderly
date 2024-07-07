@@ -3,12 +3,42 @@ package com.boilerreactnativeapplication.utils
 import android.util.Log
 import com.boilerreactnativeapplication.data.person.BodyPart
 import com.boilerreactnativeapplication.data.person.*
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE1
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE2
+import com.boilerreactnativeapplication.data.plan.ExercisePlanE3
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlanInput
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlanInputList
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.google.mediapipe.formats.proto.LandmarkProto
 import kotlin.math.sqrt
 import kotlin.math.acos
 
 object DataConverter {
+
+    fun convertJsonArrayStringToExercisePlan(jsonString: String): ExercisePlanInputList {
+        val gson = Gson()
+        val typeToken = object : TypeToken<List<ExercisePlanInput>>() {}.type
+        val exercises = gson.fromJson<List<ExercisePlanInput>>(jsonString, typeToken)
+        return ExercisePlanInputList(exercises)
+    }
+
+    fun convertExercisePlanInputToPlan(input: ExercisePlanInput): AbstractExercisePlan {
+        return when (input.exerciseId) {
+            1 -> ExercisePlanE1(
+                targetAmount = input.target,
+            )
+            2 -> ExercisePlanE2(
+                targetAmount = input.target,
+            )
+            3 -> ExercisePlanE3(
+                targetAmount = input.target,
+            )
+            else -> throw IllegalArgumentException("Unsupported exercise ID")
+        }
+    }
 
     fun convertRawReactDataToExercisePlan(): AbstractExercisePlan? {
         return null

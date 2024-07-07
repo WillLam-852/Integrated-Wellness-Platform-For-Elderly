@@ -3,6 +3,7 @@ package com.boilerreactnativeapplication.presentations.activities
 import android.app.Activity
 import android.content.Intent
 import android.graphics.SurfaceTexture
+import android.media.MediaPlayer
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,17 +16,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.boilerreactnativeapplication.R
-import com.boilerreactnativeapplication.data.person.Position
 import com.boilerreactnativeapplication.data.plan.ExercisePlanE1
-import com.boilerreactnativeapplication.data.plan.ExercisePlanE2
-import com.boilerreactnativeapplication.data.plan.ExercisePlanE3
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExercisePlanInputList
 import com.boilerreactnativeapplication.data.plan.model.ExercisePlans
+import com.boilerreactnativeapplication.data.plan.model.ExerciseState
 import com.boilerreactnativeapplication.databinding.ActivityPoseInspectorBinding
 import com.boilerreactnativeapplication.presentations.viewmodelfactories.PoseInspectorViewModelFactory
 import com.boilerreactnativeapplication.presentations.viewmodels.PoseInspectorViewModel
-import com.boilerreactnativeapplication.reactnative.modules.NativeCameraModule
 import com.boilerreactnativeapplication.utils.*
+import com.boilerreactnativeapplication.utils.DataConverter.convertExercisePlanInputToPlan
 import com.google.mediapipe.components.CameraHelper
 import com.google.mediapipe.components.CameraXPreviewHelper
 import com.google.mediapipe.components.ExternalTextureConverter
@@ -71,19 +71,25 @@ class PoseInspectorActivity : AppCompatActivity() {
     // Handles camera access via the {@link CameraX} Jetpack support library.
     private var cameraHelper: CameraXPreviewHelper? = null
 
+    private var mediaPlayer: MediaPlayer? =null
+    private val sounds = arrayOf(R.raw.level1, R.raw.level2, R.raw.level3)
+
 
 //------------------------------------- Initialization ---------------------------------------------
 
 
-    private fun getExercisePlanFromIntent(): ExercisePlans? {
-//        var plans: ExercisePlans? = null
-//        plans = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent.getSerializableExtra("plans", ExercisePlans::class.java)
-//        } else {
-//            intent.getSerializableExtra("plans") as ExercisePlans
-//        }
-        var plans: ExercisePlans? = ExercisePlans(listOf<AbstractExercisePlan>(ExercisePlanE3()))
-        return plans;
+    // Get the exercise data from react native module, default will trigger exercise plan e1.
+    private fun getExercisePlanFromIntent(): List<AbstractExercisePlan> {
+        var exercises: ExercisePlanInputList? = null
+        exercises = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("exercises", ExercisePlanInputList::class.java)
+        } else {
+            intent.getSerializableExtra("exercises") as ExercisePlanInputList
+        }
+        exercises ?.let { exercise ->
+            return exercise.list.map { convertExercisePlanInputToPlan(it) }
+        }
+        return listOf(ExercisePlanE1())
     }
 
     private fun initActivityBindingAndVM(plans: ExercisePlans?) {
@@ -95,7 +101,7 @@ class PoseInspectorActivity : AppCompatActivity() {
 
     private fun initActivityContentClickListener() {
         binding?.let { binding ->
-            binding.finishBtn.setOnClickListener { finishCurrentActivity() }
+            binding.finishBtn.setOnClickListener { finishCurrentActivity(true) }
         }
     }
 
@@ -104,8 +110,17 @@ class PoseInspectorActivity : AppCompatActivity() {
             viewModel?.let { viewModel ->
                 viewModel.plan.observe(this) { binding.execerciseNameTv.text = it.name }
                 viewModel.count.observe(this) { binding.countTv.text = it.toString() }
+                viewModel.countExerciseState.observe(this) {
+                    binding.countExerciseStateTv.text = it.toString()
+                    playSound(it)
+                }
                 viewModel.progress.observe(this) { binding.progressPb.progress = it }
                 viewModel.debugMsg.observe(this) { binding.debugMsgTv.text = it }
+                viewModel.isFinishExercise.observe(this) {
+                    if (it == true) {
+                        finishCurrentActivity(false)
+                    }
+                }
 //            viewModel.headPosition.observe(this) { updateHeadCoordinate(it) }
             }?:Log.e(LOG_TAG, "View Model has no been initialized.")
         } ?: Log.e(LOG_TAG, "Binding has ne been initialized.")
@@ -116,7 +131,7 @@ class PoseInspectorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val plans: ExercisePlans? = getExercisePlanFromIntent()
+        val plans = ExercisePlans(getExercisePlanFromIntent())
         initActivityBindingAndVM(plans)
         initActivityContentClickListener()
         initObserveFunction()
@@ -144,10 +159,18 @@ class PoseInspectorActivity : AppCompatActivity() {
         initPreviewDisplayView()
     }
 
+    override fun onDestroy() {
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+        }
+        mediaPlayer?.release()
+        super.onDestroy()
+    }
+
 
 //------------------------------------- Callback Functions -----------------------------------------
 
-    private fun finishCurrentActivity() {
+    private fun finishCurrentActivity(isFinishedByCancel: Boolean) {
         val intent = Intent().apply {
             putExtra("count", (99).toString())
         }
@@ -335,7 +358,24 @@ class PoseInspectorActivity : AppCompatActivity() {
     }
 
 
-//------------------------------------- Observe Update Functions -----------------------------------
+//------------------------------------- Media Player -----------------------------------------------
+
+    private fun playSound(state: ExerciseState) {
+        val index = when(state) {
+            ExerciseState.LEVEL1 -> 0
+            ExerciseState.LEVEL2 -> 1
+            ExerciseState.LEVEL3 -> 2
+            else -> 3
+        }
+        if (index >= sounds.size) return  // Stop when all files have been played
+
+        if(mediaPlayer?.isPlaying != true) {
+            mediaPlayer = MediaPlayer.create(this, sounds[index])
+            mediaPlayer?.start()
+        }
+
+    }
+
 
 
 }

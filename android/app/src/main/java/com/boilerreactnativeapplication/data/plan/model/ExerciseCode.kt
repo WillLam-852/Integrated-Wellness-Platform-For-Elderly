@@ -1,6 +1,8 @@
 package com.boilerreactnativeapplication.data.plan.model
 
-enum class ExerciseCode(val message: String) {
+import java.io.Serializable
+
+enum class ExerciseCode(val message: String): Serializable {
     E0("E0"),
     E1("E1"),
     E2("E2"),

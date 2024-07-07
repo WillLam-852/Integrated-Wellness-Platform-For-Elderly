@@ -32,7 +32,7 @@ abstract class AbstractExercisePlan (
 
     protected var currentState: ExerciseState = ExerciseState.RESET
 
-    abstract fun check(person: Person): Pair<Int, Int>
+    abstract fun check(person: Person, availableCountExerciseState: ExerciseState?): ExerciseCheckResult
 
     abstract fun getDebugMsg(person: Person): String
 
@@ -54,15 +54,20 @@ abstract class AbstractExercisePlan (
         return (((averageAngle / feedbackList[0].levelThreeRange.second) * 100).roundToInt())
     }
 
-    protected fun updateState(angles: List<Double>): Pair<Int, Int> {
+    protected fun updateState(angles: List<Double>, availableCountExerciseState: ExerciseState?): ExerciseCheckResult {
         val nextState = getNextState(angles)
         val currentProgress = getNextProgress(angles)
         var countToAdd = 0
-        if(currentState != ExerciseState.RESET && nextState == ExerciseState.RESET) {
+        var countExerciseState: ExerciseState? = null
+        if(currentState != ExerciseState.RESET && currentState != ExerciseState.ABNORMAL && nextState == ExerciseState.RESET) {
             countToAdd = 1
+            countExerciseState = currentState
+        }
+        if(currentState == ExerciseState.ABNORMAL) {
+            countExerciseState = availableCountExerciseState
         }
         currentState = nextState
-        return Pair(currentProgress, countToAdd)
+        return ExerciseCheckResult(currentProgress, countToAdd, countExerciseState)
     }
 
 }

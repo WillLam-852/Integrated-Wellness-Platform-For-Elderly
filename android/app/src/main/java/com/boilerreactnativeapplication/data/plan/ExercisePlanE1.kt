@@ -2,9 +2,11 @@ package com.boilerreactnativeapplication.data.plan
 
 import com.boilerreactnativeapplication.data.person.Person
 import com.boilerreactnativeapplication.data.plan.model.AbstractExercisePlan
+import com.boilerreactnativeapplication.data.plan.model.ExerciseCheckResult
 import com.boilerreactnativeapplication.data.plan.model.ExerciseCode
 import com.boilerreactnativeapplication.data.plan.model.ExerciseFeedback
 import com.boilerreactnativeapplication.data.plan.model.ExerciseSide
+import com.boilerreactnativeapplication.data.plan.model.ExerciseState
 import com.boilerreactnativeapplication.utils.DataConverter
 
 class ExercisePlanE1(
@@ -14,8 +16,8 @@ class ExercisePlanE1(
     targetAmount: Int = 5,
     feedbackList: List<ExerciseFeedback> = listOf<ExerciseFeedback>(
         ExerciseFeedback(
-            Pair(0.0, 50.0),
-            Pair(50.0, 100.0),
+            Pair(0.0, 60.0),
+            Pair(60.0, 100.0),
             Pair(100.0, 150.0),
             Pair(150.0, 180.0)
         )
@@ -28,9 +30,9 @@ class ExercisePlanE1(
     feedbackList
 ) {
 
-    override fun check(person: Person): Pair<Int, Int> {
+    override fun check(person: Person, availableCountExerciseState: ExerciseState?): ExerciseCheckResult {
         val listOfTargetAngle: List<Double> = getListOfTargetAngle(person)
-        val progressAndCountPair = updateState(listOfTargetAngle)
+        val progressAndCountPair = updateState(listOfTargetAngle, availableCountExerciseState)
         return progressAndCountPair
     }
 
