@@ -1,19 +1,15 @@
 # Integrated Wellness Platform for Elderly
 
-This repository contains a React Native app that can be run on both Android and iOS devices. Follow the instructions below to get started.
+This repository contains a Integrated Wellness Platform for Elderly app that can be run on both Android and iOS devices. Follow the instructions below to get started.
 
 ## Prerequisites
 
 To run this app, you need to have the following software installed on your machine:
 
 -   Node.js
-
 -   Yarn
-
 -   React Native CLI
-
 -   Xcode (for iOS)
-
 -   Android Studio (for Android)
 
 ## Installation
