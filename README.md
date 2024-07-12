@@ -42,13 +42,20 @@ This will build the app and deploy it to the Android emulator
     ```
     pod install
     ```
-3. Go back to the project root directory. In the project directory, run the following command to start the app on the iOS simulator:
-    ```
-    cd ..
-    yarn ios
-    ```
+3. Open Xcode.
+4. In Xcode, navigate to the project directory and open the `ios/YourApp.xcworkspace` file.
+5. In Xcode, go to the project settings and select the target.
+6. Change the bundle identifier to a unique identifier for the app.
+5. Connect your iOS device to your machine.
+6. Ensure that your iOS device is in developer mode by following the necessary steps.
+   https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device
+8. In Xcode, select your connected device as the build target.
+9. Select "Release" mode instead of "Debug" mode in the scheme.
+10. Click the "Run" button or use the shortcut `Cmd+R` to build and run the app on your device.
 
-This will build the app and deploy it to the iOS simulator.
+This will build the app and deploy it to the iOS device.
+
+> Note: Since the app requires camera functionality, it cannot be tested on the iOS simulator. Make sure you have a real iOS device connected for testing.
 
 ## Troubleshooting
 
