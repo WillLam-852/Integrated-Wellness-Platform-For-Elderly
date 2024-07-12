@@ -43,7 +43,7 @@ This will build the app and deploy it to the Android emulator
     pod install
     ```
 3. Open Xcode.
-4. In Xcode, navigate to the project directory and open the `ios/YourApp.xcworkspace` file.
+4. In Xcode, navigate to the project directory and open the `ios/BoilerReactNativeApplication.xcworkspace` file.
 5. In Xcode, go to the project settings and select the target.
 6. Change the bundle identifier to a unique identifier for the app.
 5. Connect your iOS device to your machine.
@@ -60,3 +60,4 @@ This will build the app and deploy it to the iOS device.
 ## Troubleshooting
 
 If you encounter any issues during the installation or running of the app, make sure you have followed all the prerequisites and steps correctly. You can also refer to the official React Native documentation for troubleshooting tips.
+https://reactnative.dev/docs/troubleshooting
