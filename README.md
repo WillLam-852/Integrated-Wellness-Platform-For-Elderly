@@ -47,8 +47,7 @@ This will build the app and deploy it to the Android emulator
 5. In Xcode, go to the project settings and select the target.
 6. Change the bundle identifier to a unique identifier for the app.
 5. Connect your iOS device to your machine.
-6. Ensure that your iOS device is in developer mode by following the necessary steps.
-   https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device
+6. Ensure that your iOS device is in [developer mode](https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device) by following the necessary steps.
 8. In Xcode, select your connected device as the build target.
 9. Select "Release" mode instead of "Debug" mode in the scheme.
 10. Click the "Run" button or use the shortcut `Cmd+R` to build and run the app on your device.
@@ -59,5 +58,4 @@ This will build the app and deploy it to the iOS device.
 
 ## Troubleshooting
 
-If you encounter any issues during the installation or running of the app, make sure you have followed all the prerequisites and steps correctly. You can also refer to the official React Native documentation for troubleshooting tips.
-https://reactnative.dev/docs/troubleshooting
+If you encounter any issues during the installation or running of the app, make sure you have followed all the prerequisites and steps correctly. You can also refer to the official React Native documentation for [troubleshooting tips](https://reactnative.dev/docs/troubleshooting).
