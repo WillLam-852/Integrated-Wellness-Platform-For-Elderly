@@ -49,8 +49,6 @@ class CameraModule: NSObject {
         fatalError("[iOS CameraModule.selectExercises] Error parsing JSON: \(error)")
       }
       
-      print("exercisesList:", exercisesList)
-
       DispatchQueue.main.async {
             // get currently presented view controller
             let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
