@@ -58,7 +58,9 @@ This will build the app and deploy it to the iOS device.
 
 ## Sign in to the Platform
 
-Both the username and password for testing are `admin`.
+The username and password for testing are as following:
+- Username: `admin`
+- Password: `admin`
 
 ## Troubleshooting
 
