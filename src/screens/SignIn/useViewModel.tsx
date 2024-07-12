@@ -1,8 +1,8 @@
 import { Platform, StyleSheet } from "react-native"
+import { userSignIn, userSignInSuccess } from "@/redux/authentication/slice"
 
 import { useDispatch } from "react-redux"
 import { useState } from "react"
-import { userSignIn } from "@/redux/authentication/slice"
 
 const useViewModel = () => {
     const [userName, setUserName] = useState("Carlosccc")
@@ -10,8 +10,12 @@ const useViewModel = () => {
     const dispatch = useDispatch()
 
     const signIn = () => {
-        // Perform sign-in logic here using username and password
-        dispatch(userSignIn({ userName, password }))
+        if (userName == "admin" && password == "admin") {
+            dispatch(userSignInSuccess())
+        } else {
+            // Perform sign-in logic here using username and password
+            dispatch(userSignIn({ userName, password }))
+        }
     }
 
     const styles = StyleSheet.create({

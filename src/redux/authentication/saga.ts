@@ -17,12 +17,12 @@ function* signInSaga(
     action: PayloadAction<{ userName: string; password: string }>
 ): Generator<any, void, unknown> {
     try {
+        console.log("hihi")
         const response = yield call(
             signInRequest,
             action.payload.userName,
             action.payload.password
         )
-        console.log("hi")
         const typedResponse: AxiosResponse<any, any> =
             response as AxiosResponse<any, any>
         console.log("typedResponse:", typedResponse)
