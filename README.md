@@ -56,6 +56,10 @@ This will build the app and deploy it to the iOS device.
 
 > Note: Since the app requires camera functionality, it cannot be tested on the iOS simulator. Make sure you have a real iOS device connected for testing.
 
+## Sign in to the Platform
+
+Both the username and password for testing are `admin`.
+
 ## Troubleshooting
 
 If you encounter any issues during the installation or running of the app, make sure you have followed all the prerequisites and steps correctly. You can also refer to the official React Native documentation for [troubleshooting tips](https://reactnative.dev/docs/troubleshooting).
