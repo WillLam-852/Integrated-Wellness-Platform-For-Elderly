@@ -2,11 +2,10 @@ import { useEffect, useState } from "react"
 
 import ChatMessage from "@/models/ChatMessage"
 import { StyleSheet } from "react-native"
-import sampleChatMessages from "@/sample-data/sample-chat-message"
 
 const useViewModel = () => {
     const [inputText, setInputText] = useState("")
-    const [messages, setMessages] = useState<ChatMessage[]>(sampleChatMessages)
+    const [messages, setMessages] = useState<ChatMessage[]>([])
 
     const styles = StyleSheet.create({
         safeContainer: {
