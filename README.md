@@ -10,7 +10,7 @@ To run this app, you need to have the following software installed on your machi
 -   Yarn
 -   React Native CLI
 -   Xcode (for iOS)
--   Android Studio (for Android)
+-   Android Studio and Realted Packages (for Android)
 
 ## Installation
 
@@ -20,17 +20,49 @@ To run this app, you need to have the following software installed on your machi
     yarn install
     ```
 
+## Befor Running the Test
+Before the test, in order to ensure the integrity of the test, please prepare a mobile phone equipped with a camera and ensure that the camera can connect to the internet. Otherwise, it will not be possible to test the posture recognition and related ChatGPT functionalities.
+
 ## Running on Android
 
-1. Open Android Studio and launch the Android Virtual Device (AVD) Manager.
-2. Create a new virtual device if one doesn't exist already.
-3. Start the virtual device.
-4. In the project directory, run the following command to start the app on the Android emulator:
+1. Open Android Studio and open the project file. Choose the ``` android ``` directory under the root folder.
+2. Connect your physical device to computer and make sure that the device has been enabled the "Developer Option" and "USB debugging"
+3. Make sure that target device has been selected and click the Run 'app' button. (You should see the warming before you start the React Native Local Server)
+4. Connecting your device to development server with adb command and install the react native module which mentioned at "Installation" section.
+5. The app should run successfully at device
+
+### Build Android Bundle
+The react native side is not runnable if we don't build the Android Bundle. The app can run isolately after we create bundle between Android and React Native module.
+
+1. Navigate to root project directory
+2. Run the following command to build bundle:
+```
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+```
+
+### Build Android DEBUG version APK
+
+1. Navigate to the Android project directory:
     ```
-    yarn android
+    cd android
+    ```
+2. Generate DEBUG apk:
+    ```
+    ./gradlew assembleDebug
+    ```
+3. Install APK to default device:
+    ```
+    adb install android/app/build/outputs/apk/debug/app-debug.apk
+    ```
+    Install APK to specific device:
+    ```
+    adb -s [device_serial_number] install path/to/your_app.apk
     ```
 
-This will build the app and deploy it to the Android emulator
+> Realted Link:
+
+> 1. Run React Native on Device https://reactnative.dev/docs/running-on-device.html?platform=android
+> 2. Generate Debug Android APK https://medium.com/@manasmahala53/how-to-generate-debug-and-release-apk-in-react-native-9901ffa79e3a
 
 ## Running on iOS
 
