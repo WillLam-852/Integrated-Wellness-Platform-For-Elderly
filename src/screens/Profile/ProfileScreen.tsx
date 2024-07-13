@@ -13,13 +13,14 @@ import sampleUser from "@/sample-data/sample-user"
 import { useQuery } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
+import { baseURL } from "../../redux/baseURL"
 
 const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
     const { t } = useTranslation(["profileScreen"])
 
     const fetchUsers = async () => {
         const response = await fetch(
-            "https://8.138.125.164/users/get/1"
+            `${baseURL}/users/get/1`
         )
         if (!response.ok) {
             throw new Error("Failed to fetch users")
@@ -101,12 +102,12 @@ const ProfileScreen = ({ navigation }: MainBottomTabScreenProps) => {
         <SafeScreen>
             <ScrollView style={styles.container}>
                 <ProfileIcon />
-                <ProfileItem title={"User ID"} description={data.userId} />
-                <ProfileItem title={"Name"} description={data.name} />
-                <ProfileItem title={"Email"} description={data.email} />
-                <ProfileItem title={"Phone"} description={data.phone} />
-                <ProfileItem title={"Age"} description={data.age} />
-                <ProfileItem title={"Gender"} description={data.gender} />
+                <ProfileItem title={t("profileScreen:userId")} description={data.data.userId} />
+                <ProfileItem title={t("profileScreen:name")} description={data.data.name} />
+                <ProfileItem title={t("profileScreen:email")} description={data.data.email} />
+                <ProfileItem title={t("profileScreen:phone")} description={data.data.phone} />
+                <ProfileItem title={t("profileScreen:age")} description={data.data.age} />
+                <ProfileItem title={t("profileScreen:gender")} description={data.data.gender} />
                 {/* <ProfileItem title={"Height"} description={user.height + " cm"} />
             <ProfileItem title={"Weight"} description={user.weight + " kg"} /> */}
                 <HealthInformationView />

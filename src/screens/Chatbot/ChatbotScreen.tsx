@@ -16,6 +16,8 @@ import { useQuery } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import useViewModel from "./useViewModel"
 import { TabRoute } from "@/navigators/ScreenRoute"
+import i18next from "i18next"
+import { sampleChatMessagesChi, sampleChatMessagesEng } from "@/sample-data/sample-chat-message"
 
 function ChatbotScreen({ route, navigation }: MainBottomTabScreenProps) {
     const { t } = useTranslation(["chatbotScreen"]);
@@ -82,7 +84,11 @@ function ChatbotScreen({ route, navigation }: MainBottomTabScreenProps) {
         console.log("The value of isSuccess is: ", isSuccess);
         if(isSuccess) {
             console.log("The advice data is: ", data);
-            setMessages([...messages, new ChatMessage('bot', data.data)]);
+            if(i18next.language === "en") {
+                setMessages([...sampleChatMessagesEng, new ChatMessage('bot', data.data)]);
+            } else {
+                setMessages([...sampleChatMessagesChi, new ChatMessage('bot', data.data)]);
+            }
         }
     }, [isSuccess]);
 
