@@ -1,0 +1,13 @@
+{
+    "loading": "加載中...",
+    "failedToFetchUsers" : "獲取用戶信息失敗",
+    "switchLanguage": "切換語言",
+    "error": "錯誤發生: ",
+    "signOut": "登出",
+    "userId": "用戶編號",
+    "name": "用戶名",
+    "email": "電郵地址",
+    "phone": "電話號碼",
+    "age": "年齡",
+    "gender": "性別"
+}

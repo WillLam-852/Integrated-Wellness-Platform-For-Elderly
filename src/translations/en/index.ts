@@ -1,4 +1,11 @@
-export { default as common } from './common.json';
-export { default as example } from './example.json';
-export { default as startup } from './startup.json';
-export { default as welcome } from './welcome.json';
+export { default as common } from "./common.json"
+export { default as exercise } from "./exercise.json"
+export { default as welcome } from "./welcome.json"
+export { default as screenRoute } from "./screenRoute.json"
+export { default as exerciseScreen } from "./exercise-screen.json"
+export { default as profileScreen } from "./profile-screen.json"
+export { default as tabScreen } from "./tab-screen.json"
+export { default as mealScreen } from "./meal-scrren.json"
+export { default as signInScreen } from "./signin-screen.json"
+export { default as quizScreen } from "./quiz-screen.json"
+export { default as chatbotScreen } from "./chat-bot-screen.json"
